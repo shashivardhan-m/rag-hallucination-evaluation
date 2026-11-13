@@ -1,0 +1,45 @@
+# Environments & Secrets
+.env
+*.env
+!.env.example
+venv/
+env/
+ENV/
+.venv/
+
+# Python & Testing Caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Node & Frontend
+node_modules/
+frontend/dist/
+frontend/build/
+.npm
+.eslintcache
+*.tsbuildinfo
+
+# Data, Vector Stores & SQLite
+backend/data/research.db
+backend/data/research.db*
+backend/data/faiss_index/
+backend/data/uploads/*
+!backend/data/uploads/.gitkeep
+backend/data/experiments/*
+!backend/data/experiments/.gitkeep
+
+# Operating System & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo

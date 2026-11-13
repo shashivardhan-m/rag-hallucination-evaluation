@@ -1,0 +1,84 @@
+Title: Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models
+Source: arXiv:2309.01219 (CC BY 4.0) — Excerpts for reproducible demo
+Authors: Yue Zhang et al.
+---
+
+ABSTRACT
+
+While large language models (LLMs) have shown remarkable capabilities in a range of tasks, they still face significant challenges including hallucination. We define hallucination as the generation of content that is nonsensical or unfaithful to the provided source content. In this survey, we aim to provide a thorough and in-depth overview of hallucination in LLMs.
+
+We first discuss the definition of hallucination and then categorize it into three types: input-conflicting, context-conflicting, and fact-conflicting hallucinations. We discuss the causes and existing methods to detect and mitigate hallucination, and finally highlight open challenges and future research directions.
+
+---
+
+SECTION 1: DEFINING HALLUCINATION
+
+The term "hallucination" in the context of Natural Language Generation (NLG) refers to generated content that is unfaithful to the source or factually incorrect. In NLG research, hallucination has been a known problem since sequence-to-sequence models were applied to summarization, translation, and dialogue generation tasks.
+
+For Large Language Models, hallucination takes a particularly concerning form because LLMs are general-purpose systems expected to be reliable across a wide range of tasks. When a user cannot distinguish correct from incorrect LLM output, the system becomes untrustworthy for high-stakes applications.
+
+We categorize hallucination into three types:
+
+1. Input-conflicting hallucination: The model generates content that contradicts the user's input (prompt, instruction, or context).
+
+2. Context-conflicting hallucination: In multi-turn dialogue or long-document tasks, the model contradicts information established earlier in the context window.
+
+3. Fact-conflicting hallucination: The model generates claims that contradict established world knowledge or verifiable facts, even when no source document is provided.
+
+---
+
+SECTION 2: CAUSES OF HALLUCINATION
+
+Data Quality Issues: LLMs are trained on massive web-crawled corpora that contain noise, contradictions, and misinformation. The model may learn to reproduce common misconceptions or outdated facts.
+
+Knowledge Boundaries: LLMs encode knowledge statically at training time. They cannot intrinsically reason about the temporal validity of their knowledge.
+
+Exposure Bias: During supervised fine-tuning, models are trained on teacher-forced gold sequences. At inference time, the model must condition on its own previous outputs, which introduces compounding errors.
+
+Over-reliance on Fluency: LLMs are optimised to produce fluent, human-like text. High fluency and high factuality are not the same objective. The model may sacrifice accuracy for fluency.
+
+Insufficient In-Context Grounding: Even when documents are provided in the context, LLMs may selectively attend to portions that confirm their parametric beliefs rather than the retrieved evidence.
+
+---
+
+SECTION 3: HALLUCINATION DETECTION METHODS
+
+NLI-based Factuality Scoring: Natural Language Inference models (e.g., DeBERTa-v3 fine-tuned on NLI) can be used to evaluate whether individual claims in a generated output are entailed, neutral, or contradicted by a reference source. This requires decomposing the generation into atomic claims.
+
+Question Generation-Answering (QG-QA): Generate questions from the model's output, answer them using the source, and compare the answers. Disagreement signals potential hallucination.
+
+Embedding Similarity: Compute cosine similarity between the dense embedding of the generated answer and the reference document. Low similarity indicates potential hallucination.
+
+BERTScore: Computes soft token-level similarity between the generated text and reference using contextualised BERT embeddings. It correlates well with human judgements of faithfulness.
+
+ROUGE Metrics: ROUGE-L (longest common subsequence) and ROUGE-N (n-gram overlap) measure surface-level faithfulness to a reference. These are fast but insensitive to paraphrase.
+
+---
+
+SECTION 4: MITIGATION STRATEGIES
+
+Retrieval-Augmented Generation: As discussed, grounding the model's generation in retrieved evidence significantly reduces fact-conflicting hallucination. RAG shifts the burden from parametric memory to retrievable knowledge.
+
+Instruction Fine-Tuning: Fine-tuning on datasets where models are explicitly trained to say "I don't know" or "The provided evidence does not support this claim" reduces hallucination.
+
+Chain-of-Thought Prompting: Step-by-step reasoning encourages the model to make each reasoning step verifiable, exposing intermediate claims to scrutiny.
+
+Self-Consistency: Generating multiple answers and selecting the most consistent reduces variance and hallucination frequency.
+
+Confidence Calibration: Well-calibrated models can express uncertainty. When a model correctly identifies that it is uncertain, it can abstain or hedge rather than fabricating an answer.
+
+---
+
+SECTION 5: EVALUATION BENCHMARKS
+
+TruthfulQA: A benchmark of 817 questions designed to test model truthfulness. Questions are adversarially crafted to elicit common misconceptions. Performance is measured by human annotation of answer truthfulness.
+
+HaluEval: A large-scale hallucination evaluation dataset with over 35,000 samples across QA, dialogue, and summarization. It measures both model-generated hallucinations and model ability to identify hallucinations.
+
+FActScore: A fine-grained factuality evaluation framework that decomposes long-form generation into atomic facts and verifies each against Wikipedia.
+
+RAGAS: A framework specifically designed for evaluating RAG systems. It measures faithfulness, answer relevance, context precision, and context recall without requiring ground-truth annotations.
+
+---
+
+NOTE: This text is excerpted and adapted for educational and research demonstration purposes. Original paper: Yue Zhang et al., "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models," arXiv:2309.01219, 2023. Licensed CC BY 4.0.
