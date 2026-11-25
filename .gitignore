@@ -28,6 +28,9 @@ frontend/build/
 *.tsbuildinfo
 
 # Data, Vector Stores & SQLite
+*.db
+*.db-journal
+/data/
 backend/data/research.db
 backend/data/research.db*
 backend/data/faiss_index/
@@ -35,8 +38,8 @@ backend/data/uploads/*
 !backend/data/uploads/.gitkeep
 backend/data/experiments/*
 !backend/data/experiments/.gitkeep
-!backend/data/experiments/benchmark_run_results.jsonl
-!backend/data/experiments/benchmark_summary.json
+!backend/data/experiments/*.json
+!backend/data/experiments/*.jsonl
 
 # Operating System & IDE
 .DS_Store

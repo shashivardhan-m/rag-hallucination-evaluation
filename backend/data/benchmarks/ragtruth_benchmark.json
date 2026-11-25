@@ -1,0 +1,129 @@
+[
+  {
+    "id": "ragtruth-qa-001",
+    "benchmark": "RAGTruth",
+    "domain": "Natural Science & Climate",
+    "question": "What primary mechanism causes the thermohaline circulation in the Atlantic Ocean, and what recent change has been observed?",
+    "gold_context": [
+      "Thermohaline circulation (THC) in the Atlantic Ocean is driven by global density gradients created by surface heat and freshwater fluxes. High-latitude cooling and sea-ice formation increase water density, causing cold, dense saline waters to sink in the North Atlantic Deep Water (NADW) formation regions.",
+      "Recent observational data from the RAPID array indicates a statistically significant slowdown of the Atlantic Meridional Overturning Circulation (AMOC) by approximately 15% since the mid-20th century, largely correlated with Greenland ice sheet meltwater runoff."
+    ],
+    "ground_truth_answer": "Thermohaline circulation is driven by global density gradients resulting from surface heat and freshwater fluxes, where cold saline water sinks in the North Atlantic. Recent RAPID array observations indicate the circulation has slowed by approximately 15% since the mid-20th century.",
+    "hallucinated_answer": "Thermohaline circulation is primarily driven by lunar tidal friction and submarine volcanic heat fluxes. Recent observations show the circulation has completely reversed its direction since 2010, causing immediate polar cooling.",
+    "distractor_context": [
+      "The Pacific Decadal Oscillation (PDO) is a robust, recurring pattern of ocean-atmosphere climate variability centered over the mid-latitude Pacific basin that fluctuates on 20-to-30 year cycles.",
+      "El Niño Southern Oscillation (ENSO) involves temperature fluctuations in the eastern tropical Pacific Ocean, affecting regional rainfall and atmospheric jet streams globally."
+    ],
+    "irrelevant_context": [
+      "Quantum annealing is an optimization process for finding the global minimum of a given objective function over a given set of candidate states using quantum fluctuations.",
+      "Superconducting qubits utilize Josephson junctions to operate as artificial two-level quantum systems at dilution refrigerator temperatures near 15 millikelvin."
+    ],
+    "annotated_claims": [
+      {"claim": "Thermohaline circulation is driven by density gradients created by heat and freshwater fluxes.", "label": "entailed"},
+      {"claim": "Cold dense saline waters sink in the North Atlantic.", "label": "entailed"},
+      {"claim": "The circulation has slowed down by roughly 15% since the mid-20th century.", "label": "entailed"}
+    ],
+    "hallucination_types": ["intrinsic_contradiction", "entity_fabulation"]
+  },
+  {
+    "id": "ragtruth-qa-002",
+    "benchmark": "RAGTruth",
+    "domain": "Biomedicine & Pharmacology",
+    "question": "How does Remdesivir inhibit viral replication in SARS-CoV-2, and what is its active metabolite?",
+    "gold_context": [
+      "Remdesivir (GS-5734) is a broad-spectrum monophosphoramidate prodrug of an adenosine analog. Upon intracellular uptake, it is sequentially metabolized into its active nucleoside triphosphate form, GS-443902.",
+      "The active GS-443902 metabolite is incorporated by the viral RNA-dependent RNA polymerase (RdRp; nsp12) into nascent viral RNA, inducing delayed chain termination at position i+3, which halts viral replication without causing immediate exonuclease excision."
+    ],
+    "ground_truth_answer": "Remdesivir is metabolized intracellularly into its active triphosphate form (GS-443902). It is incorporated into nascent viral RNA by the viral RNA-dependent RNA polymerase (RdRp/nsp12), causing delayed chain termination at position i+3.",
+    "hallucinated_answer": "Remdesivir acts by directly degrading the viral spike glycoprotein on the membrane surface. Its active metabolite is hydroxychloroquine-phosphate, which neutralizes endosomal pH and blocks cell entry entirely.",
+    "distractor_context": [
+      "Paxlovid consists of nirmatrelvir, a peptidomimetic inhibitor of the SARS-CoV-2 main protease (Mpro/3CLpro), co-packaged with ritonavir as a CYP3A metabolic booster.",
+      "Monoclonal antibodies such as sotrovimab target conserved epitopes on the SARS-CoV-2 receptor-binding domain (RBD) to prevent ACE2 engagement."
+    ],
+    "irrelevant_context": [
+      "The Byzantine Generals Problem describes a game theory problem where actors must agree on a concerted strategy in the presence of uncoordinated or corrupt nodes.",
+      "Practical Byzantine Fault Tolerance (PBFT) provides consensus under weak assumptions, tolerating up to (n-1)/3 malicious traitor nodes."
+    ],
+    "annotated_claims": [
+      {"claim": "Remdesivir is metabolized into active GS-443902.", "label": "entailed"},
+      {"claim": "It is incorporated by RNA-dependent RNA polymerase nsp12.", "label": "entailed"},
+      {"claim": "It causes delayed chain termination at position i+3.", "label": "entailed"}
+    ],
+    "hallucination_types": ["intrinsic_contradiction", "entity_fabulation"]
+  },
+  {
+    "id": "ragtruth-qa-003",
+    "benchmark": "RAGTruth",
+    "domain": "Computer Science & Distributed Systems",
+    "question": "What consistency guarantees does the Raft consensus algorithm provide, and how does it prevent stale reads?",
+    "gold_context": [
+      "Raft guarantees state machine safety, log matching, and election safety. Specifically, if any server has applied a particular log entry to its state machine, no other server may ever apply a different log entry for the same log index.",
+      "To prevent stale reads from leaders that have been partitioned from the cluster, the leader must contact a quorum of the cluster to verify its leadership before responding to read-only queries, or utilize lease-based read optimizations."
+    ],
+    "ground_truth_answer": "Raft guarantees state machine safety, log matching, and election safety. To prevent stale reads, a leader must exchange heartbeats with a quorum of nodes before answering read requests.",
+    "hallucinated_answer": "Raft provides eventual consistency with zero election safety. It prevents stale reads by automatically broadcasting entire hard drive snapshots to every client on every query.",
+    "distractor_context": [
+      "The Multi-Paxos protocol achieves consensus across distributed state machines using Prepare/Promise and Accept/Accepted two-phase rounds led by a distinguished Proposer.",
+      "Zab (ZooKeeper Atomic Broadcast) protocol is designed specifically for primary-backup systems, using an epoch-based leader proposal mechanism."
+    ],
+    "irrelevant_context": [
+      "Photosynthesis in C4 plants physically separates carbon fixation from the Calvin cycle across mesophyll and bundle-sheath cells to reduce photorespiration.",
+      "The enzyme PEP carboxylase fixes atmospheric carbon dioxide into four-carbon oxaloacetate with high affinity even under arid conditions."
+    ],
+    "annotated_claims": [
+      {"claim": "Raft guarantees state machine safety and log matching.", "label": "entailed"},
+      {"claim": "Leaders verify leadership with a cluster quorum before serving reads to avoid stale data.", "label": "entailed"}
+    ],
+    "hallucination_types": ["intrinsic_contradiction", "extrinsic_extrapolation"]
+  },
+  {
+    "id": "ragtruth-qa-004",
+    "benchmark": "RAGTruth",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the primary architectural difference between BERT and GPT, and how do their pre-training objectives differ?",
+    "gold_context": [
+      "BERT (Bidirectional Encoder Representations from Transformers) is an encoder-only architecture that conditions on both left and right context across all layers using masked language modeling (MLM) and next sentence prediction (NSP).",
+      "In contrast, GPT (Generative Pre-trained Transformer) is an autoregressive decoder-only architecture utilizing masked self-attention, pre-trained strictly on standard left-to-right causal language modeling (predicting the next token given preceding tokens)."
+    ],
+    "ground_truth_answer": "BERT is an encoder-only architecture pre-trained bidirectionally using masked language modeling, whereas GPT is a decoder-only architecture pre-trained autoregressively with causal language modeling.",
+    "hallucinated_answer": "BERT is an autoregressive recurrent neural network that generates tokens sequentially, whereas GPT uses bidirectional convolution kernels trained via reinforcement learning from human feedback.",
+    "distractor_context": [
+      "T5 (Text-to-Text Transfer Transformer) frames all NLP tasks into a unified text-to-text format using an encoder-decoder Transformer structure.",
+      "RoBERTa removes BERT's next-sentence prediction objective and trains with dynamic masking over larger batches and longer sequences."
+    ],
+    "irrelevant_context": [
+      "The Treaty of Westphalia signed in 1648 concluded the Thirty Years' War in the Holy Roman Empire, establishing the principle of national sovereignty in European politics.",
+      "The Peace of Münster recognized the full sovereignty of the Dutch Republic from the Spanish Empire."
+    ],
+    "annotated_claims": [
+      {"claim": "BERT is an encoder-only bidirectional architecture.", "label": "entailed"},
+      {"claim": "GPT is an autoregressive decoder-only model trained on causal language modeling.", "label": "entailed"}
+    ],
+    "hallucination_types": ["intrinsic_contradiction"]
+  },
+  {
+    "id": "ragtruth-qa-005",
+    "benchmark": "RAGTruth",
+    "domain": "Astrophysics & Cosmology",
+    "question": "What evidence confirmed the existence of gravitational waves, and what was the detected event called?",
+    "gold_context": [
+      "On September 14, 2015, the LIGO and Virgo collaborations made the first direct observation of gravitational waves, designating the transient event GW150914.",
+      "The signal matched the waveform predicted by general relativity for the inspiral and merger of a binary black hole pair with masses of approximately 36 and 29 solar masses, converting about 3 solar masses into gravitational wave energy within tenths of a second."
+    ],
+    "ground_truth_answer": "The first direct observation of gravitational waves was designated GW150914, detected on September 14, 2015 by LIGO. The signal matched predictions for the merger of two black holes of 36 and 29 solar masses.",
+    "hallucinated_answer": "Gravitational waves were first confirmed in 1974 by the Hubble Space Telescope detecting light distortions around Jupiter, designated event JUP-74.",
+    "distractor_context": [
+      "GW170817 was the historic first multi-messenger detection of a binary neutron star collision observed simultaneously in gravitational waves by LIGO/Virgo and electromagnetic gamma-ray bursts.",
+      "Pulsar timing arrays such as NANOGrav look for low-frequency gravitational waves from supermassive black hole binaries by monitoring microsecond timing residuals in millisecond pulsars."
+    ],
+    "irrelevant_context": [
+      "The French Revolution of 1789 began with the storming of the Bastille on July 14, symbolizing the fall of the ancien régime.",
+      "The Declaration of the Rights of Man and of the Citizen was adopted by the National Constituent Assembly in August 1789."
+    ],
+    "annotated_claims": [
+      {"claim": "LIGO detected gravitational waves on September 14, 2015.", "label": "entailed"},
+      {"claim": "The event was designated GW150914 and resulted from a binary black hole merger.", "label": "entailed"}
+    ],
+    "hallucination_types": ["entity_fabulation", "extrinsic_extrapolation"]
+  }
+]

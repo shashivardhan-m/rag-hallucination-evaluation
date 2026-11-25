@@ -247,6 +247,16 @@ export const analyticsAPI = {
     const { data } = await apiClient.get<MetricTimeSeries[]>(`/analytics/hallucination-trend?limit=${limit}`);
     return data;
   },
+
+  async getHallucinationTaxonomy(): Promise<{ taxonomy: Record<string, number>; descriptions: Record<string, string> }> {
+    const { data } = await apiClient.get<any>('/analytics/hallucination-taxonomy');
+    return data;
+  },
+
+  async getResearchFindings(): Promise<any> {
+    const { data } = await apiClient.get<any>('/analytics/research-findings');
+    return data;
+  },
 };
 
 // ── Reports ────────────────────────────────────────────────
@@ -258,8 +268,8 @@ export const reportsAPI = {
     window.open(`${BASE_URL}/reports/export/json`, '_blank');
   },
   async getTextReport(): Promise<string> {
-    const { data } = await apiClient.get<{ report: string }>('/reports/report/text');
-    return data.report;
+    const { data } = await apiClient.get<any>('/reports/report/text');
+    return typeof data === 'string' ? data : (data.report || JSON.stringify(data, null, 2));
   },
 };
 

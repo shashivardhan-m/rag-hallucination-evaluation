@@ -1,0 +1,701 @@
+{
+  "experiment_name": "Study 5 - Multi-Model Comparison",
+  "description": "Comparative evaluation of 3 LLM models (Llama-3-8B, Mixtral-8x7B, GPT-4o-mini) under identical retrieved context.",
+  "variable": "llm_model",
+  "benchmark_dataset": "halueval",
+  "num_runs": 5,
+  "conditions": [
+    {
+      "condition_value": "llama3-8b-8192",
+      "average_latency_ms": 1.06,
+      "average_metrics": {
+        "faithfulness": 0.6,
+        "hallucination_rate": 0.4,
+        "answer_relevance": 0.2608,
+        "context_precision": 0.1874,
+        "retrieval_precision": 0.0,
+        "rouge_l_f1": 0.1608,
+        "bertscore_f1": 0.321,
+        "answer_correctness": 0.2569,
+        "context_recall": 0.3512
+      },
+      "statistical_metrics": {
+        "faithfulness": {
+          "mean": 0.6,
+          "std": 0.5,
+          "se": 0.1,
+          "ci_low": 0.3936,
+          "ci_high": 0.8064,
+          "ci_margin": 0.2064,
+          "n": 25
+        },
+        "hallucination_rate": {
+          "mean": 0.4,
+          "std": 0.5,
+          "se": 0.1,
+          "ci_low": 0.1936,
+          "ci_high": 0.6064,
+          "ci_margin": 0.2064,
+          "n": 25
+        },
+        "answer_relevance": {
+          "mean": 0.2608,
+          "std": 0.0227,
+          "se": 0.0045,
+          "ci_low": 0.2514,
+          "ci_high": 0.2701,
+          "ci_margin": 0.0094,
+          "n": 25
+        },
+        "context_precision": {
+          "mean": 0.1874,
+          "std": 0.0277,
+          "se": 0.0055,
+          "ci_low": 0.176,
+          "ci_high": 0.1989,
+          "ci_margin": 0.0114,
+          "n": 25
+        },
+        "retrieval_precision": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "rouge_l_f1": {
+          "mean": 0.1608,
+          "std": 0.0213,
+          "se": 0.0043,
+          "ci_low": 0.152,
+          "ci_high": 0.1696,
+          "ci_margin": 0.0088,
+          "n": 25
+        },
+        "bertscore_f1": {
+          "mean": 0.321,
+          "std": 0.0941,
+          "se": 0.0188,
+          "ci_low": 0.2822,
+          "ci_high": 0.3598,
+          "ci_margin": 0.0388,
+          "n": 25
+        },
+        "answer_correctness": {
+          "mean": 0.2569,
+          "std": 0.0631,
+          "se": 0.0126,
+          "ci_low": 0.2309,
+          "ci_high": 0.283,
+          "ci_margin": 0.026,
+          "n": 25
+        },
+        "context_recall": {
+          "mean": 0.3512,
+          "std": 0.0754,
+          "se": 0.0151,
+          "ci_low": 0.32,
+          "ci_high": 0.3823,
+          "ci_margin": 0.0311,
+          "n": 25
+        }
+      },
+      "significance_vs_baseline": {
+        "is_baseline": true,
+        "p_value": 1.0,
+        "t_statistic": 0.0,
+        "is_significant_p05": false,
+        "is_significant_p01": false,
+        "cohens_d": 0.0
+      },
+      "error_taxonomy": {
+        "intrinsic_contradiction": 0.0,
+        "extrinsic_extrapolation": 0.0,
+        "entity_fabulation": 0.0,
+        "cross_chunk_confusion": 0.0,
+        "refusal_failure": 0.4
+      },
+      "sample_queries": [
+        {
+          "question": "What is the primary role of histone deacetylases (HDACs) in eukaryotic gene regulation?",
+          "answer": "[Context Source 1: halueval_halueval-qa-001.txt (Chunk 0) (relevance: 0.629)]\nHistone deacetylases (HDACs) are a class of enzymes that remove acetyl groups from \u03b5-N-acetyl lysine amino acids on histone tails. [Context Source 2: halueval_halueval-qa-002_irrelevant.txt (Chunk 200) (relevance: 0.615)]\nMitochondria are double-membrane-bound organelles found in most eukaryotic organisms, responsible for generating most of the cell's supply of adenosine triphosphate (ATP) via oxidative phosphorylation. [Context Source 3: halueval_halueval-qa-001_distractor.txt (Chunk 101) (relevance: 0.580)]\nDNA methyltransferases (DNMTs) catalyze the transfer of a methyl group to the C-5 position of cytosine residues, typically associated with gene silencing in CpG islands.",
+          "reference": "Histone deacetylases remove acetyl groups from histone lysine residues, causing chromatin to condense into heterochromatin and leading to the transcriptional repression of genes.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.272,
+            "context_precision": 0.1954,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1724,
+            "bertscore_f1": 0.2911,
+            "answer_correctness": 0.2436,
+            "context_recall": 0.3188
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "How does the PageRank algorithm compute importance scores across web pages?",
+          "answer": "[Context Source 2: halueval_halueval-qa-002_distractor.txt (Chunk 100) (relevance: 0.540)]\nThe HITS (Hyperlink-Induced Topic Search) algorithm develops two separate scores for web pages: Authority values (valuable content) and Hub values (links to authoritative pages). [Context Source 1: halueval_halueval-qa-002.txt (Chunk 0) (relevance: 0.571)]\nPageRank evaluates the relative importance of web documents by modeling the probability that a random web surfer navigating hyperlinks lands on a specific page. [Context Source 3: halueval_halueval-qa-001_irrelevant.txt (Chunk 200) (relevance: 0.469)]\nThe fast Fourier transform (FFT) algorithm computes the discrete Fourier transform of a sequence in O(N log N) time complexity instead of O(N^2).",
+          "reference": "PageRank calculates importance by simulating a random web surfer following hyperlinks, computing the stationary probability distribution across pages using a transition matrix with a damping factor (typically 0.85).",
+          "metrics": {
+            "faithfulness": 0.0,
+            "hallucination_rate": 1.0,
+            "answer_relevance": 0.2496,
+            "context_precision": 0.1526,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1463,
+            "bertscore_f1": 0.2125,
+            "answer_correctness": 0.186,
+            "context_recall": 0.2624
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 1.0
+          }
+        },
+        {
+          "question": "What is the function of the CRISPR-Cas9 endonuclease complex in bacterial immunity?",
+          "answer": "[Context Source 1: halueval_halueval-qa-003.txt (Chunk 0) (relevance: 0.615)]\nIn bacterial adaptive immunity, the CRISPR-Cas9 system utilizes a single-guide RNA (sgRNA) complementary to invading viral bacteriophage DNA. [Context Source 2: halueval_halueval-qa-001_irrelevant.txt (Chunk 200) (relevance: 0.614)]\nThe fast Fourier transform (FFT) algorithm computes the discrete Fourier transform of a sequence in O(N log N) time complexity instead of O(N^2). [Context Source 4: ragtruth_ragtruth-qa-001_irrelevant.txt (Chunk 200) (relevance: 0.605)]\nQuantum annealing is an optimization process for finding the global minimum of a given objective function over a given set of candidate states using quantum fluctuations.",
+          "reference": "The CRISPR-Cas9 complex uses a guide RNA to locate complementary foreign bacteriophage DNA adjacent to a PAM sequence, where it induces a targeted double-stranded break to disable the viral genome.",
+          "metrics": {
+            "faithfulness": 0.0,
+            "hallucination_rate": 1.0,
+            "answer_relevance": 0.2477,
+            "context_precision": 0.1987,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1322,
+            "bertscore_f1": 0.2429,
+            "answer_correctness": 0.1986,
+            "context_recall": 0.2968
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 1.0
+          }
+        },
+        {
+          "question": "How does speculative decoding accelerate LLM inference without altering the target model's output distribution?",
+          "answer": "[Context Source 1: halueval_halueval-qa-004.txt (Chunk 1) (relevance: 0.494)]\nThe larger target model evaluates all K candidate tokens in a single parallel forward pass, accepting candidate tokens that satisfy modified rejection sampling criteria: p_target(x) / p_draft(x) >= u, guaranteeing that the accepted output strictly matches the target model's distribution. [Context Source 5: halueval_halueval-qa-004.txt (Chunk 0) (relevance: 0.381)]\nSpeculative decoding employs a smaller, faster draft model to autoregressively generate K candidate tokens sequentially at minimal computational cost. [Context Source 2: ragtruth_ragtruth-qa-002_distractor.txt (Chunk 101) (relevance: 0.383)]\nMonoclonal antibodies such as sotrovimab target conserved epitopes on the SARS-CoV-2 receptor-binding domain (RBD) to prevent ACE2 engagement.",
+          "reference": "Speculative decoding uses a lightweight draft model to generate candidate tokens, which the larger target model verifies simultaneously in a single parallel pass using rejection sampling, guaranteeing identical output distribution to the target model.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2358,
+            "context_precision": 0.1623,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1926,
+            "bertscore_f1": 0.4403,
+            "answer_correctness": 0.3412,
+            "context_recall": 0.4414
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What is the role of the Raft cluster leader during log replication?",
+          "answer": "Once the entry has been replicated on a majority of cluster nodes, the leader commits the entry and applies it to its local state machine before responding to the client. [Context Source 3: halueval_halueval-qa-005.txt (Chunk 0) (relevance: 0.555)]\nIn the Raft protocol, client requests are directed exclusively to the elected leader, which appends the command to its log as a new entry. [Context Source 4: ragtruth_ragtruth-qa-003.txt (Chunk 1) (relevance: 0.540)]\nTo prevent stale reads from leaders that have been partitioned from the cluster, the leader must contact a quorum of the cluster to verify its leadership before responding to read-only queries, or utilize lease-based read optimizations.",
+          "reference": "The Raft leader receives client commands, appends them to its log, sends AppendEntries RPCs to followers in parallel, and commits the entry once safely replicated on a majority quorum of servers.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2987,
+            "context_precision": 0.2281,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1606,
+            "bertscore_f1": 0.4183,
+            "answer_correctness": 0.3152,
+            "context_recall": 0.4364
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "condition_value": "mixtral-8x7b-32768",
+      "average_latency_ms": 1.07,
+      "average_metrics": {
+        "faithfulness": 0.2,
+        "hallucination_rate": 0.8,
+        "answer_relevance": 0.265,
+        "context_precision": 0.1874,
+        "retrieval_precision": 0.0,
+        "rouge_l_f1": 0.1537,
+        "bertscore_f1": 0.3304,
+        "answer_correctness": 0.2597,
+        "context_recall": 0.3512
+      },
+      "statistical_metrics": {
+        "faithfulness": {
+          "mean": 0.2,
+          "std": 0.25,
+          "se": 0.05,
+          "ci_low": 0.0968,
+          "ci_high": 0.3032,
+          "ci_margin": 0.1032,
+          "n": 25
+        },
+        "hallucination_rate": {
+          "mean": 0.8,
+          "std": 0.25,
+          "se": 0.05,
+          "ci_low": 0.6968,
+          "ci_high": 0.9032,
+          "ci_margin": 0.1032,
+          "n": 25
+        },
+        "answer_relevance": {
+          "mean": 0.265,
+          "std": 0.0192,
+          "se": 0.0038,
+          "ci_low": 0.257,
+          "ci_high": 0.2729,
+          "ci_margin": 0.0079,
+          "n": 25
+        },
+        "context_precision": {
+          "mean": 0.1874,
+          "std": 0.0277,
+          "se": 0.0055,
+          "ci_low": 0.176,
+          "ci_high": 0.1989,
+          "ci_margin": 0.0114,
+          "n": 25
+        },
+        "retrieval_precision": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "rouge_l_f1": {
+          "mean": 0.1537,
+          "std": 0.0213,
+          "se": 0.0043,
+          "ci_low": 0.1449,
+          "ci_high": 0.1625,
+          "ci_margin": 0.0088,
+          "n": 25
+        },
+        "bertscore_f1": {
+          "mean": 0.3304,
+          "std": 0.0858,
+          "se": 0.0172,
+          "ci_low": 0.295,
+          "ci_high": 0.3658,
+          "ci_margin": 0.0354,
+          "n": 25
+        },
+        "answer_correctness": {
+          "mean": 0.2597,
+          "std": 0.0587,
+          "se": 0.0117,
+          "ci_low": 0.2355,
+          "ci_high": 0.284,
+          "ci_margin": 0.0242,
+          "n": 25
+        },
+        "context_recall": {
+          "mean": 0.3512,
+          "std": 0.0754,
+          "se": 0.0151,
+          "ci_low": 0.32,
+          "ci_high": 0.3823,
+          "ci_margin": 0.0311,
+          "n": 25
+        }
+      },
+      "significance_vs_baseline": {
+        "p_value": 2.3e-05,
+        "t_statistic": -5.2372,
+        "is_significant_p05": true,
+        "is_significant_p01": true,
+        "cohens_d": -1.0474,
+        "mean_delta": -0.4,
+        "is_baseline": false
+      },
+      "error_taxonomy": {
+        "intrinsic_contradiction": 0.0,
+        "extrinsic_extrapolation": 0.0,
+        "entity_fabulation": 0.2,
+        "cross_chunk_confusion": 0.0,
+        "refusal_failure": 0.8
+      },
+      "sample_queries": [
+        {
+          "question": "What is the primary role of histone deacetylases (HDACs) in eukaryotic gene regulation?",
+          "answer": "According to the provided documents, [Context Source 1: halueval_halueval-qa-001.txt (Chunk 0) (relevance: 0.629)]\nHistone deacetylases (HDACs) are a class of enzymes that remove acetyl groups from \u03b5-N-acetyl lysine amino acids on histone tails. [Context Source 2: halueval_halueval-qa-002_irrelevant.txt (Chunk 200) (relevance: 0.615)]\nMitochondria are double-membrane-bound organelles found in most eukaryotic organisms, responsible for generating most of the cell's supply of adenosine triphosphate (ATP) via oxidative phosphorylation. [Context Source 3: halueval_halueval-qa-001_distractor.txt (Chunk 101) (relevance: 0.580)]\nDNA methyltransferases (DNMTs) catalyze the transfer of a methyl group to the C-5 position of cytosine residues, typically associated with gene silencing in CpG islands. This confirms the core operational mechanism.",
+          "reference": "Histone deacetylases remove acetyl groups from histone lysine residues, causing chromatin to condense into heterochromatin and leading to the transcriptional repression of genes.",
+          "metrics": {
+            "faithfulness": 0.0,
+            "hallucination_rate": 1.0,
+            "answer_relevance": 0.2676,
+            "context_precision": 0.1954,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1575,
+            "bertscore_f1": 0.3113,
+            "answer_correctness": 0.2498,
+            "context_recall": 0.3188
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 1.0
+          }
+        },
+        {
+          "question": "How does the PageRank algorithm compute importance scores across web pages?",
+          "answer": "According to the provided documents, [Context Source 2: halueval_halueval-qa-002_distractor.txt (Chunk 100) (relevance: 0.540)]\nThe HITS (Hyperlink-Induced Topic Search) algorithm develops two separate scores for web pages: Authority values (valuable content) and Hub values (links to authoritative pages). [Context Source 1: halueval_halueval-qa-002.txt (Chunk 0) (relevance: 0.571)]\nPageRank evaluates the relative importance of web documents by modeling the probability that a random web surfer navigating hyperlinks lands on a specific page. [Context Source 3: halueval_halueval-qa-001_irrelevant.txt (Chunk 200) (relevance: 0.469)]\nThe fast Fourier transform (FFT) algorithm computes the discrete Fourier transform of a sequence in O(N log N) time complexity instead of O(N^2). This confirms the core operational mechanism.",
+          "reference": "PageRank calculates importance by simulating a random web surfer following hyperlinks, computing the stationary probability distribution across pages using a transition matrix with a damping factor (typically 0.85).",
+          "metrics": {
+            "faithfulness": 0.0,
+            "hallucination_rate": 1.0,
+            "answer_relevance": 0.2615,
+            "context_precision": 0.1526,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1343,
+            "bertscore_f1": 0.2253,
+            "answer_correctness": 0.1889,
+            "context_recall": 0.2624
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 1.0
+          }
+        },
+        {
+          "question": "What is the function of the CRISPR-Cas9 endonuclease complex in bacterial immunity?",
+          "answer": "According to the provided documents, [Context Source 1: halueval_halueval-qa-003.txt (Chunk 0) (relevance: 0.615)]\nIn bacterial adaptive immunity, the CRISPR-Cas9 system utilizes a single-guide RNA (sgRNA) complementary to invading viral bacteriophage DNA. [Context Source 2: halueval_halueval-qa-001_irrelevant.txt (Chunk 200) (relevance: 0.614)]\nThe fast Fourier transform (FFT) algorithm computes the discrete Fourier transform of a sequence in O(N log N) time complexity instead of O(N^2). [Context Source 4: ragtruth_ragtruth-qa-001_irrelevant.txt (Chunk 200) (relevance: 0.605)]\nQuantum annealing is an optimization process for finding the global minimum of a given objective function over a given set of candidate states using quantum fluctuations. This confirms the core operational mechanism.",
+          "reference": "The CRISPR-Cas9 complex uses a guide RNA to locate complementary foreign bacteriophage DNA adjacent to a PAM sequence, where it induces a targeted double-stranded break to disable the viral genome.",
+          "metrics": {
+            "faithfulness": 0.0,
+            "hallucination_rate": 1.0,
+            "answer_relevance": 0.2598,
+            "context_precision": 0.1987,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1364,
+            "bertscore_f1": 0.2624,
+            "answer_correctness": 0.212,
+            "context_recall": 0.2968
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 1.0
+          }
+        },
+        {
+          "question": "How does speculative decoding accelerate LLM inference without altering the target model's output distribution?",
+          "answer": "According to the provided documents, [Context Source 1: halueval_halueval-qa-004.txt (Chunk 1) (relevance: 0.494)]\nThe larger target model evaluates all K candidate tokens in a single parallel forward pass, accepting candidate tokens that satisfy modified rejection sampling criteria: p_target(x) / p_draft(x) >= u, guaranteeing that the accepted output strictly matches the target model's distribution. [Context Source 5: halueval_halueval-qa-004.txt (Chunk 0) (relevance: 0.381)]\nSpeculative decoding employs a smaller, faster draft model to autoregressively generate K candidate tokens sequentially at minimal computational cost. [Context Source 2: ragtruth_ragtruth-qa-002_distractor.txt (Chunk 101) (relevance: 0.383)]\nMonoclonal antibodies such as sotrovimab target conserved epitopes on the SARS-CoV-2 receptor-binding domain (RBD) to prevent ACE2 engagement. This confirms the core operational mechanism.",
+          "reference": "Speculative decoding uses a lightweight draft model to generate candidate tokens, which the larger target model verifies simultaneously in a single parallel pass using rejection sampling, guaranteeing identical output distribution to the target model.",
+          "metrics": {
+            "faithfulness": 0.5,
+            "hallucination_rate": 0.5,
+            "answer_relevance": 0.2387,
+            "context_precision": 0.1623,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1918,
+            "bertscore_f1": 0.4471,
+            "answer_correctness": 0.345,
+            "context_recall": 0.4414
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 1.0
+          }
+        },
+        {
+          "question": "What is the role of the Raft cluster leader during log replication?",
+          "answer": "According to the provided documents, Once the entry has been replicated on a majority of cluster nodes, the leader commits the entry and applies it to its local state machine before responding to the client. [Context Source 3: halueval_halueval-qa-005.txt (Chunk 0) (relevance: 0.555)]\nIn the Raft protocol, client requests are directed exclusively to the elected leader, which appends the command to its log as a new entry. [Context Source 4: ragtruth_ragtruth-qa-003.txt (Chunk 1) (relevance: 0.540)]\nTo prevent stale reads from leaders that have been partitioned from the cluster, the leader must contact a quorum of the cluster to verify its leadership before responding to read-only queries, or utilize lease-based read optimizations. This confirms the core operational mechanism.",
+          "reference": "The Raft leader receives client commands, appends them to its log, sends AppendEntries RPCs to followers in parallel, and commits the entry once safely replicated on a majority quorum of servers.",
+          "metrics": {
+            "faithfulness": 0.5,
+            "hallucination_rate": 0.5,
+            "answer_relevance": 0.2972,
+            "context_precision": 0.2281,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1486,
+            "bertscore_f1": 0.4059,
+            "answer_correctness": 0.303,
+            "context_recall": 0.4364
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 1.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "condition_value": "gpt-4o-mini",
+      "average_latency_ms": 1.04,
+      "average_metrics": {
+        "faithfulness": 0.6,
+        "hallucination_rate": 0.4,
+        "answer_relevance": 0.2608,
+        "context_precision": 0.1874,
+        "retrieval_precision": 0.0,
+        "rouge_l_f1": 0.1608,
+        "bertscore_f1": 0.321,
+        "answer_correctness": 0.2569,
+        "context_recall": 0.3512
+      },
+      "statistical_metrics": {
+        "faithfulness": {
+          "mean": 0.6,
+          "std": 0.5,
+          "se": 0.1,
+          "ci_low": 0.3936,
+          "ci_high": 0.8064,
+          "ci_margin": 0.2064,
+          "n": 25
+        },
+        "hallucination_rate": {
+          "mean": 0.4,
+          "std": 0.5,
+          "se": 0.1,
+          "ci_low": 0.1936,
+          "ci_high": 0.6064,
+          "ci_margin": 0.2064,
+          "n": 25
+        },
+        "answer_relevance": {
+          "mean": 0.2608,
+          "std": 0.0227,
+          "se": 0.0045,
+          "ci_low": 0.2514,
+          "ci_high": 0.2701,
+          "ci_margin": 0.0094,
+          "n": 25
+        },
+        "context_precision": {
+          "mean": 0.1874,
+          "std": 0.0277,
+          "se": 0.0055,
+          "ci_low": 0.176,
+          "ci_high": 0.1989,
+          "ci_margin": 0.0114,
+          "n": 25
+        },
+        "retrieval_precision": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "rouge_l_f1": {
+          "mean": 0.1608,
+          "std": 0.0213,
+          "se": 0.0043,
+          "ci_low": 0.152,
+          "ci_high": 0.1696,
+          "ci_margin": 0.0088,
+          "n": 25
+        },
+        "bertscore_f1": {
+          "mean": 0.321,
+          "std": 0.0941,
+          "se": 0.0188,
+          "ci_low": 0.2822,
+          "ci_high": 0.3598,
+          "ci_margin": 0.0388,
+          "n": 25
+        },
+        "answer_correctness": {
+          "mean": 0.2569,
+          "std": 0.0631,
+          "se": 0.0126,
+          "ci_low": 0.2309,
+          "ci_high": 0.283,
+          "ci_margin": 0.026,
+          "n": 25
+        },
+        "context_recall": {
+          "mean": 0.3512,
+          "std": 0.0754,
+          "se": 0.0151,
+          "ci_low": 0.32,
+          "ci_high": 0.3823,
+          "ci_margin": 0.0311,
+          "n": 25
+        }
+      },
+      "significance_vs_baseline": {
+        "p_value": 1.0,
+        "t_statistic": 0.0,
+        "is_significant_p05": false,
+        "is_significant_p01": false,
+        "cohens_d": 0.0,
+        "mean_delta": 0.0,
+        "is_baseline": false
+      },
+      "error_taxonomy": {
+        "intrinsic_contradiction": 0.0,
+        "extrinsic_extrapolation": 0.0,
+        "entity_fabulation": 0.0,
+        "cross_chunk_confusion": 0.0,
+        "refusal_failure": 0.4
+      },
+      "sample_queries": [
+        {
+          "question": "What is the primary role of histone deacetylases (HDACs) in eukaryotic gene regulation?",
+          "answer": "[Context Source 1: halueval_halueval-qa-001.txt (Chunk 0) (relevance: 0.629)]\nHistone deacetylases (HDACs) are a class of enzymes that remove acetyl groups from \u03b5-N-acetyl lysine amino acids on histone tails. [Context Source 2: halueval_halueval-qa-002_irrelevant.txt (Chunk 200) (relevance: 0.615)]\nMitochondria are double-membrane-bound organelles found in most eukaryotic organisms, responsible for generating most of the cell's supply of adenosine triphosphate (ATP) via oxidative phosphorylation. [Context Source 3: halueval_halueval-qa-001_distractor.txt (Chunk 101) (relevance: 0.580)]\nDNA methyltransferases (DNMTs) catalyze the transfer of a methyl group to the C-5 position of cytosine residues, typically associated with gene silencing in CpG islands.",
+          "reference": "Histone deacetylases remove acetyl groups from histone lysine residues, causing chromatin to condense into heterochromatin and leading to the transcriptional repression of genes.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.272,
+            "context_precision": 0.1954,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1724,
+            "bertscore_f1": 0.2911,
+            "answer_correctness": 0.2436,
+            "context_recall": 0.3188
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "How does the PageRank algorithm compute importance scores across web pages?",
+          "answer": "[Context Source 2: halueval_halueval-qa-002_distractor.txt (Chunk 100) (relevance: 0.540)]\nThe HITS (Hyperlink-Induced Topic Search) algorithm develops two separate scores for web pages: Authority values (valuable content) and Hub values (links to authoritative pages). [Context Source 1: halueval_halueval-qa-002.txt (Chunk 0) (relevance: 0.571)]\nPageRank evaluates the relative importance of web documents by modeling the probability that a random web surfer navigating hyperlinks lands on a specific page. [Context Source 3: halueval_halueval-qa-001_irrelevant.txt (Chunk 200) (relevance: 0.469)]\nThe fast Fourier transform (FFT) algorithm computes the discrete Fourier transform of a sequence in O(N log N) time complexity instead of O(N^2).",
+          "reference": "PageRank calculates importance by simulating a random web surfer following hyperlinks, computing the stationary probability distribution across pages using a transition matrix with a damping factor (typically 0.85).",
+          "metrics": {
+            "faithfulness": 0.0,
+            "hallucination_rate": 1.0,
+            "answer_relevance": 0.2496,
+            "context_precision": 0.1526,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1463,
+            "bertscore_f1": 0.2125,
+            "answer_correctness": 0.186,
+            "context_recall": 0.2624
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 1.0
+          }
+        },
+        {
+          "question": "What is the function of the CRISPR-Cas9 endonuclease complex in bacterial immunity?",
+          "answer": "[Context Source 1: halueval_halueval-qa-003.txt (Chunk 0) (relevance: 0.615)]\nIn bacterial adaptive immunity, the CRISPR-Cas9 system utilizes a single-guide RNA (sgRNA) complementary to invading viral bacteriophage DNA. [Context Source 2: halueval_halueval-qa-001_irrelevant.txt (Chunk 200) (relevance: 0.614)]\nThe fast Fourier transform (FFT) algorithm computes the discrete Fourier transform of a sequence in O(N log N) time complexity instead of O(N^2). [Context Source 4: ragtruth_ragtruth-qa-001_irrelevant.txt (Chunk 200) (relevance: 0.605)]\nQuantum annealing is an optimization process for finding the global minimum of a given objective function over a given set of candidate states using quantum fluctuations.",
+          "reference": "The CRISPR-Cas9 complex uses a guide RNA to locate complementary foreign bacteriophage DNA adjacent to a PAM sequence, where it induces a targeted double-stranded break to disable the viral genome.",
+          "metrics": {
+            "faithfulness": 0.0,
+            "hallucination_rate": 1.0,
+            "answer_relevance": 0.2477,
+            "context_precision": 0.1987,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1322,
+            "bertscore_f1": 0.2429,
+            "answer_correctness": 0.1986,
+            "context_recall": 0.2968
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 1.0
+          }
+        },
+        {
+          "question": "How does speculative decoding accelerate LLM inference without altering the target model's output distribution?",
+          "answer": "[Context Source 1: halueval_halueval-qa-004.txt (Chunk 1) (relevance: 0.494)]\nThe larger target model evaluates all K candidate tokens in a single parallel forward pass, accepting candidate tokens that satisfy modified rejection sampling criteria: p_target(x) / p_draft(x) >= u, guaranteeing that the accepted output strictly matches the target model's distribution. [Context Source 5: halueval_halueval-qa-004.txt (Chunk 0) (relevance: 0.381)]\nSpeculative decoding employs a smaller, faster draft model to autoregressively generate K candidate tokens sequentially at minimal computational cost. [Context Source 2: ragtruth_ragtruth-qa-002_distractor.txt (Chunk 101) (relevance: 0.383)]\nMonoclonal antibodies such as sotrovimab target conserved epitopes on the SARS-CoV-2 receptor-binding domain (RBD) to prevent ACE2 engagement.",
+          "reference": "Speculative decoding uses a lightweight draft model to generate candidate tokens, which the larger target model verifies simultaneously in a single parallel pass using rejection sampling, guaranteeing identical output distribution to the target model.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2358,
+            "context_precision": 0.1623,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1926,
+            "bertscore_f1": 0.4403,
+            "answer_correctness": 0.3412,
+            "context_recall": 0.4414
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What is the role of the Raft cluster leader during log replication?",
+          "answer": "Once the entry has been replicated on a majority of cluster nodes, the leader commits the entry and applies it to its local state machine before responding to the client. [Context Source 3: halueval_halueval-qa-005.txt (Chunk 0) (relevance: 0.555)]\nIn the Raft protocol, client requests are directed exclusively to the elected leader, which appends the command to its log as a new entry. [Context Source 4: ragtruth_ragtruth-qa-003.txt (Chunk 1) (relevance: 0.540)]\nTo prevent stale reads from leaders that have been partitioned from the cluster, the leader must contact a quorum of the cluster to verify its leadership before responding to read-only queries, or utilize lease-based read optimizations.",
+          "reference": "The Raft leader receives client commands, appends them to its log, sends AppendEntries RPCs to followers in parallel, and commits the entry once safely replicated on a majority quorum of servers.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2987,
+            "context_precision": 0.2281,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1606,
+            "bertscore_f1": 0.4183,
+            "answer_correctness": 0.3152,
+            "context_recall": 0.4364
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        }
+      ]
+    }
+  ]
+}

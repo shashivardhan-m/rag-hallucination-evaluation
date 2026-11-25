@@ -1,17 +1,23 @@
-"""FAISS vector store for semantic similarity search over document chunks."""
+"""FAISS vector store for semantic similarity search over document chunks with NumPy fallback."""
 
 import os
 import pickle
 import threading
 from typing import Any, Dict, List, Optional
-import faiss
 import numpy as np
+
+try:
+    import faiss
+    _FAISS_AVAILABLE = True
+except ImportError:
+    faiss = None
+    _FAISS_AVAILABLE = False
 
 from app.config import get_settings
 
 
 class FAISSVectorStore:
-    """In-memory and persisted FAISS vector index using Inner Product (cosine similarity)."""
+    """In-memory and persisted vector index using Inner Product (cosine similarity)."""
 
     _instance: Optional["FAISSVectorStore"] = None
     _singleton_lock: threading.Lock = threading.Lock()
@@ -30,7 +36,7 @@ class FAISSVectorStore:
         self.settings = get_settings()
         self.lock = threading.RLock()
         self.dimension: Optional[int] = None
-        self.index: Optional[faiss.IndexFlatIP] = None
+        self.index: Any = None
         self.metadata: List[Dict[str, Any]] = []
         self.all_embeddings: Optional[np.ndarray] = None
         self._initialized = True
@@ -38,7 +44,17 @@ class FAISSVectorStore:
     def _init_index(self, dimension: int) -> None:
         """Initialize empty IndexFlatIP for the given embedding dimension."""
         self.dimension = dimension
-        self.index = faiss.IndexFlatIP(dimension)
+        if _FAISS_AVAILABLE and faiss is not None:
+            self.index = faiss.IndexFlatIP(dimension)
+        else:
+            # Native NumPy fallback index (all_embeddings will store the vectors)
+            self.index = "numpy"
+
+    def _normalize(self, x: np.ndarray) -> np.ndarray:
+        """L2 normalize row vectors."""
+        norms = np.linalg.norm(x, axis=1, keepdims=True)
+        norms[norms == 0] = 1.0
+        return x / norms
 
     def add_chunks(
         self,
@@ -62,11 +78,13 @@ class FAISSVectorStore:
                 )
 
             # Ensure vectors are L2-normalized for cosine similarity
-            faiss.normalize_L2(embeddings_f32)
+            if _FAISS_AVAILABLE and faiss is not None:
+                faiss.normalize_L2(embeddings_f32)
+                self.index.add(embeddings_f32)
+            else:
+                embeddings_f32 = self._normalize(embeddings_f32)
 
-            self.index.add(embeddings_f32)
-
-            # Keep all embeddings for rebuilds on deletion
+            # Keep all embeddings for rebuilds on deletion and NumPy search
             if self.all_embeddings is None or self.all_embeddings.size == 0:
                 self.all_embeddings = embeddings_f32.copy()
             else:
@@ -85,128 +103,98 @@ class FAISSVectorStore:
     ) -> List[Dict[str, Any]]:
         """Search top-k most similar chunks for query embedding."""
         with self.lock:
-            if self.index is None or self.index.ntotal == 0 or len(self.metadata) == 0:
+            total_items = len(self.metadata)
+            if total_items == 0 or self.all_embeddings is None or self.all_embeddings.size == 0:
                 return []
 
             q = np.ascontiguousarray(query_embedding, dtype=np.float32)
             if q.ndim == 1:
                 q = q.reshape(1, -1)
-            faiss.normalize_L2(q)
 
-            k_search = min(self.index.ntotal, top_k * 4 if document_id else top_k)
-            distances, indices = self.index.search(q, k_search)
+            if _FAISS_AVAILABLE and faiss is not None and self.index is not None and not isinstance(self.index, str):
+                faiss.normalize_L2(q)
+                k_search = min(self.index.ntotal, top_k * 4 if document_id else top_k)
+                distances, indices = self.index.search(q, k_search)
+                raw_indices = indices[0]
+                raw_scores = distances[0]
+            else:
+                # NumPy cosine similarity search
+                q_norm = self._normalize(q)
+                sims = np.dot(self.all_embeddings, q_norm.T).flatten()
+                k_search = min(len(sims), top_k * 4 if document_id else top_k)
+                raw_indices = np.argsort(-sims)[:k_search]
+                raw_scores = sims[raw_indices]
 
             results: List[Dict[str, Any]] = []
-            for rank_idx, (idx, score) in enumerate(zip(indices[0], distances[0])):
+            for idx, score in zip(raw_indices, raw_scores):
                 if idx < 0 or idx >= len(self.metadata):
                     continue
-
-                item = dict(self.metadata[idx])
-                if document_id and item.get("document_id") != document_id:
+                meta = self.metadata[idx]
+                if document_id and meta.get("document_id") != document_id:
                     continue
 
-                item["score"] = float(score)
-                item["rank"] = len(results) + 1
-                results.append(item)
-
+                res = dict(meta)
+                res["score"] = float(score)
+                results.append(res)
                 if len(results) >= top_k:
                     break
 
             return results
 
-    def delete_document(self, document_id: str) -> int:
-        """Remove all chunks associated with a document and rebuild index."""
-        with self.lock:
-            if not self.metadata:
-                return 0
-
-            keep_indices: List[int] = []
-            deleted_count = 0
-            for idx, meta in enumerate(self.metadata):
-                if meta.get("document_id") == document_id:
-                    deleted_count += 1
-                else:
-                    keep_indices.append(idx)
-
-            if deleted_count == 0:
-                return 0
-
-            new_metadata = [self.metadata[i] for i in keep_indices]
-            if keep_indices and self.all_embeddings is not None and self.dimension is not None:
-                new_embeddings = self.all_embeddings[keep_indices]
-                new_index = faiss.IndexFlatIP(self.dimension)
-                new_index.add(np.ascontiguousarray(new_embeddings, dtype=np.float32))
-
-                self.metadata = new_metadata
-                self.all_embeddings = new_embeddings
-                self.index = new_index
-            else:
-                self.metadata = []
-                self.all_embeddings = None
-                if self.dimension:
-                    self.index = faiss.IndexFlatIP(self.dimension)
-
-            return deleted_count
-
-    def save_index(self, path: Optional[str] = None) -> None:
-        """Persist FAISS index and chunk metadata to disk."""
-        target_path = path or self.settings.FAISS_INDEX_PATH
-        os.makedirs(target_path, exist_ok=True)
-
-        with self.lock:
-            index_file = os.path.join(target_path, "faiss.index")
-            meta_file = os.path.join(target_path, "metadata.pkl")
-
-            if self.index is not None:
-                faiss.write_index(self.index, index_file)
-
-            payload = {
-                "metadata": self.metadata,
-                "dimension": self.dimension,
-                "all_embeddings": self.all_embeddings,
-            }
-            with open(meta_file, "wb") as f:
-                pickle.dump(payload, f, protocol=pickle.HIGHEST_PROTOCOL)
-
-    def load_index(self, path: Optional[str] = None) -> bool:
-        """Load FAISS index and chunk metadata from disk if available."""
-        target_path = path or self.settings.FAISS_INDEX_PATH
-        index_file = os.path.join(target_path, "faiss.index")
-        meta_file = os.path.join(target_path, "metadata.pkl")
-
-        if not os.path.exists(index_file) or not os.path.exists(meta_file):
-            return False
-
-        with self.lock:
-            try:
-                self.index = faiss.read_index(index_file)
-                with open(meta_file, "rb") as f:
-                    payload = pickle.load(f)
-
-                self.metadata = payload.get("metadata", [])
-                self.dimension = payload.get("dimension", self.index.d if self.index else None)
-                self.all_embeddings = payload.get("all_embeddings", None)
-                return True
-            except Exception:
-                return False
-
-    def get_stats(self) -> Dict[str, Any]:
-        """Return statistics on the indexed vectors and documents."""
-        with self.lock:
-            total_chunks = self.index.ntotal if self.index else 0
-            doc_ids = {m.get("document_id") for m in self.metadata if m.get("document_id")}
-            return {
-                "total_chunks": total_chunks,
-                "total_documents": len(doc_ids),
-                "dimension": self.dimension or 0,
-            }
-
     def get_all_chunks(self) -> List[Dict[str, Any]]:
-        """Return shallow copies of all stored chunk metadata."""
+        """Return all metadata chunks stored in the index."""
         with self.lock:
             return [dict(m) for m in self.metadata]
 
+    def get_document_chunks(self, document_id: str) -> List[Dict[str, Any]]:
+        """Return metadata for chunks belonging to a specific document."""
+        with self.lock:
+            return [dict(m) for m in self.metadata if m.get("document_id") == document_id]
+
+    def delete_document(self, document_id: str) -> int:
+        """Remove all chunks associated with a document and rebuild index."""
+        with self.lock:
+            indices_to_keep = [
+                i for i, m in enumerate(self.metadata)
+                if m.get("document_id") != document_id
+            ]
+            deleted_count = len(self.metadata) - len(indices_to_keep)
+            if deleted_count == 0:
+                return 0
+
+            self.metadata = [self.metadata[i] for i in indices_to_keep]
+
+            if self.all_embeddings is not None and len(indices_to_keep) > 0:
+                self.all_embeddings = self.all_embeddings[indices_to_keep]
+                if _FAISS_AVAILABLE and faiss is not None and self.dimension:
+                    self.index = faiss.IndexFlatIP(self.dimension)
+                    self.index.add(self.all_embeddings)
+            else:
+                self.all_embeddings = None
+                self.index = None
+
+            return deleted_count
+
+    def clear(self) -> None:
+        """Completely reset the vector index and metadata."""
+        with self.lock:
+            self.index = None
+            self.dimension = None
+            self.metadata = []
+            self.all_embeddings = None
+
+    def get_stats(self) -> Dict[str, Any]:
+        """Return current status and size of the vector store."""
+        with self.lock:
+            ntotal = len(self.metadata)
+            return {
+                "total_chunks": ntotal,
+                "dimension": self.dimension or 0,
+                "is_empty": ntotal == 0,
+                "backend": "faiss" if _FAISS_AVAILABLE else "numpy_fallback",
+            }
+
 
 def get_vector_store() -> FAISSVectorStore:
-    """Return singleton FAISSVectorStore instance."""
+    """Return singleton vector store instance."""
     return FAISSVectorStore()

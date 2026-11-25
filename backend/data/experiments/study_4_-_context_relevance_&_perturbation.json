@@ -1,0 +1,932 @@
+{
+  "experiment_name": "Study 4 - Context Relevance & Perturbation",
+  "description": "Ablation evaluating model behavior under Gold Relevant, Distractor, Irrelevant, and Parametric (None) context.",
+  "variable": "context_relevance",
+  "benchmark_dataset": "halueval",
+  "num_runs": 5,
+  "conditions": [
+    {
+      "condition_value": "gold",
+      "average_latency_ms": 0.02,
+      "average_metrics": {
+        "faithfulness": 1.0,
+        "hallucination_rate": 0.0,
+        "answer_relevance": 0.2478,
+        "context_precision": 0.1921,
+        "retrieval_precision": 0.0,
+        "rouge_l_f1": 0.3024,
+        "bertscore_f1": 0.4067,
+        "answer_correctness": 0.365,
+        "context_recall": 0.4063
+      },
+      "statistical_metrics": {
+        "faithfulness": {
+          "mean": 1.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "hallucination_rate": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "answer_relevance": {
+          "mean": 0.2478,
+          "std": 0.0371,
+          "se": 0.0074,
+          "ci_low": 0.2325,
+          "ci_high": 0.2631,
+          "ci_margin": 0.0153,
+          "n": 25
+        },
+        "context_precision": {
+          "mean": 0.1921,
+          "std": 0.0296,
+          "se": 0.0059,
+          "ci_low": 0.1799,
+          "ci_high": 0.2044,
+          "ci_margin": 0.0122,
+          "n": 25
+        },
+        "retrieval_precision": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "rouge_l_f1": {
+          "mean": 0.3024,
+          "std": 0.0629,
+          "se": 0.0126,
+          "ci_low": 0.2764,
+          "ci_high": 0.3284,
+          "ci_margin": 0.026,
+          "n": 25
+        },
+        "bertscore_f1": {
+          "mean": 0.4067,
+          "std": 0.0895,
+          "se": 0.0179,
+          "ci_low": 0.3698,
+          "ci_high": 0.4436,
+          "ci_margin": 0.0369,
+          "n": 25
+        },
+        "answer_correctness": {
+          "mean": 0.365,
+          "std": 0.0668,
+          "se": 0.0134,
+          "ci_low": 0.3374,
+          "ci_high": 0.3926,
+          "ci_margin": 0.0276,
+          "n": 25
+        },
+        "context_recall": {
+          "mean": 0.4063,
+          "std": 0.0889,
+          "se": 0.0178,
+          "ci_low": 0.3696,
+          "ci_high": 0.443,
+          "ci_margin": 0.0367,
+          "n": 25
+        }
+      },
+      "significance_vs_baseline": {
+        "is_baseline": true,
+        "p_value": 1.0,
+        "t_statistic": 0.0,
+        "is_significant_p05": false,
+        "is_significant_p01": false,
+        "cohens_d": 0.0
+      },
+      "error_taxonomy": {
+        "intrinsic_contradiction": 0.0,
+        "extrinsic_extrapolation": 0.0,
+        "entity_fabulation": 0.0,
+        "cross_chunk_confusion": 0.0,
+        "refusal_failure": 0.0
+      },
+      "sample_queries": [
+        {
+          "question": "What is the primary role of histone deacetylases (HDACs) in eukaryotic gene regulation?",
+          "answer": "Histone deacetylases (HDACs) are a class of enzymes that remove acetyl groups from \u03b5-N-acetyl lysine amino acids on histone tails. By removing acetyl groups, HDACs allow histones to wrap DNA more tightly, leading to condensed heterochromatin structure and transcriptional repression of target genes.",
+          "reference": "Histone deacetylases remove acetyl groups from histone lysine residues, causing chromatin to condense into heterochromatin and leading to the transcriptional repression of genes.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2032,
+            "context_precision": 0.1603,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.4242,
+            "bertscore_f1": 0.4544,
+            "answer_correctness": 0.4423,
+            "context_recall": 0.4544
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "How does the PageRank algorithm compute importance scores across web pages?",
+          "answer": "PageRank evaluates the relative importance of web documents by modeling the probability that a random web surfer navigating hyperlinks lands on a specific page. The rank vector satisfies the stationary distribution R = d * M * R + (1 - d)/N * E, where d is the damping factor (traditionally set to 0.85) representing the probability of continuing to follow links rather than jumping randomly.",
+          "reference": "PageRank calculates importance by simulating a random web surfer following hyperlinks, computing the stationary probability distribution across pages using a transition matrix with a damping factor (typically 0.85).",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2069,
+            "context_precision": 0.1655,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.2553,
+            "bertscore_f1": 0.2753,
+            "answer_correctness": 0.2673,
+            "context_recall": 0.2753
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What is the function of the CRISPR-Cas9 endonuclease complex in bacterial immunity?",
+          "answer": "In bacterial adaptive immunity, the CRISPR-Cas9 system utilizes a single-guide RNA (sgRNA) complementary to invading viral bacteriophage DNA. Cas9 recognizes a 2-6 base pair protospacer adjacent motif (PAM) downstream of the target sequence and introduces a sequence-specific blunt double-stranded break (DSB) three nucleotides upstream of the PAM site.",
+          "reference": "The CRISPR-Cas9 complex uses a guide RNA to locate complementary foreign bacteriophage DNA adjacent to a PAM sequence, where it induces a targeted double-stranded break to disable the viral genome.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2773,
+            "context_precision": 0.2109,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.2821,
+            "bertscore_f1": 0.3338,
+            "answer_correctness": 0.3131,
+            "context_recall": 0.3338
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "How does speculative decoding accelerate LLM inference without altering the target model's output distribution?",
+          "answer": "The larger target model evaluates all K candidate tokens in a single parallel forward pass, accepting candidate tokens that satisfy modified rejection sampling criteria: p_target(x) / p_draft(x) >= u, guaranteeing that the accepted output strictly matches the target model's distribution. Speculative decoding employs a smaller, faster draft model to autoregressively generate K candidate tokens sequentially at minimal computational cost.",
+          "reference": "Speculative decoding uses a lightweight draft model to generate candidate tokens, which the larger target model verifies simultaneously in a single parallel pass using rejection sampling, guaranteeing identical output distribution to the target model.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2597,
+            "context_precision": 0.186,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.2796,
+            "bertscore_f1": 0.5104,
+            "answer_correctness": 0.4181,
+            "context_recall": 0.5081
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What is the role of the Raft cluster leader during log replication?",
+          "answer": "In the Raft protocol, client requests are directed exclusively to the elected leader, which appends the command to its log as a new entry. Once the entry has been replicated on a majority of cluster nodes, the leader commits the entry and applies it to its local state machine before responding to the client. The leader issues AppendEntries RPCs in parallel to all follower nodes.",
+          "reference": "The Raft leader receives client commands, appends them to its log, sends AppendEntries RPCs to followers in parallel, and commits the entry once safely replicated on a majority quorum of servers.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2918,
+            "context_precision": 0.238,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.2708,
+            "bertscore_f1": 0.4597,
+            "answer_correctness": 0.3842,
+            "context_recall": 0.4597
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "condition_value": "distractor",
+      "average_latency_ms": 0.04,
+      "average_metrics": {
+        "faithfulness": 1.0,
+        "hallucination_rate": 0.0,
+        "answer_relevance": 0.2673,
+        "context_precision": 0.1504,
+        "retrieval_precision": 0.0,
+        "rouge_l_f1": 0.2555,
+        "bertscore_f1": 0.4256,
+        "answer_correctness": 0.3576,
+        "context_recall": 0.4141
+      },
+      "statistical_metrics": {
+        "faithfulness": {
+          "mean": 1.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "hallucination_rate": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "answer_relevance": {
+          "mean": 0.2673,
+          "std": 0.0407,
+          "se": 0.0081,
+          "ci_low": 0.2505,
+          "ci_high": 0.2841,
+          "ci_margin": 0.0168,
+          "n": 25
+        },
+        "context_precision": {
+          "mean": 0.1504,
+          "std": 0.0152,
+          "se": 0.003,
+          "ci_low": 0.1441,
+          "ci_high": 0.1566,
+          "ci_margin": 0.0063,
+          "n": 25
+        },
+        "retrieval_precision": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "rouge_l_f1": {
+          "mean": 0.2555,
+          "std": 0.0407,
+          "se": 0.0081,
+          "ci_low": 0.2387,
+          "ci_high": 0.2723,
+          "ci_margin": 0.0168,
+          "n": 25
+        },
+        "bertscore_f1": {
+          "mean": 0.4256,
+          "std": 0.0904,
+          "se": 0.0181,
+          "ci_low": 0.3883,
+          "ci_high": 0.4629,
+          "ci_margin": 0.0373,
+          "n": 25
+        },
+        "answer_correctness": {
+          "mean": 0.3576,
+          "std": 0.0638,
+          "se": 0.0128,
+          "ci_low": 0.3312,
+          "ci_high": 0.3839,
+          "ci_margin": 0.0263,
+          "n": 25
+        },
+        "context_recall": {
+          "mean": 0.4141,
+          "std": 0.0746,
+          "se": 0.0149,
+          "ci_low": 0.3834,
+          "ci_high": 0.4449,
+          "ci_margin": 0.0308,
+          "n": 25
+        }
+      },
+      "significance_vs_baseline": {
+        "p_value": 1.0,
+        "t_statistic": 0.0,
+        "is_significant_p05": false,
+        "is_significant_p01": false,
+        "cohens_d": 0.0,
+        "mean_delta": 0.0,
+        "is_baseline": false
+      },
+      "error_taxonomy": {
+        "intrinsic_contradiction": 0.0,
+        "extrinsic_extrapolation": 0.0,
+        "entity_fabulation": 0.0,
+        "cross_chunk_confusion": 0.0,
+        "refusal_failure": 0.0
+      },
+      "sample_queries": [
+        {
+          "question": "What is the primary role of histone deacetylases (HDACs) in eukaryotic gene regulation?",
+          "answer": "Histone deacetylases (HDACs) are a class of enzymes that remove acetyl groups from \u03b5-N-acetyl lysine amino acids on histone tails. By removing acetyl groups, HDACs allow histones to wrap DNA more tightly, leading to condensed heterochromatin structure and transcriptional repression of target genes. Histone acetyltransferases (HATs) transfer acetyl groups from acetyl-CoA to lysine residues on histone tails, neutralizing positive charges to facilitate euchromatin formation.",
+          "reference": "Histone deacetylases remove acetyl groups from histone lysine residues, causing chromatin to condense into heterochromatin and leading to the transcriptional repression of genes.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.194,
+            "context_precision": 0.1399,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.3218,
+            "bertscore_f1": 0.4751,
+            "answer_correctness": 0.4138,
+            "context_recall": 0.4671
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "How does the PageRank algorithm compute importance scores across web pages?",
+          "answer": "The HITS (Hyperlink-Induced Topic Search) algorithm develops two separate scores for web pages: Authority values (valuable content) and Hub values (links to authoritative pages). PageRank evaluates the relative importance of web documents by modeling the probability that a random web surfer navigating hyperlinks lands on a specific page. The rank vector satisfies the stationary distribution R = d * M * R + (1 - d)/N * E, where d is the damping factor (traditionally set to 0.85) representing the probability of continuing to follow links rather than jumping randomly.",
+          "reference": "PageRank calculates importance by simulating a random web surfer following hyperlinks, computing the stationary probability distribution across pages using a transition matrix with a damping factor (typically 0.85).",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2563,
+            "context_precision": 0.1473,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.2034,
+            "bertscore_f1": 0.2862,
+            "answer_correctness": 0.2531,
+            "context_recall": 0.3024
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What is the function of the CRISPR-Cas9 endonuclease complex in bacterial immunity?",
+          "answer": "In bacterial adaptive immunity, the CRISPR-Cas9 system utilizes a single-guide RNA (sgRNA) complementary to invading viral bacteriophage DNA. Type III CRISPR systems target RNA rather than DNA, using the Cas10 multiprotein complex to degrade foreign transcripts. Cas9 recognizes a 2-6 base pair protospacer adjacent motif (PAM) downstream of the target sequence and introduces a sequence-specific blunt double-stranded break (DSB) three nucleotides upstream of the PAM site.",
+          "reference": "The CRISPR-Cas9 complex uses a guide RNA to locate complementary foreign bacteriophage DNA adjacent to a PAM sequence, where it induces a targeted double-stranded break to disable the viral genome.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.3022,
+            "context_precision": 0.1687,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.25,
+            "bertscore_f1": 0.3679,
+            "answer_correctness": 0.3208,
+            "context_recall": 0.3634
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "How does speculative decoding accelerate LLM inference without altering the target model's output distribution?",
+          "answer": "The larger target model evaluates all K candidate tokens in a single parallel forward pass, accepting candidate tokens that satisfy modified rejection sampling criteria: p_target(x) / p_draft(x) >= u, guaranteeing that the accepted output strictly matches the target model's distribution. Speculative decoding employs a smaller, faster draft model to autoregressively generate K candidate tokens sequentially at minimal computational cost. Medusa introduces multiple draft heads on top of the final transformer hidden states of a single model to predict multiple future tokens concurrently without a separate draft model.",
+          "reference": "Speculative decoding uses a lightweight draft model to generate candidate tokens, which the larger target model verifies simultaneously in a single parallel pass using rejection sampling, guaranteeing identical output distribution to the target model.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2923,
+            "context_precision": 0.1659,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.2314,
+            "bertscore_f1": 0.539,
+            "answer_correctness": 0.416,
+            "context_recall": 0.5066
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What is the role of the Raft cluster leader during log replication?",
+          "answer": "In the Raft protocol, client requests are directed exclusively to the elected leader, which appends the command to its log as a new entry. Once the entry has been replicated on a majority of cluster nodes, the leader commits the entry and applies it to its local state machine before responding to the client. The leader issues AppendEntries RPCs in parallel to all follower nodes.",
+          "reference": "The Raft leader receives client commands, appends them to its log, sends AppendEntries RPCs to followers in parallel, and commits the entry once safely replicated on a majority quorum of servers.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2918,
+            "context_precision": 0.1301,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.2708,
+            "bertscore_f1": 0.4597,
+            "answer_correctness": 0.3842,
+            "context_recall": 0.4312
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "condition_value": "irrelevant",
+      "average_latency_ms": 0.01,
+      "average_metrics": {
+        "faithfulness": 1.0,
+        "hallucination_rate": 0.0,
+        "answer_relevance": 0.0999,
+        "context_precision": 0.1291,
+        "retrieval_precision": 0.0,
+        "rouge_l_f1": 0.0747,
+        "bertscore_f1": 0.1138,
+        "answer_correctness": 0.0981,
+        "context_recall": 0.1306
+      },
+      "statistical_metrics": {
+        "faithfulness": {
+          "mean": 1.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "hallucination_rate": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "answer_relevance": {
+          "mean": 0.0999,
+          "std": 0.0216,
+          "se": 0.0043,
+          "ci_low": 0.091,
+          "ci_high": 0.1088,
+          "ci_margin": 0.0089,
+          "n": 25
+        },
+        "context_precision": {
+          "mean": 0.1291,
+          "std": 0.0383,
+          "se": 0.0077,
+          "ci_low": 0.1133,
+          "ci_high": 0.1449,
+          "ci_margin": 0.0158,
+          "n": 25
+        },
+        "retrieval_precision": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "rouge_l_f1": {
+          "mean": 0.0747,
+          "std": 0.019,
+          "se": 0.0038,
+          "ci_low": 0.0668,
+          "ci_high": 0.0825,
+          "ci_margin": 0.0079,
+          "n": 25
+        },
+        "bertscore_f1": {
+          "mean": 0.1138,
+          "std": 0.0526,
+          "se": 0.0105,
+          "ci_low": 0.0921,
+          "ci_high": 0.1355,
+          "ci_margin": 0.0217,
+          "n": 25
+        },
+        "answer_correctness": {
+          "mean": 0.0981,
+          "std": 0.0385,
+          "se": 0.0077,
+          "ci_low": 0.0823,
+          "ci_high": 0.114,
+          "ci_margin": 0.0159,
+          "n": 25
+        },
+        "context_recall": {
+          "mean": 0.1306,
+          "std": 0.021,
+          "se": 0.0042,
+          "ci_low": 0.1219,
+          "ci_high": 0.1392,
+          "ci_margin": 0.0087,
+          "n": 25
+        }
+      },
+      "significance_vs_baseline": {
+        "p_value": 1.0,
+        "t_statistic": 0.0,
+        "is_significant_p05": false,
+        "is_significant_p01": false,
+        "cohens_d": 0.0,
+        "mean_delta": 0.0,
+        "is_baseline": false
+      },
+      "error_taxonomy": {
+        "intrinsic_contradiction": 0.0,
+        "extrinsic_extrapolation": 0.0,
+        "entity_fabulation": 0.0,
+        "cross_chunk_confusion": 0.0,
+        "refusal_failure": 0.0
+      },
+      "sample_queries": [
+        {
+          "question": "What is the primary role of histone deacetylases (HDACs) in eukaryotic gene regulation?",
+          "answer": "I cannot find sufficient information in the provided documents to answer this question.",
+          "reference": "Histone deacetylases remove acetyl groups from histone lysine residues, causing chromatin to condense into heterochromatin and leading to the transcriptional repression of genes.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.0802,
+            "context_precision": 0.1685,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.0556,
+            "bertscore_f1": 0.0996,
+            "answer_correctness": 0.082,
+            "context_recall": 0.1151
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "How does the PageRank algorithm compute importance scores across web pages?",
+          "answer": "I cannot find sufficient information in the provided documents to answer this question.",
+          "reference": "PageRank calculates importance by simulating a random web surfer following hyperlinks, computing the stationary probability distribution across pages using a transition matrix with a damping factor (typically 0.85).",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.0926,
+            "context_precision": 0.0616,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.0488,
+            "bertscore_f1": 0.0194,
+            "answer_correctness": 0.0311,
+            "context_recall": 0.132
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What is the function of the CRISPR-Cas9 endonuclease complex in bacterial immunity?",
+          "answer": "I cannot find sufficient information in the provided documents to answer this question.",
+          "reference": "The CRISPR-Cas9 complex uses a guide RNA to locate complementary foreign bacteriophage DNA adjacent to a PAM sequence, where it induces a targeted double-stranded break to disable the viral genome.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.1371,
+            "context_precision": 0.1388,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.093,
+            "bertscore_f1": 0.138,
+            "answer_correctness": 0.12,
+            "context_recall": 0.1501
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "How does speculative decoding accelerate LLM inference without altering the target model's output distribution?",
+          "answer": "I cannot find sufficient information in the provided documents to answer this question.",
+          "reference": "Speculative decoding uses a lightweight draft model to generate candidate tokens, which the larger target model verifies simultaneously in a single parallel pass using rejection sampling, guaranteeing identical output distribution to the target model.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.0812,
+            "context_precision": 0.12,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.0851,
+            "bertscore_f1": 0.1576,
+            "answer_correctness": 0.1286,
+            "context_recall": 0.1007
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What is the role of the Raft cluster leader during log replication?",
+          "answer": "I cannot find sufficient information in the provided documents to answer this question.",
+          "reference": "The Raft leader receives client commands, appends them to its log, sends AppendEntries RPCs to followers in parallel, and commits the entry once safely replicated on a majority quorum of servers.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.1083,
+            "context_precision": 0.1564,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.0909,
+            "bertscore_f1": 0.1545,
+            "answer_correctness": 0.129,
+            "context_recall": 0.155
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "condition_value": "none",
+      "average_latency_ms": 0.0,
+      "average_metrics": {
+        "faithfulness": 0.0,
+        "hallucination_rate": 1.0,
+        "answer_relevance": 0.6579,
+        "context_precision": 0.0,
+        "retrieval_precision": 0.0,
+        "rouge_l_f1": 0.1458,
+        "bertscore_f1": 0.2298,
+        "answer_correctness": 0.1962,
+        "context_recall": 0.0
+      },
+      "statistical_metrics": {
+        "faithfulness": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "hallucination_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "answer_relevance": {
+          "mean": 0.6579,
+          "std": 0.0257,
+          "se": 0.0051,
+          "ci_low": 0.6473,
+          "ci_high": 0.6685,
+          "ci_margin": 0.0106,
+          "n": 25
+        },
+        "context_precision": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "retrieval_precision": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "rouge_l_f1": {
+          "mean": 0.1458,
+          "std": 0.0263,
+          "se": 0.0053,
+          "ci_low": 0.135,
+          "ci_high": 0.1567,
+          "ci_margin": 0.0109,
+          "n": 25
+        },
+        "bertscore_f1": {
+          "mean": 0.2298,
+          "std": 0.0342,
+          "se": 0.0068,
+          "ci_low": 0.2156,
+          "ci_high": 0.2439,
+          "ci_margin": 0.0141,
+          "n": 25
+        },
+        "answer_correctness": {
+          "mean": 0.1962,
+          "std": 0.0293,
+          "se": 0.0059,
+          "ci_low": 0.1841,
+          "ci_high": 0.2083,
+          "ci_margin": 0.0121,
+          "n": 25
+        },
+        "context_recall": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        }
+      },
+      "significance_vs_baseline": {
+        "p_value": 0.0,
+        "t_statistic": -Infinity,
+        "is_significant_p05": true,
+        "is_significant_p01": true,
+        "cohens_d": 0.0,
+        "mean_delta": -1.0,
+        "is_baseline": false
+      },
+      "error_taxonomy": {
+        "intrinsic_contradiction": 0.0,
+        "extrinsic_extrapolation": 0.0,
+        "entity_fabulation": 0.0,
+        "cross_chunk_confusion": 0.0,
+        "refusal_failure": 0.0
+      },
+      "sample_queries": [
+        {
+          "question": "What is the primary role of histone deacetylases (HDACs) in eukaryotic gene regulation?",
+          "answer": "What is the primary role of histone deacetylases (HDACs) in eukaryotic gene regulation? is generally understood in the literature through foundational concepts, incorporating standard theoretical frameworks, though exact quantitative parameters vary widely across implementations.",
+          "reference": "Histone deacetylases remove acetyl groups from histone lysine residues, causing chromatin to condense into heterochromatin and leading to the transcriptional repression of genes.",
+          "metrics": {
+            "faithfulness": 0.0,
+            "hallucination_rate": 1.0,
+            "answer_relevance": 0.6782,
+            "context_precision": 0.0,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1053,
+            "bertscore_f1": 0.1758,
+            "answer_correctness": 0.1476,
+            "context_recall": 0.0
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "How does the PageRank algorithm compute importance scores across web pages?",
+          "answer": "How does the PageRank algorithm compute importance scores across web pages? is generally understood in the literature through foundational concepts, incorporating standard theoretical frameworks, though exact quantitative parameters vary widely across implementations.",
+          "reference": "PageRank calculates importance by simulating a random web surfer following hyperlinks, computing the stationary probability distribution across pages using a transition matrix with a damping factor (typically 0.85).",
+          "metrics": {
+            "faithfulness": 0.0,
+            "hallucination_rate": 1.0,
+            "answer_relevance": 0.6177,
+            "context_precision": 0.0,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1667,
+            "bertscore_f1": 0.2169,
+            "answer_correctness": 0.1968,
+            "context_recall": 0.0
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What is the function of the CRISPR-Cas9 endonuclease complex in bacterial immunity?",
+          "answer": "What is the function of the CRISPR-Cas9 endonuclease complex in bacterial immunity? is generally understood in the literature through foundational concepts, incorporating standard theoretical frameworks, though exact quantitative parameters vary widely across implementations.",
+          "reference": "The CRISPR-Cas9 complex uses a guide RNA to locate complementary foreign bacteriophage DNA adjacent to a PAM sequence, where it induces a targeted double-stranded break to disable the viral genome.",
+          "metrics": {
+            "faithfulness": 0.0,
+            "hallucination_rate": 1.0,
+            "answer_relevance": 0.6899,
+            "context_precision": 0.0,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.127,
+            "bertscore_f1": 0.2359,
+            "answer_correctness": 0.1923,
+            "context_recall": 0.0
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "How does speculative decoding accelerate LLM inference without altering the target model's output distribution?",
+          "answer": "How does speculative decoding accelerate LLM inference without altering the target model's output distribution? is generally understood in the literature through foundational concepts, incorporating standard theoretical frameworks, though exact quantitative parameters vary widely across implementations.",
+          "reference": "Speculative decoding uses a lightweight draft model to generate candidate tokens, which the larger target model verifies simultaneously in a single parallel pass using rejection sampling, guaranteeing identical output distribution to the target model.",
+          "metrics": {
+            "faithfulness": 0.0,
+            "hallucination_rate": 1.0,
+            "answer_relevance": 0.6472,
+            "context_precision": 0.0,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1739,
+            "bertscore_f1": 0.2782,
+            "answer_correctness": 0.2365,
+            "context_recall": 0.0
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What is the role of the Raft cluster leader during log replication?",
+          "answer": "What is the role of the Raft cluster leader during log replication? is generally understood in the literature through foundational concepts, incorporating standard theoretical frameworks, though exact quantitative parameters vary widely across implementations.",
+          "reference": "The Raft leader receives client commands, appends them to its log, sends AppendEntries RPCs to followers in parallel, and commits the entry once safely replicated on a majority quorum of servers.",
+          "metrics": {
+            "faithfulness": 0.0,
+            "hallucination_rate": 1.0,
+            "answer_relevance": 0.6565,
+            "context_precision": 0.0,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1562,
+            "bertscore_f1": 0.242,
+            "answer_correctness": 0.2077,
+            "context_recall": 0.0
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        }
+      ]
+    }
+  ]
+}

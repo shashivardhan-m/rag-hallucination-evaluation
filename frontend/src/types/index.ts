@@ -157,7 +157,8 @@ export type ExperimentVariable =
   | 'retrieval_mode'
   | 'reranking'
   | 'top_k'
-  | 'llm_model';
+  | 'llm_model'
+  | 'context_relevance';
 
 export interface ExperimentConfig {
   name: string;
@@ -166,15 +167,17 @@ export interface ExperimentConfig {
   values: (string | number | boolean)[];
   questions: string[];
   reference_answers?: string[];
-  base_config: {
-    chunk_size: number;
-    chunk_overlap: number;
-    embedding_model: string;
-    retrieval_mode: 'semantic' | 'hybrid';
-    use_reranking: boolean;
-    top_k: number;
-    llm_backend: string;
-    llm_model: string;
+  benchmark_dataset?: 'ragtruth' | 'halueval' | 'all' | string;
+  num_runs?: number;
+  base_config?: {
+    chunk_size?: number;
+    chunk_overlap?: number;
+    embedding_model?: string;
+    retrieval_mode?: 'semantic' | 'bm25' | 'hybrid' | string;
+    use_reranking?: boolean;
+    top_k?: number;
+    llm_backend?: string;
+    llm_model?: string;
   };
 }
 

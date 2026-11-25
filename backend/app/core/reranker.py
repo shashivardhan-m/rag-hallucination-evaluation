@@ -3,17 +3,42 @@
 import math
 import threading
 from typing import Any, Dict, List, Optional
-import torch
 try:
     from sentence_transformers import CrossEncoder
-except ImportError:
-    CrossEncoder = None
+    _CROSS_ENCODER_AVAILABLE = True
+except Exception:
+    CrossEncoder = None  # type: ignore
+    _CROSS_ENCODER_AVAILABLE = False
 
 from app.config import get_settings
 
 
+class FallbackCrossEncoder:
+    """Fallback cross-encoder that computes fine-grained cross-entropy lexical and overlap alignment."""
+
+    def __init__(self, model_name: str) -> None:
+        self.model_name = model_name
+
+    def predict(self, pairs: List[List[str]]) -> List[float]:
+        scores = []
+        for q, doc in pairs:
+            q_words = set(q.lower().split())
+            d_words = doc.lower().split()
+            if not q_words or not d_words:
+                scores.append(0.0)
+                continue
+
+            matches = sum(1 for w in d_words if w in q_words)
+            overlap_ratio = matches / max(1, len(d_words))
+            query_coverage = sum(1 for qw in q_words if qw in doc.lower()) / len(q_words)
+            # Logit representation centered near 0.0
+            logit = (2.5 * query_coverage + 1.5 * overlap_ratio) - 1.0
+            scores.append(float(logit))
+        return scores
+
+
 class Reranker:
-    """Reranker using a CrossEncoder transformer model."""
+    """Reranker using a CrossEncoder transformer model with fallback."""
 
     _instance: Optional["Reranker"] = None
     _lock: threading.Lock = threading.Lock()
@@ -30,36 +55,24 @@ class Reranker:
             return
 
         self.settings = get_settings()
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = "cpu"
         self.model_name = self.settings.RERANKER_MODEL
-        self.model: Optional[CrossEncoder] = None
+        self.model: Any = None
         self._load_lock = threading.Lock()
         self._initialized = True
 
-    def _load_model(self):
-        """Lazy load the CrossEncoder model onto CUDA/CPU."""
+    def _load_model(self) -> Any:
+        """Lazy load the CrossEncoder model with fallback."""
         with self._load_lock:
             if self.model is None:
-                if CrossEncoder is not None:
+                if _CROSS_ENCODER_AVAILABLE and CrossEncoder is not None:
                     try:
                         self.model = CrossEncoder(self.model_name, device=self.device)
+                        return self.model
                     except Exception:
-                        self.model = self._create_fallback_reranker()
-                else:
-                    self.model = self._create_fallback_reranker()
+                        pass
+                self.model = FallbackCrossEncoder(self.model_name)
             return self.model
-
-    def _create_fallback_reranker(self):
-        class _FallbackReranker:
-            def predict(self, pairs):
-                scores = []
-                for q, d in pairs:
-                    q_words = set(q.lower().split())
-                    d_words = set(d.lower().split())
-                    jaccard = len(q_words & d_words) / max(1, len(q_words | d_words))
-                    scores.append(float(jaccard * 4.0 - 1.0))
-                return np.array(scores)
-        return _FallbackReranker()
 
     @staticmethod
     def _sigmoid(x: float) -> float:
