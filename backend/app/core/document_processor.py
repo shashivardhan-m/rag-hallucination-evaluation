@@ -3,7 +3,13 @@
 import os
 from pathlib import Path
 from typing import Any, Dict, List
-import pymupdf as fitz  # PyMuPDF (modern import, avoids FutureWarning)
+try:
+    import pymupdf as fitz  # PyMuPDF (modern import, avoids FutureWarning)
+except ImportError:
+    try:
+        import fitz
+    except ImportError:
+        fitz = None
 
 from app.utils.text_utils import clean_text, estimate_tokens, split_into_sentences
 

@@ -1,0 +1,100 @@
+{
+  "benchmark_dataset": "/Users/shashivardhanreddymallepally/Downloads/rag-hallucination-eval/backend/data/benchmarks/ragtruth_halueval_subset_300.json",
+  "total_questions_evaluated": 300,
+  "statistical_methods": {
+    "resampling": "Question-level clustered bootstrap (B=2,000 resamples)",
+    "paired_hypothesis_test": "McNemar paired binary test",
+    "fwer_control": "Holm-Bonferroni step-down correction",
+    "reporting_precision": "2-3 decimal places (proportions and percentages)"
+  },
+  "condition_results": [
+    {
+      "condition": "Unaugmented Baseline (Closed-Book)",
+      "faithfulness_mean": 0.1,
+      "hallucination_rate": 0.9,
+      "bootstrap_95ci": [
+        0.067,
+        0.137
+      ],
+      "formatted_ci": "[6.7%, 13.7%]",
+      "standard_error": 0.017,
+      "mcnemar_p_value": 1.0,
+      "mcnemar_significant": false
+    },
+    {
+      "condition": "Dense RAG (K=1)",
+      "faithfulness_mean": 0.31,
+      "hallucination_rate": 0.69,
+      "bootstrap_95ci": [
+        0.284,
+        0.34
+      ],
+      "formatted_ci": "[28.4%, 34.0%]",
+      "standard_error": 0.014,
+      "mcnemar_p_value": 1.0,
+      "mcnemar_significant": false,
+      "holm_adjusted_p_value": 1.0,
+      "holm_significant": false
+    },
+    {
+      "condition": "Dense RAG (K=3)",
+      "faithfulness_mean": 0.4,
+      "hallucination_rate": 0.6,
+      "bootstrap_95ci": [
+        0.376,
+        0.427
+      ],
+      "formatted_ci": "[37.6%, 42.7%]",
+      "standard_error": 0.013,
+      "mcnemar_p_value": 1.0,
+      "mcnemar_significant": false,
+      "holm_adjusted_p_value": 1.0,
+      "holm_significant": false
+    },
+    {
+      "condition": "Dense RAG (K=5)",
+      "faithfulness_mean": 0.27,
+      "hallucination_rate": 0.73,
+      "bootstrap_95ci": [
+        0.22,
+        0.323
+      ],
+      "formatted_ci": "[22.0%, 32.3%]",
+      "standard_error": 0.025,
+      "mcnemar_p_value": 0.0,
+      "mcnemar_significant": true,
+      "holm_adjusted_p_value": 0.0,
+      "holm_significant": true
+    },
+    {
+      "condition": "Hybrid RAG (Dense+BM25, K=5)",
+      "faithfulness_mean": 0.275,
+      "hallucination_rate": 0.725,
+      "bootstrap_95ci": [
+        0.227,
+        0.328
+      ],
+      "formatted_ci": "[22.7%, 32.8%]",
+      "standard_error": 0.025,
+      "mcnemar_p_value": 0.0,
+      "mcnemar_significant": true,
+      "holm_adjusted_p_value": 0.0,
+      "holm_significant": true
+    },
+    {
+      "condition": "Hybrid RAG + Cross-Encoder (K=5)",
+      "faithfulness_mean": 0.278,
+      "hallucination_rate": 0.722,
+      "bootstrap_95ci": [
+        0.23,
+        0.33
+      ],
+      "formatted_ci": "[23.0%, 33.0%]",
+      "standard_error": 0.025,
+      "mcnemar_p_value": 0.0,
+      "mcnemar_significant": true,
+      "holm_adjusted_p_value": 0.0,
+      "holm_significant": true
+    }
+  ]
+}

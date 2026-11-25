@@ -1,0 +1,1002 @@
+[
+  {
+    "id": "VAL-001",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the primary role of the attention mechanism in Transformers?",
+    "context": "The attention mechanism in Transformers allows the model to dynamically weight the importance of different tokens in the input sequence regardless of their positional distance, replacing recurrence with parallel self-attention computations.",
+    "answer": "The attention mechanism enables the model to assign dynamic weights to tokens across the sequence, facilitating parallel computations without relying on recurrent connections.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-002",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the primary role of the attention mechanism in Transformers?",
+    "context": "The attention mechanism in Transformers allows the model to dynamically weight the importance of different tokens in the input sequence regardless of their positional distance, replacing recurrence with parallel self-attention computations.",
+    "answer": "The attention mechanism forces Transformers to process tokens sequentially one by one, using recurrent hidden state propagation to compute token importance.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Context explicitly states recurrence is replaced with parallel computation; hallucination claims sequential recurrent hidden state propagation."
+  },
+  {
+    "id": "VAL-003",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the embedding dimension of BGE-base-en-v1.5?",
+    "context": "BAAI's bge-base-en-v1.5 produces dense semantic vector representations with a dimensionality of 768 features, trained with contrastive learning on large-scale paired corpora.",
+    "answer": "BGE-base-en-v1.5 outputs dense vector embeddings that have a dimensionality of 768 features.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-004",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the embedding dimension of BGE-base-en-v1.5?",
+    "context": "BAAI's bge-base-en-v1.5 produces dense semantic vector representations with a dimensionality of 768 features, trained with contrastive learning on large-scale paired corpora.",
+    "answer": "BGE-base-en-v1.5 generates high-dimensional embeddings with 1536 features, identical to OpenAI text-embedding-ada-002.",
+    "human_ground_truth": 0,
+    "hallucination_type": "numerical_distortion",
+    "annotation_notes": "Context specifies 768 dimensions; hallucination invents 1536 dimensions and adds unsupported comparison."
+  },
+  {
+    "id": "VAL-005",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "How does Reciprocal Rank Fusion (RRF) combine sparse and dense rankings?",
+    "context": "Reciprocal Rank Fusion computes a composite score for each candidate document d by summing 1 / (k + rank_i(d)) across individual ranking systems, where k is a smoothing constant typically set to 60.",
+    "answer": "RRF calculates a document's combined score by summing the reciprocal ranks 1 / (k + rank) from each retriever, with k acting as a smoothing factor commonly set around 60.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-006",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "How does Reciprocal Rank Fusion (RRF) combine sparse and dense rankings?",
+    "context": "Reciprocal Rank Fusion computes a composite score for each candidate document d by summing 1 / (k + rank_i(d)) across individual ranking systems, where k is a smoothing constant typically set to 60.",
+    "answer": "Reciprocal Rank Fusion multiplies the raw cosine similarities of dense vectors by the BM25 integer term frequencies without considering relative rank order.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "RRF relies on rank sum formula, whereas hallucination invents raw cosine multiplication."
+  },
+  {
+    "id": "VAL-007",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What does FAISS IndexFlatIP compute?",
+    "context": "FAISS IndexFlatIP performs exhaustive exact search by calculating the inner product (dot product) between query vectors and stored vectors. When vectors are L2-normalized, inner product is mathematically equivalent to cosine similarity.",
+    "answer": "IndexFlatIP computes the exact inner product between query and index vectors, which equals cosine similarity when vectors have unit L2 norm.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-008",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What does FAISS IndexFlatIP compute?",
+    "context": "FAISS IndexFlatIP performs exhaustive exact search by calculating the inner product (dot product) between query vectors and stored vectors. When vectors are L2-normalized, inner product is mathematically equivalent to cosine similarity.",
+    "answer": "FAISS IndexFlatIP uses approximate Voronoi cell quantization to avoid calculating dot products, trading accuracy for sub-millisecond retrieval.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Context specifies exact search by calculating inner product; hallucination claims it avoids calculating dot products via quantization."
+  },
+  {
+    "id": "VAL-009",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the primary motivation for cross-encoder reranking?",
+    "context": "While bi-encoders calculate query and document embeddings independently to enable fast index search, cross-encoders feed the query and candidate document together into all transformer layers, capturing rich cross-attention interactions at the cost of higher latency.",
+    "answer": "Cross-encoders process the query and document jointly through full cross-attention layers, yielding deeper interaction modeling than independent bi-encoders.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-010",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the primary motivation for cross-encoder reranking?",
+    "context": "While bi-encoders calculate query and document embeddings independently to enable fast index search, cross-encoders feed the query and candidate document together into all transformer layers, capturing rich cross-attention interactions at the cost of higher latency.",
+    "answer": "Cross-encoders compute independent vectors that reduce latency to under one microsecond, allowing full web-scale indexing without GPU acceleration.",
+    "human_ground_truth": 0,
+    "hallucination_type": "unsupported_extrapolation",
+    "annotation_notes": "Context states cross-encoders have higher latency due to joint attention; hallucination claims under 1 microsecond latency."
+  },
+  {
+    "id": "VAL-011",
+    "domain": "Biomedicine & Health",
+    "question": "What is the function of mRNA in COVID-19 vaccines?",
+    "context": "mRNA vaccines deliver genetic instructions wrapped in lipid nanoparticles to host cells, instructing ribosomes to temporarily produce the SARS-CoV-2 spike protein to elicit an adaptive immune response.",
+    "answer": "The mRNA delivers instructions that prompt cellular ribosomes to produce the viral spike protein, triggering an immune defense.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-012",
+    "domain": "Biomedicine & Health",
+    "question": "What is the function of mRNA in COVID-19 vaccines?",
+    "context": "mRNA vaccines deliver genetic instructions wrapped in lipid nanoparticles to host cells, instructing ribosomes to temporarily produce the SARS-CoV-2 spike protein to elicit an adaptive immune response.",
+    "answer": "The mRNA directly integrates into the patient's nuclear DNA to permanently alter cellular genomic transcription.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "mRNA does not enter the nucleus or integrate into DNA; context specifies temporary production by ribosomes."
+  },
+  {
+    "id": "VAL-013",
+    "domain": "Biomedicine & Health",
+    "question": "What was the reported efficacy of the SGLT2 inhibitor empagliflozin in heart failure?",
+    "context": "In the EMPEROR-Reduced clinical trial, empagliflozin demonstrated a 25% relative risk reduction in the primary composite endpoint of cardiovascular death or hospitalization for heart failure compared to placebo.",
+    "answer": "Clinical trials showed empagliflozin lowered the relative risk of cardiovascular death or heart failure hospitalization by 25%.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-014",
+    "domain": "Biomedicine & Health",
+    "question": "What was the reported efficacy of the SGLT2 inhibitor empagliflozin in heart failure?",
+    "context": "In the EMPEROR-Reduced clinical trial, empagliflozin demonstrated a 25% relative risk reduction in the primary composite endpoint of cardiovascular death or hospitalization for heart failure compared to placebo.",
+    "answer": "Empagliflozin achieved a complete 100% cure for advanced heart failure, eliminating all cardiovascular fatalities across all cohorts.",
+    "human_ground_truth": 0,
+    "hallucination_type": "unsupported_extrapolation",
+    "annotation_notes": "Relative risk reduction was 25%, not 100% cure."
+  },
+  {
+    "id": "VAL-015",
+    "domain": "Biomedicine & Health",
+    "question": "What causes Alzheimer's disease according to the amyloid hypothesis?",
+    "context": "The amyloid hypothesis posits that the accumulation of neurotoxic amyloid-beta plaques in the brain extracellular space triggers neurofibrillary tau tangle formation and subsequent synaptic loss and neuronal death.",
+    "answer": "Under this hypothesis, the build-up of amyloid-beta plaques in brain tissue initiates tau protein tangles, leading to synaptic degradation and neuron death.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-016",
+    "domain": "Biomedicine & Health",
+    "question": "What causes Alzheimer's disease according to the amyloid hypothesis?",
+    "context": "The amyloid hypothesis posits that the accumulation of neurotoxic amyloid-beta plaques in the brain extracellular space triggers neurofibrillary tau tangle formation and subsequent synaptic loss and neuronal death.",
+    "answer": "The amyloid hypothesis states that Alzheimer's is caused exclusively by bacterial infections originating in the gastrointestinal tract.",
+    "human_ground_truth": 0,
+    "hallucination_type": "entity_confusion",
+    "annotation_notes": "Context specifies amyloid-beta plaques in the brain; hallucination substitutes bacterial gut infection."
+  },
+  {
+    "id": "VAL-017",
+    "domain": "Biomedicine & Health",
+    "question": "How does CRISPR-Cas9 achieve targeted double-strand breaks?",
+    "context": "The CRISPR-Cas9 system utilizes a synthetic guide RNA (sgRNA) that pairs complementarily with a target 20-nucleotide genomic DNA sequence adjacent to a protospacer adjacent motif (PAM), directing the Cas9 endonuclease to cleave both DNA strands.",
+    "answer": "A guide RNA guides Cas9 by base-pairing with a matching genomic sequence next to a PAM site, where the Cas9 nuclease introduces double-strand breaks.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-018",
+    "domain": "Biomedicine & Health",
+    "question": "How does CRISPR-Cas9 achieve targeted double-strand breaks?",
+    "context": "The CRISPR-Cas9 system utilizes a synthetic guide RNA (sgRNA) that pairs complementarily with a target 20-nucleotide genomic DNA sequence adjacent to a protospacer adjacent motif (PAM), directing the Cas9 endonuclease to cleave both DNA strands.",
+    "answer": "Cas9 cleaves DNA indiscriminately across all chromosomes without requiring any guide RNA or sequence complementarity.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Cas9 requires synthetic guide RNA and PAM sequence; hallucination asserts indiscriminate cleavage."
+  },
+  {
+    "id": "VAL-019",
+    "domain": "Biomedicine & Health",
+    "question": "What is the recommended storage temperature for the Pfizer-BioNTech Comirnaty vaccine during ultra-cold shipping?",
+    "context": "During ultra-cold international distribution, the Pfizer-BioNTech COVID-19 vaccine formulation requires thermal shipping containers maintained between -90\u00b0C and -60\u00b0C (-130\u00b0F to -76\u00b0F).",
+    "answer": "The vaccine shipping protocol mandates maintaining ultra-cold temperatures between -90\u00b0C and -60\u00b0C.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-020",
+    "domain": "Biomedicine & Health",
+    "question": "What is the recommended storage temperature for the Pfizer-BioNTech Comirnaty vaccine during ultra-cold shipping?",
+    "context": "During ultra-cold international distribution, the Pfizer-BioNTech COVID-19 vaccine formulation requires thermal shipping containers maintained between -90\u00b0C and -60\u00b0C (-130\u00b0F to -76\u00b0F).",
+    "answer": "Pfizer's vaccine is shipped at standard room temperature of 25\u00b0C without any specialized refrigeration.",
+    "human_ground_truth": 0,
+    "hallucination_type": "numerical_distortion",
+    "annotation_notes": "Context specifies -90\u00b0C to -60\u00b0C; hallucination invents 25\u00b0C room temperature."
+  },
+  {
+    "id": "VAL-021",
+    "domain": "Economics & Finance",
+    "question": "What is the Federal Reserve's statutory dual mandate?",
+    "context": "Under the Federal Reserve Reform Act of 1977, the Board of Governors and the FOMC are statutorily mandated to pursue two co-equal objectives: maximum sustainable employment and price stability.",
+    "answer": "The Fed is tasked with achieving maximum employment alongside price stability as co-equal statutory goals.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-022",
+    "domain": "Economics & Finance",
+    "question": "What is the Federal Reserve's statutory dual mandate?",
+    "context": "Under the Federal Reserve Reform Act of 1977, the Board of Governors and the FOMC are statutorily mandated to pursue two co-equal objectives: maximum sustainable employment and price stability.",
+    "answer": "The Federal Reserve's primary legal mandate is to guarantee positive returns for stock market investors on the S&P 500 index.",
+    "human_ground_truth": 0,
+    "hallucination_type": "unsupported_extrapolation",
+    "annotation_notes": "Dual mandate is maximum employment and price stability; stock market returns are not mandated."
+  },
+  {
+    "id": "VAL-023",
+    "domain": "Economics & Finance",
+    "question": "How does quantitative tightening (QT) reduce central bank balance sheets?",
+    "context": "In quantitative tightening, the central bank allows maturing Treasury bonds and mortgage-backed securities to roll off its asset holdings without reinvesting the principal payments, shrinking banking reserve balances.",
+    "answer": "Under QT, central banks decline to reinvest proceeds from maturing securities, thereby decreasing total reserve assets on the balance sheet.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-024",
+    "domain": "Economics & Finance",
+    "question": "How does quantitative tightening (QT) reduce central bank balance sheets?",
+    "context": "In quantitative tightening, the central bank allows maturing Treasury bonds and mortgage-backed securities to roll off its asset holdings without reinvesting the principal payments, shrinking banking reserve balances.",
+    "answer": "Quantitative tightening occurs when central banks print physical cash and distribute it directly to households as stimulus checks.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Context explains bond roll-off without reinvestment; hallucination confuses QT with helicopter money stimulus."
+  },
+  {
+    "id": "VAL-025",
+    "domain": "Economics & Finance",
+    "question": "What is the target inflation rate adopted by the European Central Bank?",
+    "context": "In its 2021 monetary policy strategy review, the Governing Council of the European Central Bank adopted an explicit symmetric 2% inflation target over the medium term.",
+    "answer": "The ECB targets a symmetric inflation rate of 2% over the medium-term horizon.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-026",
+    "domain": "Economics & Finance",
+    "question": "What is the target inflation rate adopted by the European Central Bank?",
+    "context": "In its 2021 monetary policy strategy review, the Governing Council of the European Central Bank adopted an explicit symmetric 2% inflation target over the medium term.",
+    "answer": "The ECB operates under a zero-inflation target, requiring strict 0.0% annual price index changes.",
+    "human_ground_truth": 0,
+    "hallucination_type": "numerical_distortion",
+    "annotation_notes": "Context states symmetric 2% target; hallucination claims 0.0%."
+  },
+  {
+    "id": "VAL-027",
+    "domain": "Economics & Finance",
+    "question": "What determines bond yield movement relative to interest rates?",
+    "context": "Because bond coupon payments are fixed at issuance, bond prices move inversely to market interest rates; when prevailing interest rates rise, existing bond prices decline to align their yield to maturity with newly issued debt.",
+    "answer": "Fixed-rate bond prices move in the opposite direction of market interest rates, decreasing when benchmark rates increase.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-028",
+    "domain": "Economics & Finance",
+    "question": "What determines bond yield movement relative to interest rates?",
+    "context": "Because bond coupon payments are fixed at issuance, bond prices move inversely to market interest rates; when prevailing interest rates rise, existing bond prices decline to align their yield to maturity with newly issued debt.",
+    "answer": "When market interest rates increase, bond prices surge higher because existing fixed coupons become dramatically more valuable.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Bond prices and interest rates move inversely; hallucination asserts they rise together."
+  },
+  {
+    "id": "VAL-029",
+    "domain": "Economics & Finance",
+    "question": "What is the Basel III Common Equity Tier 1 (CET1) capital requirement minimum?",
+    "context": "Under global Basel III regulatory standards, commercial banks must maintain a minimum Common Equity Tier 1 (CET1) ratio of 4.5% of risk-weighted assets, supplemented by a 2.5% capital conservation buffer.",
+    "answer": "Basel III sets the baseline minimum CET1 ratio at 4.5% of risk-weighted assets, alongside a 2.5% conservation buffer.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-030",
+    "domain": "Economics & Finance",
+    "question": "What is the Basel III Common Equity Tier 1 (CET1) capital requirement minimum?",
+    "context": "Under global Basel III regulatory standards, commercial banks must maintain a minimum Common Equity Tier 1 (CET1) ratio of 4.5% of risk-weighted assets, supplemented by a 2.5% capital conservation buffer.",
+    "answer": "Basel III abolished all capital reserve requirements, allowing banks to operate with 0% tier-one capital backing.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Context establishes 4.5% CET1 + 2.5% buffer; hallucination claims requirements were abolished."
+  },
+  {
+    "id": "VAL-031",
+    "domain": "Physics & Climate Science",
+    "question": "What is the greenhouse effect mechanism in Earth's atmosphere?",
+    "context": "Earth's surface absorbs incoming shortwave solar radiation and re-emits thermal energy as longwave infrared radiation. Atmospheric greenhouse gases such as CO2, water vapor, and methane absorb this infrared radiation and re-radiate it in all directions, warming the lower troposphere.",
+    "answer": "Greenhouse gases absorb longwave infrared radiation emitted by the Earth and re-radiate thermal energy, thereby warming the lower atmosphere.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-032",
+    "domain": "Physics & Climate Science",
+    "question": "What is the greenhouse effect mechanism in Earth's atmosphere?",
+    "context": "Earth's surface absorbs incoming shortwave solar radiation and re-emits thermal energy as longwave infrared radiation. Atmospheric greenhouse gases such as CO2, water vapor, and methane absorb this infrared radiation and re-radiate it in all directions, warming the lower troposphere.",
+    "answer": "The greenhouse effect works because greenhouse gases reflect 100% of incoming solar ultraviolet radiation directly into outer space before it reaches Earth.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Greenhouse effect involves trapping outgoing longwave IR; hallucination claims reflecting solar UV into space."
+  },
+  {
+    "id": "VAL-033",
+    "domain": "Physics & Climate Science",
+    "question": "What did the James Webb Space Telescope detect in the atmosphere of exoplanet WASP-96b?",
+    "context": "Spectroscopic measurements from the James Webb Space Telescope's NIRISS instrument revealed distinct spectral signatures of water vapor, haze, and clouds in the atmosphere of the giant gas exoplanet WASP-96b.",
+    "answer": "JWST's NIRISS spectrometer detected unambiguous absorption features indicating water vapor, clouds, and atmospheric haze on WASP-96b.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-034",
+    "domain": "Physics & Climate Science",
+    "question": "What did the James Webb Space Telescope detect in the atmosphere of exoplanet WASP-96b?",
+    "context": "Spectroscopic measurements from the James Webb Space Telescope's NIRISS instrument revealed distinct spectral signatures of water vapor, haze, and clouds in the atmosphere of the giant gas exoplanet WASP-96b.",
+    "answer": "JWST confirmed the presence of advanced alien industrial cities and artificial radio transmission towers on WASP-96b.",
+    "human_ground_truth": 0,
+    "hallucination_type": "unsupported_extrapolation",
+    "annotation_notes": "Context reports water vapor and haze; hallucination invents alien cities and radio towers."
+  },
+  {
+    "id": "VAL-035",
+    "domain": "Physics & Climate Science",
+    "question": "What is nuclear fusion in stellar cores?",
+    "context": "In the core of main-sequence stars like the Sun, extreme temperatures and gravitational pressures force hydrogen nuclei (protons) to overcome electrostatic Coulomb repulsion and fuse into helium through the proton-proton chain reaction, releasing energy governed by E = mc^2.",
+    "answer": "High temperature and pressure enable hydrogen protons to overcome Coulomb repulsion and fuse into helium nuclei, releasing binding energy.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-036",
+    "domain": "Physics & Climate Science",
+    "question": "What is nuclear fusion in stellar cores?",
+    "context": "In the core of main-sequence stars like the Sun, extreme temperatures and gravitational pressures force hydrogen nuclei (protons) to overcome electrostatic Coulomb repulsion and fuse into helium through the proton-proton chain reaction, releasing energy governed by E = mc^2.",
+    "answer": "Nuclear fusion in stars involves splitting heavy uranium atoms into lighter barium and krypton fragments through neutron bombardment.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Context describes fusing hydrogen into helium; hallucination describes uranium fission."
+  },
+  {
+    "id": "VAL-037",
+    "domain": "Physics & Climate Science",
+    "question": "What was the pre-industrial atmospheric CO2 concentration?",
+    "context": "Ice core records from Dome C in Antarctica confirm that atmospheric carbon dioxide concentrations remained relatively stable between 275 and 285 parts per million (ppm) during the 10,000 years prior to the Industrial Revolution.",
+    "answer": "Antarctic ice core data indicate pre-industrial atmospheric CO2 levels hovered around 275 to 285 ppm.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-038",
+    "domain": "Physics & Climate Science",
+    "question": "What was the pre-industrial atmospheric CO2 concentration?",
+    "context": "Ice core records from Dome C in Antarctica confirm that atmospheric carbon dioxide concentrations remained relatively stable between 275 and 285 parts per million (ppm) during the 10,000 years prior to the Industrial Revolution.",
+    "answer": "Atmospheric CO2 levels before the industrial era exceeded 1,200 ppm, significantly higher than modern measurements.",
+    "human_ground_truth": 0,
+    "hallucination_type": "numerical_distortion",
+    "annotation_notes": "Context specifies 275-285 ppm; hallucination invents 1,200 ppm."
+  },
+  {
+    "id": "VAL-039",
+    "domain": "Physics & Climate Science",
+    "question": "What is quantum superposition?",
+    "context": "In quantum mechanics, the principle of superposition states that a physical system can exist simultaneously in a linear combination of multiple distinct quantum states until a measurement interaction causes state reduction.",
+    "answer": "Quantum superposition allows a physical system to occupy a linear combination of several quantum states until an observation occurs.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-040",
+    "domain": "Physics & Climate Science",
+    "question": "What is quantum superposition?",
+    "context": "In quantum mechanics, the principle of superposition states that a physical system can exist simultaneously in a linear combination of multiple distinct quantum states until a measurement interaction causes state reduction.",
+    "answer": "Quantum superposition is the classical phenomenon where two macroscopic rocks merge into a single solid boulder when heated.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Context describes quantum linear state combination; hallucination invents classical rock merging."
+  },
+  {
+    "id": "VAL-041",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the primary role of the attention mechanism in Transformers?",
+    "context": "The attention mechanism in Transformers allows the model to dynamically weight the importance of different tokens in the input sequence regardless of their positional distance, replacing recurrence with parallel self-attention computations.",
+    "answer": "The attention mechanism forces Transformers to process tokens sequentially one by one, using recurrent hidden state propagation to compute token importance.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Context explicitly states recurrence is replaced with parallel computation; hallucination claims sequential recurrent hidden state propagation."
+  },
+  {
+    "id": "VAL-042",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the primary role of the attention mechanism in Transformers?",
+    "context": "The attention mechanism in Transformers allows the model to dynamically weight the importance of different tokens in the input sequence regardless of their positional distance, replacing recurrence with parallel self-attention computations.",
+    "answer": "The attention mechanism enables the model to assign dynamic weights to tokens across the sequence, facilitating parallel computations without relying on recurrent connections.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-043",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the embedding dimension of BGE-base-en-v1.5?",
+    "context": "BAAI's bge-base-en-v1.5 produces dense semantic vector representations with a dimensionality of 768 features, trained with contrastive learning on large-scale paired corpora.",
+    "answer": "BGE-base-en-v1.5 generates high-dimensional embeddings with 1536 features, identical to OpenAI text-embedding-ada-002.",
+    "human_ground_truth": 0,
+    "hallucination_type": "numerical_distortion",
+    "annotation_notes": "Context specifies 768 dimensions; hallucination invents 1536 dimensions and adds unsupported comparison."
+  },
+  {
+    "id": "VAL-044",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the embedding dimension of BGE-base-en-v1.5?",
+    "context": "BAAI's bge-base-en-v1.5 produces dense semantic vector representations with a dimensionality of 768 features, trained with contrastive learning on large-scale paired corpora.",
+    "answer": "BGE-base-en-v1.5 outputs dense vector embeddings that have a dimensionality of 768 features.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-045",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "How does Reciprocal Rank Fusion (RRF) combine sparse and dense rankings?",
+    "context": "Reciprocal Rank Fusion computes a composite score for each candidate document d by summing 1 / (k + rank_i(d)) across individual ranking systems, where k is a smoothing constant typically set to 60.",
+    "answer": "Reciprocal Rank Fusion multiplies the raw cosine similarities of dense vectors by the BM25 integer term frequencies without considering relative rank order.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "RRF relies on rank sum formula, whereas hallucination invents raw cosine multiplication."
+  },
+  {
+    "id": "VAL-046",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "How does Reciprocal Rank Fusion (RRF) combine sparse and dense rankings?",
+    "context": "Reciprocal Rank Fusion computes a composite score for each candidate document d by summing 1 / (k + rank_i(d)) across individual ranking systems, where k is a smoothing constant typically set to 60.",
+    "answer": "RRF calculates a document's combined score by summing the reciprocal ranks 1 / (k + rank) from each retriever, with k acting as a smoothing factor commonly set around 60.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-047",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What does FAISS IndexFlatIP compute?",
+    "context": "FAISS IndexFlatIP performs exhaustive exact search by calculating the inner product (dot product) between query vectors and stored vectors. When vectors are L2-normalized, inner product is mathematically equivalent to cosine similarity.",
+    "answer": "FAISS IndexFlatIP uses approximate Voronoi cell quantization to avoid calculating dot products, trading accuracy for sub-millisecond retrieval.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Context specifies exact search by calculating inner product; hallucination claims it avoids calculating dot products via quantization."
+  },
+  {
+    "id": "VAL-048",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What does FAISS IndexFlatIP compute?",
+    "context": "FAISS IndexFlatIP performs exhaustive exact search by calculating the inner product (dot product) between query vectors and stored vectors. When vectors are L2-normalized, inner product is mathematically equivalent to cosine similarity.",
+    "answer": "IndexFlatIP computes the exact inner product between query and index vectors, which equals cosine similarity when vectors have unit L2 norm.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-049",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the primary motivation for cross-encoder reranking?",
+    "context": "While bi-encoders calculate query and document embeddings independently to enable fast index search, cross-encoders feed the query and candidate document together into all transformer layers, capturing rich cross-attention interactions at the cost of higher latency.",
+    "answer": "Cross-encoders compute independent vectors that reduce latency to under one microsecond, allowing full web-scale indexing without GPU acceleration.",
+    "human_ground_truth": 0,
+    "hallucination_type": "unsupported_extrapolation",
+    "annotation_notes": "Context states cross-encoders have higher latency due to joint attention; hallucination claims under 1 microsecond latency."
+  },
+  {
+    "id": "VAL-050",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the primary motivation for cross-encoder reranking?",
+    "context": "While bi-encoders calculate query and document embeddings independently to enable fast index search, cross-encoders feed the query and candidate document together into all transformer layers, capturing rich cross-attention interactions at the cost of higher latency.",
+    "answer": "Cross-encoders process the query and document jointly through full cross-attention layers, yielding deeper interaction modeling than independent bi-encoders.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-051",
+    "domain": "Biomedicine & Health",
+    "question": "What is the function of mRNA in COVID-19 vaccines?",
+    "context": "mRNA vaccines deliver genetic instructions wrapped in lipid nanoparticles to host cells, instructing ribosomes to temporarily produce the SARS-CoV-2 spike protein to elicit an adaptive immune response.",
+    "answer": "The mRNA directly integrates into the patient's nuclear DNA to permanently alter cellular genomic transcription.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "mRNA does not enter the nucleus or integrate into DNA; context specifies temporary production by ribosomes."
+  },
+  {
+    "id": "VAL-052",
+    "domain": "Biomedicine & Health",
+    "question": "What is the function of mRNA in COVID-19 vaccines?",
+    "context": "mRNA vaccines deliver genetic instructions wrapped in lipid nanoparticles to host cells, instructing ribosomes to temporarily produce the SARS-CoV-2 spike protein to elicit an adaptive immune response.",
+    "answer": "The mRNA delivers instructions that prompt cellular ribosomes to produce the viral spike protein, triggering an immune defense.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-053",
+    "domain": "Biomedicine & Health",
+    "question": "What was the reported efficacy of the SGLT2 inhibitor empagliflozin in heart failure?",
+    "context": "In the EMPEROR-Reduced clinical trial, empagliflozin demonstrated a 25% relative risk reduction in the primary composite endpoint of cardiovascular death or hospitalization for heart failure compared to placebo.",
+    "answer": "Empagliflozin achieved a complete 100% cure for advanced heart failure, eliminating all cardiovascular fatalities across all cohorts.",
+    "human_ground_truth": 0,
+    "hallucination_type": "unsupported_extrapolation",
+    "annotation_notes": "Relative risk reduction was 25%, not 100% cure."
+  },
+  {
+    "id": "VAL-054",
+    "domain": "Biomedicine & Health",
+    "question": "What was the reported efficacy of the SGLT2 inhibitor empagliflozin in heart failure?",
+    "context": "In the EMPEROR-Reduced clinical trial, empagliflozin demonstrated a 25% relative risk reduction in the primary composite endpoint of cardiovascular death or hospitalization for heart failure compared to placebo.",
+    "answer": "Clinical trials showed empagliflozin lowered the relative risk of cardiovascular death or heart failure hospitalization by 25%.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-055",
+    "domain": "Biomedicine & Health",
+    "question": "What causes Alzheimer's disease according to the amyloid hypothesis?",
+    "context": "The amyloid hypothesis posits that the accumulation of neurotoxic amyloid-beta plaques in the brain extracellular space triggers neurofibrillary tau tangle formation and subsequent synaptic loss and neuronal death.",
+    "answer": "The amyloid hypothesis states that Alzheimer's is caused exclusively by bacterial infections originating in the gastrointestinal tract.",
+    "human_ground_truth": 0,
+    "hallucination_type": "entity_confusion",
+    "annotation_notes": "Context specifies amyloid-beta plaques in the brain; hallucination substitutes bacterial gut infection."
+  },
+  {
+    "id": "VAL-056",
+    "domain": "Biomedicine & Health",
+    "question": "What causes Alzheimer's disease according to the amyloid hypothesis?",
+    "context": "The amyloid hypothesis posits that the accumulation of neurotoxic amyloid-beta plaques in the brain extracellular space triggers neurofibrillary tau tangle formation and subsequent synaptic loss and neuronal death.",
+    "answer": "Under this hypothesis, the build-up of amyloid-beta plaques in brain tissue initiates tau protein tangles, leading to synaptic degradation and neuron death.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-057",
+    "domain": "Biomedicine & Health",
+    "question": "How does CRISPR-Cas9 achieve targeted double-strand breaks?",
+    "context": "The CRISPR-Cas9 system utilizes a synthetic guide RNA (sgRNA) that pairs complementarily with a target 20-nucleotide genomic DNA sequence adjacent to a protospacer adjacent motif (PAM), directing the Cas9 endonuclease to cleave both DNA strands.",
+    "answer": "Cas9 cleaves DNA indiscriminately across all chromosomes without requiring any guide RNA or sequence complementarity.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Cas9 requires synthetic guide RNA and PAM sequence; hallucination asserts indiscriminate cleavage."
+  },
+  {
+    "id": "VAL-058",
+    "domain": "Biomedicine & Health",
+    "question": "How does CRISPR-Cas9 achieve targeted double-strand breaks?",
+    "context": "The CRISPR-Cas9 system utilizes a synthetic guide RNA (sgRNA) that pairs complementarily with a target 20-nucleotide genomic DNA sequence adjacent to a protospacer adjacent motif (PAM), directing the Cas9 endonuclease to cleave both DNA strands.",
+    "answer": "A guide RNA guides Cas9 by base-pairing with a matching genomic sequence next to a PAM site, where the Cas9 nuclease introduces double-strand breaks.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-059",
+    "domain": "Biomedicine & Health",
+    "question": "What is the recommended storage temperature for the Pfizer-BioNTech Comirnaty vaccine during ultra-cold shipping?",
+    "context": "During ultra-cold international distribution, the Pfizer-BioNTech COVID-19 vaccine formulation requires thermal shipping containers maintained between -90\u00b0C and -60\u00b0C (-130\u00b0F to -76\u00b0F).",
+    "answer": "Pfizer's vaccine is shipped at standard room temperature of 25\u00b0C without any specialized refrigeration.",
+    "human_ground_truth": 0,
+    "hallucination_type": "numerical_distortion",
+    "annotation_notes": "Context specifies -90\u00b0C to -60\u00b0C; hallucination invents 25\u00b0C room temperature."
+  },
+  {
+    "id": "VAL-060",
+    "domain": "Biomedicine & Health",
+    "question": "What is the recommended storage temperature for the Pfizer-BioNTech Comirnaty vaccine during ultra-cold shipping?",
+    "context": "During ultra-cold international distribution, the Pfizer-BioNTech COVID-19 vaccine formulation requires thermal shipping containers maintained between -90\u00b0C and -60\u00b0C (-130\u00b0F to -76\u00b0F).",
+    "answer": "The vaccine shipping protocol mandates maintaining ultra-cold temperatures between -90\u00b0C and -60\u00b0C.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-061",
+    "domain": "Economics & Finance",
+    "question": "What is the Federal Reserve's statutory dual mandate?",
+    "context": "Under the Federal Reserve Reform Act of 1977, the Board of Governors and the FOMC are statutorily mandated to pursue two co-equal objectives: maximum sustainable employment and price stability.",
+    "answer": "The Federal Reserve's primary legal mandate is to guarantee positive returns for stock market investors on the S&P 500 index.",
+    "human_ground_truth": 0,
+    "hallucination_type": "unsupported_extrapolation",
+    "annotation_notes": "Dual mandate is maximum employment and price stability; stock market returns are not mandated."
+  },
+  {
+    "id": "VAL-062",
+    "domain": "Economics & Finance",
+    "question": "What is the Federal Reserve's statutory dual mandate?",
+    "context": "Under the Federal Reserve Reform Act of 1977, the Board of Governors and the FOMC are statutorily mandated to pursue two co-equal objectives: maximum sustainable employment and price stability.",
+    "answer": "The Fed is tasked with achieving maximum employment alongside price stability as co-equal statutory goals.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-063",
+    "domain": "Economics & Finance",
+    "question": "How does quantitative tightening (QT) reduce central bank balance sheets?",
+    "context": "In quantitative tightening, the central bank allows maturing Treasury bonds and mortgage-backed securities to roll off its asset holdings without reinvesting the principal payments, shrinking banking reserve balances.",
+    "answer": "Quantitative tightening occurs when central banks print physical cash and distribute it directly to households as stimulus checks.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Context explains bond roll-off without reinvestment; hallucination confuses QT with helicopter money stimulus."
+  },
+  {
+    "id": "VAL-064",
+    "domain": "Economics & Finance",
+    "question": "How does quantitative tightening (QT) reduce central bank balance sheets?",
+    "context": "In quantitative tightening, the central bank allows maturing Treasury bonds and mortgage-backed securities to roll off its asset holdings without reinvesting the principal payments, shrinking banking reserve balances.",
+    "answer": "Under QT, central banks decline to reinvest proceeds from maturing securities, thereby decreasing total reserve assets on the balance sheet.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-065",
+    "domain": "Economics & Finance",
+    "question": "What is the target inflation rate adopted by the European Central Bank?",
+    "context": "In its 2021 monetary policy strategy review, the Governing Council of the European Central Bank adopted an explicit symmetric 2% inflation target over the medium term.",
+    "answer": "The ECB operates under a zero-inflation target, requiring strict 0.0% annual price index changes.",
+    "human_ground_truth": 0,
+    "hallucination_type": "numerical_distortion",
+    "annotation_notes": "Context states symmetric 2% target; hallucination claims 0.0%."
+  },
+  {
+    "id": "VAL-066",
+    "domain": "Economics & Finance",
+    "question": "What is the target inflation rate adopted by the European Central Bank?",
+    "context": "In its 2021 monetary policy strategy review, the Governing Council of the European Central Bank adopted an explicit symmetric 2% inflation target over the medium term.",
+    "answer": "The ECB targets a symmetric inflation rate of 2% over the medium-term horizon.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-067",
+    "domain": "Economics & Finance",
+    "question": "What determines bond yield movement relative to interest rates?",
+    "context": "Because bond coupon payments are fixed at issuance, bond prices move inversely to market interest rates; when prevailing interest rates rise, existing bond prices decline to align their yield to maturity with newly issued debt.",
+    "answer": "When market interest rates increase, bond prices surge higher because existing fixed coupons become dramatically more valuable.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Bond prices and interest rates move inversely; hallucination asserts they rise together."
+  },
+  {
+    "id": "VAL-068",
+    "domain": "Economics & Finance",
+    "question": "What determines bond yield movement relative to interest rates?",
+    "context": "Because bond coupon payments are fixed at issuance, bond prices move inversely to market interest rates; when prevailing interest rates rise, existing bond prices decline to align their yield to maturity with newly issued debt.",
+    "answer": "Fixed-rate bond prices move in the opposite direction of market interest rates, decreasing when benchmark rates increase.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-069",
+    "domain": "Economics & Finance",
+    "question": "What is the Basel III Common Equity Tier 1 (CET1) capital requirement minimum?",
+    "context": "Under global Basel III regulatory standards, commercial banks must maintain a minimum Common Equity Tier 1 (CET1) ratio of 4.5% of risk-weighted assets, supplemented by a 2.5% capital conservation buffer.",
+    "answer": "Basel III abolished all capital reserve requirements, allowing banks to operate with 0% tier-one capital backing.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Context establishes 4.5% CET1 + 2.5% buffer; hallucination claims requirements were abolished."
+  },
+  {
+    "id": "VAL-070",
+    "domain": "Economics & Finance",
+    "question": "What is the Basel III Common Equity Tier 1 (CET1) capital requirement minimum?",
+    "context": "Under global Basel III regulatory standards, commercial banks must maintain a minimum Common Equity Tier 1 (CET1) ratio of 4.5% of risk-weighted assets, supplemented by a 2.5% capital conservation buffer.",
+    "answer": "Basel III sets the baseline minimum CET1 ratio at 4.5% of risk-weighted assets, alongside a 2.5% conservation buffer.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-071",
+    "domain": "Physics & Climate Science",
+    "question": "What is the greenhouse effect mechanism in Earth's atmosphere?",
+    "context": "Earth's surface absorbs incoming shortwave solar radiation and re-emits thermal energy as longwave infrared radiation. Atmospheric greenhouse gases such as CO2, water vapor, and methane absorb this infrared radiation and re-radiate it in all directions, warming the lower troposphere.",
+    "answer": "The greenhouse effect works because greenhouse gases reflect 100% of incoming solar ultraviolet radiation directly into outer space before it reaches Earth.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Greenhouse effect involves trapping outgoing longwave IR; hallucination claims reflecting solar UV into space."
+  },
+  {
+    "id": "VAL-072",
+    "domain": "Physics & Climate Science",
+    "question": "What is the greenhouse effect mechanism in Earth's atmosphere?",
+    "context": "Earth's surface absorbs incoming shortwave solar radiation and re-emits thermal energy as longwave infrared radiation. Atmospheric greenhouse gases such as CO2, water vapor, and methane absorb this infrared radiation and re-radiate it in all directions, warming the lower troposphere.",
+    "answer": "Greenhouse gases absorb longwave infrared radiation emitted by the Earth and re-radiate thermal energy, thereby warming the lower atmosphere.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-073",
+    "domain": "Physics & Climate Science",
+    "question": "What did the James Webb Space Telescope detect in the atmosphere of exoplanet WASP-96b?",
+    "context": "Spectroscopic measurements from the James Webb Space Telescope's NIRISS instrument revealed distinct spectral signatures of water vapor, haze, and clouds in the atmosphere of the giant gas exoplanet WASP-96b.",
+    "answer": "JWST confirmed the presence of advanced alien industrial cities and artificial radio transmission towers on WASP-96b.",
+    "human_ground_truth": 0,
+    "hallucination_type": "unsupported_extrapolation",
+    "annotation_notes": "Context reports water vapor and haze; hallucination invents alien cities and radio towers."
+  },
+  {
+    "id": "VAL-074",
+    "domain": "Physics & Climate Science",
+    "question": "What did the James Webb Space Telescope detect in the atmosphere of exoplanet WASP-96b?",
+    "context": "Spectroscopic measurements from the James Webb Space Telescope's NIRISS instrument revealed distinct spectral signatures of water vapor, haze, and clouds in the atmosphere of the giant gas exoplanet WASP-96b.",
+    "answer": "JWST's NIRISS spectrometer detected unambiguous absorption features indicating water vapor, clouds, and atmospheric haze on WASP-96b.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-075",
+    "domain": "Physics & Climate Science",
+    "question": "What is nuclear fusion in stellar cores?",
+    "context": "In the core of main-sequence stars like the Sun, extreme temperatures and gravitational pressures force hydrogen nuclei (protons) to overcome electrostatic Coulomb repulsion and fuse into helium through the proton-proton chain reaction, releasing energy governed by E = mc^2.",
+    "answer": "Nuclear fusion in stars involves splitting heavy uranium atoms into lighter barium and krypton fragments through neutron bombardment.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Context describes fusing hydrogen into helium; hallucination describes uranium fission."
+  },
+  {
+    "id": "VAL-076",
+    "domain": "Physics & Climate Science",
+    "question": "What is nuclear fusion in stellar cores?",
+    "context": "In the core of main-sequence stars like the Sun, extreme temperatures and gravitational pressures force hydrogen nuclei (protons) to overcome electrostatic Coulomb repulsion and fuse into helium through the proton-proton chain reaction, releasing energy governed by E = mc^2.",
+    "answer": "High temperature and pressure enable hydrogen protons to overcome Coulomb repulsion and fuse into helium nuclei, releasing binding energy.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-077",
+    "domain": "Physics & Climate Science",
+    "question": "What was the pre-industrial atmospheric CO2 concentration?",
+    "context": "Ice core records from Dome C in Antarctica confirm that atmospheric carbon dioxide concentrations remained relatively stable between 275 and 285 parts per million (ppm) during the 10,000 years prior to the Industrial Revolution.",
+    "answer": "Atmospheric CO2 levels before the industrial era exceeded 1,200 ppm, significantly higher than modern measurements.",
+    "human_ground_truth": 0,
+    "hallucination_type": "numerical_distortion",
+    "annotation_notes": "Context specifies 275-285 ppm; hallucination invents 1,200 ppm."
+  },
+  {
+    "id": "VAL-078",
+    "domain": "Physics & Climate Science",
+    "question": "What was the pre-industrial atmospheric CO2 concentration?",
+    "context": "Ice core records from Dome C in Antarctica confirm that atmospheric carbon dioxide concentrations remained relatively stable between 275 and 285 parts per million (ppm) during the 10,000 years prior to the Industrial Revolution.",
+    "answer": "Antarctic ice core data indicate pre-industrial atmospheric CO2 levels hovered around 275 to 285 ppm.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-079",
+    "domain": "Physics & Climate Science",
+    "question": "What is quantum superposition?",
+    "context": "In quantum mechanics, the principle of superposition states that a physical system can exist simultaneously in a linear combination of multiple distinct quantum states until a measurement interaction causes state reduction.",
+    "answer": "Quantum superposition is the classical phenomenon where two macroscopic rocks merge into a single solid boulder when heated.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Context describes quantum linear state combination; hallucination invents classical rock merging."
+  },
+  {
+    "id": "VAL-080",
+    "domain": "Physics & Climate Science",
+    "question": "What is quantum superposition?",
+    "context": "In quantum mechanics, the principle of superposition states that a physical system can exist simultaneously in a linear combination of multiple distinct quantum states until a measurement interaction causes state reduction.",
+    "answer": "Quantum superposition allows a physical system to occupy a linear combination of several quantum states until an observation occurs.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-081",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the primary role of the attention mechanism in Transformers?",
+    "context": "The attention mechanism in Transformers allows the model to dynamically weight the importance of different tokens in the input sequence regardless of their positional distance, replacing recurrence with parallel self-attention computations.",
+    "answer": "The attention mechanism enables the model to assign dynamic weights to tokens across the sequence, facilitating parallel computations without relying on recurrent connections.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-082",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the primary role of the attention mechanism in Transformers?",
+    "context": "The attention mechanism in Transformers allows the model to dynamically weight the importance of different tokens in the input sequence regardless of their positional distance, replacing recurrence with parallel self-attention computations.",
+    "answer": "The attention mechanism forces Transformers to process tokens sequentially one by one, using recurrent hidden state propagation to compute token importance.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Context explicitly states recurrence is replaced with parallel computation; hallucination claims sequential recurrent hidden state propagation."
+  },
+  {
+    "id": "VAL-083",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the embedding dimension of BGE-base-en-v1.5?",
+    "context": "BAAI's bge-base-en-v1.5 produces dense semantic vector representations with a dimensionality of 768 features, trained with contrastive learning on large-scale paired corpora.",
+    "answer": "BGE-base-en-v1.5 outputs dense vector embeddings that have a dimensionality of 768 features.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-084",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the embedding dimension of BGE-base-en-v1.5?",
+    "context": "BAAI's bge-base-en-v1.5 produces dense semantic vector representations with a dimensionality of 768 features, trained with contrastive learning on large-scale paired corpora.",
+    "answer": "BGE-base-en-v1.5 generates high-dimensional embeddings with 1536 features, identical to OpenAI text-embedding-ada-002.",
+    "human_ground_truth": 0,
+    "hallucination_type": "numerical_distortion",
+    "annotation_notes": "Context specifies 768 dimensions; hallucination invents 1536 dimensions and adds unsupported comparison."
+  },
+  {
+    "id": "VAL-085",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "How does Reciprocal Rank Fusion (RRF) combine sparse and dense rankings?",
+    "context": "Reciprocal Rank Fusion computes a composite score for each candidate document d by summing 1 / (k + rank_i(d)) across individual ranking systems, where k is a smoothing constant typically set to 60.",
+    "answer": "RRF calculates a document's combined score by summing the reciprocal ranks 1 / (k + rank) from each retriever, with k acting as a smoothing factor commonly set around 60.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-086",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "How does Reciprocal Rank Fusion (RRF) combine sparse and dense rankings?",
+    "context": "Reciprocal Rank Fusion computes a composite score for each candidate document d by summing 1 / (k + rank_i(d)) across individual ranking systems, where k is a smoothing constant typically set to 60.",
+    "answer": "Reciprocal Rank Fusion multiplies the raw cosine similarities of dense vectors by the BM25 integer term frequencies without considering relative rank order.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "RRF relies on rank sum formula, whereas hallucination invents raw cosine multiplication."
+  },
+  {
+    "id": "VAL-087",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What does FAISS IndexFlatIP compute?",
+    "context": "FAISS IndexFlatIP performs exhaustive exact search by calculating the inner product (dot product) between query vectors and stored vectors. When vectors are L2-normalized, inner product is mathematically equivalent to cosine similarity.",
+    "answer": "IndexFlatIP computes the exact inner product between query and index vectors, which equals cosine similarity when vectors have unit L2 norm.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-088",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What does FAISS IndexFlatIP compute?",
+    "context": "FAISS IndexFlatIP performs exhaustive exact search by calculating the inner product (dot product) between query vectors and stored vectors. When vectors are L2-normalized, inner product is mathematically equivalent to cosine similarity.",
+    "answer": "FAISS IndexFlatIP uses approximate Voronoi cell quantization to avoid calculating dot products, trading accuracy for sub-millisecond retrieval.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Context specifies exact search by calculating inner product; hallucination claims it avoids calculating dot products via quantization."
+  },
+  {
+    "id": "VAL-089",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the primary motivation for cross-encoder reranking?",
+    "context": "While bi-encoders calculate query and document embeddings independently to enable fast index search, cross-encoders feed the query and candidate document together into all transformer layers, capturing rich cross-attention interactions at the cost of higher latency.",
+    "answer": "Cross-encoders process the query and document jointly through full cross-attention layers, yielding deeper interaction modeling than independent bi-encoders.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-090",
+    "domain": "Artificial Intelligence & NLP",
+    "question": "What is the primary motivation for cross-encoder reranking?",
+    "context": "While bi-encoders calculate query and document embeddings independently to enable fast index search, cross-encoders feed the query and candidate document together into all transformer layers, capturing rich cross-attention interactions at the cost of higher latency.",
+    "answer": "Cross-encoders compute independent vectors that reduce latency to under one microsecond, allowing full web-scale indexing without GPU acceleration.",
+    "human_ground_truth": 0,
+    "hallucination_type": "unsupported_extrapolation",
+    "annotation_notes": "Context states cross-encoders have higher latency due to joint attention; hallucination claims under 1 microsecond latency."
+  },
+  {
+    "id": "VAL-091",
+    "domain": "Biomedicine & Health",
+    "question": "What is the function of mRNA in COVID-19 vaccines?",
+    "context": "mRNA vaccines deliver genetic instructions wrapped in lipid nanoparticles to host cells, instructing ribosomes to temporarily produce the SARS-CoV-2 spike protein to elicit an adaptive immune response.",
+    "answer": "The mRNA delivers instructions that prompt cellular ribosomes to produce the viral spike protein, triggering an immune defense.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-092",
+    "domain": "Biomedicine & Health",
+    "question": "What is the function of mRNA in COVID-19 vaccines?",
+    "context": "mRNA vaccines deliver genetic instructions wrapped in lipid nanoparticles to host cells, instructing ribosomes to temporarily produce the SARS-CoV-2 spike protein to elicit an adaptive immune response.",
+    "answer": "The mRNA directly integrates into the patient's nuclear DNA to permanently alter cellular genomic transcription.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "mRNA does not enter the nucleus or integrate into DNA; context specifies temporary production by ribosomes."
+  },
+  {
+    "id": "VAL-093",
+    "domain": "Biomedicine & Health",
+    "question": "What was the reported efficacy of the SGLT2 inhibitor empagliflozin in heart failure?",
+    "context": "In the EMPEROR-Reduced clinical trial, empagliflozin demonstrated a 25% relative risk reduction in the primary composite endpoint of cardiovascular death or hospitalization for heart failure compared to placebo.",
+    "answer": "Clinical trials showed empagliflozin lowered the relative risk of cardiovascular death or heart failure hospitalization by 25%.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-094",
+    "domain": "Biomedicine & Health",
+    "question": "What was the reported efficacy of the SGLT2 inhibitor empagliflozin in heart failure?",
+    "context": "In the EMPEROR-Reduced clinical trial, empagliflozin demonstrated a 25% relative risk reduction in the primary composite endpoint of cardiovascular death or hospitalization for heart failure compared to placebo.",
+    "answer": "Empagliflozin achieved a complete 100% cure for advanced heart failure, eliminating all cardiovascular fatalities across all cohorts.",
+    "human_ground_truth": 0,
+    "hallucination_type": "unsupported_extrapolation",
+    "annotation_notes": "Relative risk reduction was 25%, not 100% cure."
+  },
+  {
+    "id": "VAL-095",
+    "domain": "Biomedicine & Health",
+    "question": "What causes Alzheimer's disease according to the amyloid hypothesis?",
+    "context": "The amyloid hypothesis posits that the accumulation of neurotoxic amyloid-beta plaques in the brain extracellular space triggers neurofibrillary tau tangle formation and subsequent synaptic loss and neuronal death.",
+    "answer": "Under this hypothesis, the build-up of amyloid-beta plaques in brain tissue initiates tau protein tangles, leading to synaptic degradation and neuron death.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-096",
+    "domain": "Biomedicine & Health",
+    "question": "What causes Alzheimer's disease according to the amyloid hypothesis?",
+    "context": "The amyloid hypothesis posits that the accumulation of neurotoxic amyloid-beta plaques in the brain extracellular space triggers neurofibrillary tau tangle formation and subsequent synaptic loss and neuronal death.",
+    "answer": "The amyloid hypothesis states that Alzheimer's is caused exclusively by bacterial infections originating in the gastrointestinal tract.",
+    "human_ground_truth": 0,
+    "hallucination_type": "entity_confusion",
+    "annotation_notes": "Context specifies amyloid-beta plaques in the brain; hallucination substitutes bacterial gut infection."
+  },
+  {
+    "id": "VAL-097",
+    "domain": "Biomedicine & Health",
+    "question": "How does CRISPR-Cas9 achieve targeted double-strand breaks?",
+    "context": "The CRISPR-Cas9 system utilizes a synthetic guide RNA (sgRNA) that pairs complementarily with a target 20-nucleotide genomic DNA sequence adjacent to a protospacer adjacent motif (PAM), directing the Cas9 endonuclease to cleave both DNA strands.",
+    "answer": "A guide RNA guides Cas9 by base-pairing with a matching genomic sequence next to a PAM site, where the Cas9 nuclease introduces double-strand breaks.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-098",
+    "domain": "Biomedicine & Health",
+    "question": "How does CRISPR-Cas9 achieve targeted double-strand breaks?",
+    "context": "The CRISPR-Cas9 system utilizes a synthetic guide RNA (sgRNA) that pairs complementarily with a target 20-nucleotide genomic DNA sequence adjacent to a protospacer adjacent motif (PAM), directing the Cas9 endonuclease to cleave both DNA strands.",
+    "answer": "Cas9 cleaves DNA indiscriminately across all chromosomes without requiring any guide RNA or sequence complementarity.",
+    "human_ground_truth": 0,
+    "hallucination_type": "factual_contradiction",
+    "annotation_notes": "Cas9 requires synthetic guide RNA and PAM sequence; hallucination asserts indiscriminate cleavage."
+  },
+  {
+    "id": "VAL-099",
+    "domain": "Biomedicine & Health",
+    "question": "What is the recommended storage temperature for the Pfizer-BioNTech Comirnaty vaccine during ultra-cold shipping?",
+    "context": "During ultra-cold international distribution, the Pfizer-BioNTech COVID-19 vaccine formulation requires thermal shipping containers maintained between -90\u00b0C and -60\u00b0C (-130\u00b0F to -76\u00b0F).",
+    "answer": "The vaccine shipping protocol mandates maintaining ultra-cold temperatures between -90\u00b0C and -60\u00b0C.",
+    "human_ground_truth": 1,
+    "hallucination_type": "none",
+    "annotation_notes": "All claims directly substantiated by evidence in context."
+  },
+  {
+    "id": "VAL-100",
+    "domain": "Biomedicine & Health",
+    "question": "What is the recommended storage temperature for the Pfizer-BioNTech Comirnaty vaccine during ultra-cold shipping?",
+    "context": "During ultra-cold international distribution, the Pfizer-BioNTech COVID-19 vaccine formulation requires thermal shipping containers maintained between -90\u00b0C and -60\u00b0C (-130\u00b0F to -76\u00b0F).",
+    "answer": "Pfizer's vaccine is shipped at standard room temperature of 25\u00b0C without any specialized refrigeration.",
+    "human_ground_truth": 0,
+    "hallucination_type": "numerical_distortion",
+    "annotation_notes": "Context specifies -90\u00b0C to -60\u00b0C; hallucination invents 25\u00b0C room temperature."
+  }
+]

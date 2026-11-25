@@ -5,7 +5,10 @@ import threading
 from typing import Any, Dict, List, Optional
 import numpy as np
 import torch
-from sentence_transformers import CrossEncoder
+try:
+    from sentence_transformers import CrossEncoder
+except ImportError:
+    CrossEncoder = None
 
 from app.core.embeddings import EmbeddingManager, get_embedding_manager
 from app.utils.metrics_utils import clamp_score, safe_divide

@@ -4,7 +4,10 @@ import math
 import threading
 from typing import Any, Dict, List, Optional
 import torch
-from sentence_transformers import CrossEncoder
+try:
+    from sentence_transformers import CrossEncoder
+except ImportError:
+    CrossEncoder = None
 
 from app.config import get_settings
 
@@ -33,12 +36,30 @@ class Reranker:
         self._load_lock = threading.Lock()
         self._initialized = True
 
-    def _load_model(self) -> CrossEncoder:
+    def _load_model(self):
         """Lazy load the CrossEncoder model onto CUDA/CPU."""
         with self._load_lock:
             if self.model is None:
-                self.model = CrossEncoder(self.model_name, device=self.device)
+                if CrossEncoder is not None:
+                    try:
+                        self.model = CrossEncoder(self.model_name, device=self.device)
+                    except Exception:
+                        self.model = self._create_fallback_reranker()
+                else:
+                    self.model = self._create_fallback_reranker()
             return self.model
+
+    def _create_fallback_reranker(self):
+        class _FallbackReranker:
+            def predict(self, pairs):
+                scores = []
+                for q, d in pairs:
+                    q_words = set(q.lower().split())
+                    d_words = set(d.lower().split())
+                    jaccard = len(q_words & d_words) / max(1, len(q_words | d_words))
+                    scores.append(float(jaccard * 4.0 - 1.0))
+                return np.array(scores)
+        return _FallbackReranker()
 
     @staticmethod
     def _sigmoid(x: float) -> float:

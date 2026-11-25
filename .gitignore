@@ -35,6 +35,8 @@ backend/data/uploads/*
 !backend/data/uploads/.gitkeep
 backend/data/experiments/*
 !backend/data/experiments/.gitkeep
+!backend/data/experiments/benchmark_run_results.jsonl
+!backend/data/experiments/benchmark_summary.json
 
 # Operating System & IDE
 .DS_Store

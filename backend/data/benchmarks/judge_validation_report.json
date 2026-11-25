@@ -1,0 +1,959 @@
+{
+  "benchmark_file": "/Users/shashivardhanreddymallepally/Downloads/rag-hallucination-eval/backend/data/benchmarks/judge_validation_100.json",
+  "sample_size": 100,
+  "true_faithful_count": 50,
+  "true_hallucinated_count": 50,
+  "decision_threshold": 0.7,
+  "confusion_matrix": {
+    "true_negatives_correct_hallucination": 48,
+    "false_positives_missed_hallucination": 2,
+    "false_negatives_falsely_accused": 31,
+    "true_positives_correct_faithful": 19
+  },
+  "metrics": {
+    "accuracy": 0.67,
+    "macro_f1": 0.64,
+    "cohens_kappa": 0.34,
+    "cohens_kappa_95ci": [
+      0.156,
+      0.524
+    ],
+    "cohens_kappa_interpretation": "Fair Agreement",
+    "observed_agreement": 0.67,
+    "chance_agreement": 0.5,
+    "faithful_class": {
+      "precision": 0.905,
+      "recall": 0.38,
+      "f1": 0.535
+    },
+    "hallucinated_class": {
+      "precision": 0.608,
+      "recall": 0.96,
+      "f1": 0.744
+    }
+  },
+  "hallucination_type_detection": {
+    "entity_confusion": {
+      "total": 3,
+      "caught_as_hallucination": 3,
+      "detection_rate": 1.0
+    },
+    "factual_contradiction": {
+      "total": 27,
+      "caught_as_hallucination": 25,
+      "detection_rate": 0.926
+    },
+    "numerical_distortion": {
+      "total": 10,
+      "caught_as_hallucination": 10,
+      "detection_rate": 1.0
+    },
+    "unsupported_extrapolation": {
+      "total": 10,
+      "caught_as_hallucination": 10,
+      "detection_rate": 1.0
+    }
+  },
+  "detailed_evaluations": [
+    {
+      "id": "VAL-001",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-002",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-003",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-004",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "numerical_distortion"
+    },
+    {
+      "id": "VAL-005",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-006",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-007",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-008",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-009",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-010",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "unsupported_extrapolation"
+    },
+    {
+      "id": "VAL-011",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-012",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-013",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-014",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "unsupported_extrapolation"
+    },
+    {
+      "id": "VAL-015",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-016",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "entity_confusion"
+    },
+    {
+      "id": "VAL-017",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-018",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-019",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-020",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "numerical_distortion"
+    },
+    {
+      "id": "VAL-021",
+      "domain": "Economics & Finance",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-022",
+      "domain": "Economics & Finance",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "unsupported_extrapolation"
+    },
+    {
+      "id": "VAL-023",
+      "domain": "Economics & Finance",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-024",
+      "domain": "Economics & Finance",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-025",
+      "domain": "Economics & Finance",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-026",
+      "domain": "Economics & Finance",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "numerical_distortion"
+    },
+    {
+      "id": "VAL-027",
+      "domain": "Economics & Finance",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-028",
+      "domain": "Economics & Finance",
+      "human_label": 0,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": false,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-029",
+      "domain": "Economics & Finance",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-030",
+      "domain": "Economics & Finance",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-031",
+      "domain": "Physics & Climate Science",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-032",
+      "domain": "Physics & Climate Science",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-033",
+      "domain": "Physics & Climate Science",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-034",
+      "domain": "Physics & Climate Science",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "unsupported_extrapolation"
+    },
+    {
+      "id": "VAL-035",
+      "domain": "Physics & Climate Science",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-036",
+      "domain": "Physics & Climate Science",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-037",
+      "domain": "Physics & Climate Science",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-038",
+      "domain": "Physics & Climate Science",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "numerical_distortion"
+    },
+    {
+      "id": "VAL-039",
+      "domain": "Physics & Climate Science",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-040",
+      "domain": "Physics & Climate Science",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-041",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-042",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-043",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "numerical_distortion"
+    },
+    {
+      "id": "VAL-044",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-045",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-046",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-047",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-048",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-049",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "unsupported_extrapolation"
+    },
+    {
+      "id": "VAL-050",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-051",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-052",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-053",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "unsupported_extrapolation"
+    },
+    {
+      "id": "VAL-054",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-055",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "entity_confusion"
+    },
+    {
+      "id": "VAL-056",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-057",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-058",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-059",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "numerical_distortion"
+    },
+    {
+      "id": "VAL-060",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-061",
+      "domain": "Economics & Finance",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "unsupported_extrapolation"
+    },
+    {
+      "id": "VAL-062",
+      "domain": "Economics & Finance",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-063",
+      "domain": "Economics & Finance",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-064",
+      "domain": "Economics & Finance",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-065",
+      "domain": "Economics & Finance",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "numerical_distortion"
+    },
+    {
+      "id": "VAL-066",
+      "domain": "Economics & Finance",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-067",
+      "domain": "Economics & Finance",
+      "human_label": 0,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": false,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-068",
+      "domain": "Economics & Finance",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-069",
+      "domain": "Economics & Finance",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-070",
+      "domain": "Economics & Finance",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-071",
+      "domain": "Physics & Climate Science",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-072",
+      "domain": "Physics & Climate Science",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-073",
+      "domain": "Physics & Climate Science",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "unsupported_extrapolation"
+    },
+    {
+      "id": "VAL-074",
+      "domain": "Physics & Climate Science",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-075",
+      "domain": "Physics & Climate Science",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-076",
+      "domain": "Physics & Climate Science",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-077",
+      "domain": "Physics & Climate Science",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "numerical_distortion"
+    },
+    {
+      "id": "VAL-078",
+      "domain": "Physics & Climate Science",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-079",
+      "domain": "Physics & Climate Science",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-080",
+      "domain": "Physics & Climate Science",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-081",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-082",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-083",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-084",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "numerical_distortion"
+    },
+    {
+      "id": "VAL-085",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-086",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-087",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-088",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-089",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-090",
+      "domain": "Artificial Intelligence & NLP",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "unsupported_extrapolation"
+    },
+    {
+      "id": "VAL-091",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-092",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-093",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-094",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "unsupported_extrapolation"
+    },
+    {
+      "id": "VAL-095",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-096",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "entity_confusion"
+    },
+    {
+      "id": "VAL-097",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": false,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-098",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "factual_contradiction"
+    },
+    {
+      "id": "VAL-099",
+      "domain": "Biomedicine & Health",
+      "human_label": 1,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
+      "hallucination_type": "none"
+    },
+    {
+      "id": "VAL-100",
+      "domain": "Biomedicine & Health",
+      "human_label": 0,
+      "judge_score": 0.0,
+      "judge_pred": 0,
+      "is_correct": true,
+      "hallucination_type": "numerical_distortion"
+    }
+  ]
+}
