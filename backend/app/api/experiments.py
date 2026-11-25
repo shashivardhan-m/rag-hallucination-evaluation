@@ -330,6 +330,7 @@ async def run_experiment(payload: ExperimentRunRequest, db: Session = Depends(ge
     )
 
 
+@router.get("", response_model=ExperimentListResponse, include_in_schema=False)
 @router.get("/", response_model=ExperimentListResponse)
 async def list_experiments(
     skip: int = Query(0, ge=0),

@@ -8,6 +8,7 @@ router = APIRouter(prefix="/settings", tags=["Settings"])
 settings = get_settings()
 
 
+@router.get("", response_model=SettingsResponse, include_in_schema=False)
 @router.get("/", response_model=SettingsResponse)
 async def get_current_settings():
     """Retrieve active runtime configuration."""
