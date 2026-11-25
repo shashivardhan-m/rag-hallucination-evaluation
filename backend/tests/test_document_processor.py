@@ -82,6 +82,38 @@ def test_extract_text_from_txt(processor: DocumentProcessor):
             os.remove(temp_path)
 
 
+def test_vector_store_save_and_load():
+    import numpy as np
+    from app.core.vector_store import FAISSVectorStore
+
+    vs = FAISSVectorStore()
+    vs.clear()
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        chunks = [
+            {"chunk_id": "c1", "content": "RAG evaluation and benchmarking", "chunk_index": 0},
+            {"chunk_id": "c2", "content": "NLI claim verification models", "chunk_index": 1},
+        ]
+        embeddings = np.random.randn(2, 64).astype(np.float32)
+
+        vs.add_chunks(chunks, embeddings, "doc_test")
+        assert len(vs.get_all_chunks()) == 2
+
+        # Save to disk
+        saved = vs.save_index(tmpdir)
+        assert saved is True
+
+        # Clear in-memory
+        vs.clear()
+        assert len(vs.get_all_chunks()) == 0
+
+        # Load from disk
+        loaded = vs.load_index(tmpdir)
+        assert loaded is True
+        assert len(vs.get_all_chunks()) == 2
+        assert vs.get_all_chunks()[0]["chunk_id"] == "c1"
+
+
 def test_process_document_txt(processor: DocumentProcessor):
     content = "The quick brown fox jumps over the lazy dog. Artificial intelligence evaluation benchmarks."
     with tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False, encoding="utf-8") as f:

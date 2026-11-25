@@ -183,6 +183,62 @@ class FAISSVectorStore:
             self.metadata = []
             self.all_embeddings = None
 
+    def save_index(self, path: Optional[str] = None) -> bool:
+        """Persist index, embeddings, and metadata to disk."""
+        with self.lock:
+            save_dir = path or self.settings.FAISS_INDEX_PATH
+            os.makedirs(save_dir, exist_ok=True)
+            try:
+                # Save metadata and dimension
+                meta_file = os.path.join(save_dir, "metadata.pkl")
+                with open(meta_file, "wb") as f:
+                    pickle.dump({
+                        "metadata": self.metadata,
+                        "dimension": self.dimension,
+                    }, f)
+
+                # Save raw embeddings
+                if self.all_embeddings is not None and self.all_embeddings.size > 0:
+                    emb_file = os.path.join(save_dir, "embeddings.npy")
+                    np.save(emb_file, self.all_embeddings)
+
+                # Save FAISS index binary if active
+                if _FAISS_AVAILABLE and faiss is not None and self.index is not None and not isinstance(self.index, str):
+                    idx_file = os.path.join(save_dir, "index.faiss")
+                    faiss.write_index(self.index, idx_file)
+
+                return True
+            except Exception:
+                return False
+
+    def load_index(self, path: Optional[str] = None) -> bool:
+        """Load index, embeddings, and metadata from disk if present."""
+        with self.lock:
+            load_dir = path or self.settings.FAISS_INDEX_PATH
+            meta_file = os.path.join(load_dir, "metadata.pkl")
+            if not os.path.exists(meta_file):
+                return False
+
+            try:
+                with open(meta_file, "rb") as f:
+                    data = pickle.load(f)
+                    self.metadata = data.get("metadata", [])
+                    self.dimension = data.get("dimension")
+
+                emb_file = os.path.join(load_dir, "embeddings.npy")
+                if os.path.exists(emb_file):
+                    self.all_embeddings = np.load(emb_file)
+
+                idx_file = os.path.join(load_dir, "index.faiss")
+                if _FAISS_AVAILABLE and faiss is not None and os.path.exists(idx_file):
+                    self.index = faiss.read_index(idx_file)
+                elif self.all_embeddings is not None:
+                    self.index = "numpy"
+
+                return bool(self.metadata)
+            except Exception:
+                return False
+
     def get_stats(self) -> Dict[str, Any]:
         """Return current status and size of the vector store."""
         with self.lock:
