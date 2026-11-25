@@ -288,22 +288,31 @@ class HallucinationEvaluator:
                     nli_label = "neutral"
 
             if nli_label == "neutral":
-                # Deterministic lexical and semantic heuristic fallback
-                claim_words = [w for w in clean_text(claim).lower().split() if len(w) > 3]
-                context_words = set(clean_text(full_context).lower().split())
-                if claim_words:
-                    match_ratio = sum(1 for w in claim_words if w in context_words) / len(claim_words)
-                    if match_ratio >= 0.70:
-                        nli_label = "entailment"
-                    else:
-                        # Check contradiction cues
-                        claim_err = HallucinationClassifier.classify_unsupported_claim(
-                            claim=claim,
-                            context=full_context,
-                            context_precision=context_precision,
-                        )
-                        if claim_err == "intrinsic_contradiction":
-                            nli_label = "contradiction"
+                # Deterministic lexical, numerical, and semantic heuristic fallback
+                claim_numbers = set(re.findall(r"\b\d+(?:\.\d+)?%?\b", claim))
+                context_numbers = set(re.findall(r"\b\d+(?:\.\d+)?%?\b", full_context))
+                if claim_numbers and not claim_numbers.issubset(context_numbers):
+                    # Direct numerical conflict / distortion
+                    nli_label = "contradiction"
+
+                if nli_label == "neutral":
+                    claim_err = HallucinationClassifier.classify_unsupported_claim(
+                        claim=claim,
+                        context=full_context,
+                        context_precision=context_precision,
+                    )
+                    if claim_err == "intrinsic_contradiction":
+                        nli_label = "contradiction"
+
+                if nli_label == "neutral":
+                    clean_tokens = re.findall(r"\b[a-zA-Z]{3,}\b", claim.lower())
+                    ctx_tokens = set(re.findall(r"\b[a-zA-Z]{3,}\b", full_context.lower()))
+                    ctx_roots = {w[:4] for w in ctx_tokens if len(w) >= 4} | ctx_tokens
+                    if clean_tokens:
+                        matched = sum(1 for w in clean_tokens if w in ctx_tokens or (len(w) >= 4 and w[:4] in ctx_roots))
+                        match_ratio = matched / len(clean_tokens)
+                        if match_ratio >= 0.50:
+                            nli_label = "entailment"
 
             if nli_label == "entailment":
                 entailed_count += 1

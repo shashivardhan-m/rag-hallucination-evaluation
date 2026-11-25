@@ -176,5 +176,6 @@ def validate_nli_judge(
 
 
 if __name__ == "__main__":
-    bench_file = Path("/Users/shashivardhanreddymallepally/Downloads/rag-hallucination-eval/backend/data/benchmarks/judge_validation_100.json")
+    backend_root = Path(__file__).resolve().parent.parent
+    bench_file = backend_root / "data" / "benchmarks" / "judge_validation_100.json"
     validate_nli_judge(bench_file)

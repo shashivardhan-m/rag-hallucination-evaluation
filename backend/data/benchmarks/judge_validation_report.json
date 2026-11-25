@@ -5,31 +5,31 @@
   "true_hallucinated_count": 50,
   "decision_threshold": 0.7,
   "confusion_matrix": {
-    "true_negatives_correct_hallucination": 48,
-    "false_positives_missed_hallucination": 2,
-    "false_negatives_falsely_accused": 31,
-    "true_positives_correct_faithful": 19
+    "true_negatives_correct_hallucination": 42,
+    "false_positives_missed_hallucination": 8,
+    "false_negatives_falsely_accused": 3,
+    "true_positives_correct_faithful": 47
   },
   "metrics": {
-    "accuracy": 0.67,
-    "macro_f1": 0.64,
-    "cohens_kappa": 0.34,
+    "accuracy": 0.89,
+    "macro_f1": 0.89,
+    "cohens_kappa": 0.78,
     "cohens_kappa_95ci": [
-      0.156,
-      0.524
+      0.657,
+      0.903
     ],
-    "cohens_kappa_interpretation": "Fair Agreement",
-    "observed_agreement": 0.67,
+    "cohens_kappa_interpretation": "Substantial Agreement",
+    "observed_agreement": 0.89,
     "chance_agreement": 0.5,
     "faithful_class": {
-      "precision": 0.905,
-      "recall": 0.38,
-      "f1": 0.535
+      "precision": 0.855,
+      "recall": 0.94,
+      "f1": 0.895
     },
     "hallucinated_class": {
-      "precision": 0.608,
-      "recall": 0.96,
-      "f1": 0.744
+      "precision": 0.933,
+      "recall": 0.84,
+      "f1": 0.884
     }
   },
   "hallucination_type_detection": {
@@ -40,8 +40,8 @@
     },
     "factual_contradiction": {
       "total": 27,
-      "caught_as_hallucination": 25,
-      "detection_rate": 0.926
+      "caught_as_hallucination": 19,
+      "detection_rate": 0.704
     },
     "numerical_distortion": {
       "total": 10,
@@ -59,27 +59,27 @@
       "id": "VAL-001",
       "domain": "Artificial Intelligence & NLP",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
       "id": "VAL-002",
       "domain": "Artificial Intelligence & NLP",
       "human_label": 0,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": true,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": false,
       "hallucination_type": "factual_contradiction"
     },
     {
       "id": "VAL-003",
       "domain": "Artificial Intelligence & NLP",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -131,9 +131,9 @@
       "id": "VAL-009",
       "domain": "Artificial Intelligence & NLP",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -149,9 +149,9 @@
       "id": "VAL-011",
       "domain": "Biomedicine & Health",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -185,9 +185,9 @@
       "id": "VAL-015",
       "domain": "Biomedicine & Health",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -203,18 +203,18 @@
       "id": "VAL-017",
       "domain": "Biomedicine & Health",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
       "id": "VAL-018",
       "domain": "Biomedicine & Health",
       "human_label": 0,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": true,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": false,
       "hallucination_type": "factual_contradiction"
     },
     {
@@ -239,9 +239,9 @@
       "id": "VAL-021",
       "domain": "Economics & Finance",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -257,9 +257,9 @@
       "id": "VAL-023",
       "domain": "Economics & Finance",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -275,9 +275,9 @@
       "id": "VAL-025",
       "domain": "Economics & Finance",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -347,9 +347,9 @@
       "id": "VAL-033",
       "domain": "Physics & Climate Science",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -383,9 +383,9 @@
       "id": "VAL-037",
       "domain": "Physics & Climate Science",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -419,18 +419,18 @@
       "id": "VAL-041",
       "domain": "Artificial Intelligence & NLP",
       "human_label": 0,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": true,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": false,
       "hallucination_type": "factual_contradiction"
     },
     {
       "id": "VAL-042",
       "domain": "Artificial Intelligence & NLP",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -446,9 +446,9 @@
       "id": "VAL-044",
       "domain": "Artificial Intelligence & NLP",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -500,9 +500,9 @@
       "id": "VAL-050",
       "domain": "Artificial Intelligence & NLP",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -518,9 +518,9 @@
       "id": "VAL-052",
       "domain": "Biomedicine & Health",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -554,27 +554,27 @@
       "id": "VAL-056",
       "domain": "Biomedicine & Health",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
       "id": "VAL-057",
       "domain": "Biomedicine & Health",
       "human_label": 0,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": true,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": false,
       "hallucination_type": "factual_contradiction"
     },
     {
       "id": "VAL-058",
       "domain": "Biomedicine & Health",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -608,9 +608,9 @@
       "id": "VAL-062",
       "domain": "Economics & Finance",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -626,9 +626,9 @@
       "id": "VAL-064",
       "domain": "Economics & Finance",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -644,9 +644,9 @@
       "id": "VAL-066",
       "domain": "Economics & Finance",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -716,9 +716,9 @@
       "id": "VAL-074",
       "domain": "Physics & Climate Science",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -752,9 +752,9 @@
       "id": "VAL-078",
       "domain": "Physics & Climate Science",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -779,27 +779,27 @@
       "id": "VAL-081",
       "domain": "Artificial Intelligence & NLP",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
       "id": "VAL-082",
       "domain": "Artificial Intelligence & NLP",
       "human_label": 0,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": true,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": false,
       "hallucination_type": "factual_contradiction"
     },
     {
       "id": "VAL-083",
       "domain": "Artificial Intelligence & NLP",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -851,9 +851,9 @@
       "id": "VAL-089",
       "domain": "Artificial Intelligence & NLP",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -869,9 +869,9 @@
       "id": "VAL-091",
       "domain": "Biomedicine & Health",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -905,9 +905,9 @@
       "id": "VAL-095",
       "domain": "Biomedicine & Health",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
@@ -923,18 +923,18 @@
       "id": "VAL-097",
       "domain": "Biomedicine & Health",
       "human_label": 1,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": false,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": true,
       "hallucination_type": "none"
     },
     {
       "id": "VAL-098",
       "domain": "Biomedicine & Health",
       "human_label": 0,
-      "judge_score": 0.0,
-      "judge_pred": 0,
-      "is_correct": true,
+      "judge_score": 1.0,
+      "judge_pred": 1,
+      "is_correct": false,
       "hallucination_type": "factual_contradiction"
     },
     {

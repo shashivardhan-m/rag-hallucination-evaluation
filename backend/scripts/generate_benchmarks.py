@@ -325,7 +325,8 @@ def generate_ragtruth_halueval_300():
 
 
 def main():
-    bench_dir = Path("/Users/shashivardhanreddymallepally/Downloads/rag-hallucination-eval/backend/data/benchmarks")
+    backend_root = Path(__file__).resolve().parent.parent
+    bench_dir = backend_root / "data" / "benchmarks"
     bench_dir.mkdir(parents=True, exist_ok=True)
 
     val_100 = generate_judge_validation_100()
