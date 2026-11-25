@@ -1,0 +1,21 @@
+{
+  "experiment_name": "llm_comparison",
+  "dataset": "ragtruth",
+  "num_runs": 5,
+  "top_k": 5,
+  "conditions": [
+    { "id": "A", "model": "llama-3-8b-instruct", "provider": "groq", "temperature": 0.1 },
+    { "id": "B", "model": "mixtral-8x7b-instruct", "provider": "groq", "temperature": 0.1 },
+    { "id": "C", "model": "gpt-4o-mini", "provider": "openai", "temperature": 0.1 }
+  ],
+  "metrics": [
+    "faithfulness",
+    "hallucination_rate",
+    "supported_claim_rate",
+    "contradiction_rate",
+    "unsupported_claim_rate",
+    "answer_relevance",
+    "answer_correctness",
+    "latency_ms"
+  ]
+}

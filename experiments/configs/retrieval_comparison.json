@@ -1,0 +1,23 @@
+{
+  "experiment_name": "retrieval_comparison",
+  "dataset": "ragtruth",
+  "num_runs": 5,
+  "top_k": 5,
+  "conditions": [
+    { "id": "A", "name": "Dense Retrieval", "mode": "semantic", "rerank": false },
+    { "id": "B", "name": "BM25 Lexical", "mode": "bm25", "rerank": false },
+    { "id": "C", "name": "Hybrid Fusion", "mode": "hybrid", "rerank": false, "bm25_weight": 0.35 },
+    { "id": "D", "name": "Hybrid + Cross-Encoder Reranking", "mode": "hybrid", "rerank": true, "bm25_weight": 0.35 }
+  ],
+  "metrics": [
+    "recall_at_5",
+    "mrr_at_10",
+    "ndcg_at_10",
+    "faithfulness",
+    "supported_claim_rate",
+    "contradiction_rate",
+    "unsupported_claim_rate",
+    "answer_correctness",
+    "latency_ms"
+  ]
+}

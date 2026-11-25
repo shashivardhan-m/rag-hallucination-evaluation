@@ -101,3 +101,95 @@ def test_error_taxonomy_classification():
         context_precision=0.10,
     )
     assert err_type_refusal == "refusal_failure"
+
+
+def test_claim_breakdown_three_way_nli():
+    evaluator = get_evaluator()
+    context = [
+        "James Webb Space Telescope was launched in December 2021. It orbits the Sun at Lagrange Point 2."
+    ]
+    # Claim 1 entailed, Claim 2 contradicts launch date, Claim 3 is neutral ungrounded speculation
+    answer = (
+        "James Webb Space Telescope was launched in December 2021. "
+        "The telescope was launched in 1990 by Apollo astronauts. "
+        "Scientists predict it will discover alien civilizations by next Tuesday."
+    )
+
+    breakdown = evaluator.compute_claim_breakdown(answer, context)
+    assert breakdown["total_claims"] == 3
+    assert breakdown["supported_claim_rate"] > 0.0
+    assert breakdown["contradiction_rate"] > 0.0
+    assert breakdown["unsupported_claim_rate"] > 0.0
+    # Sum of the 3 rates must equal 1.0 (subject to floating precision)
+    total_rate = breakdown["supported_claim_rate"] + breakdown["contradiction_rate"] + breakdown["unsupported_claim_rate"]
+    assert round(total_rate, 2) == 1.0
+
+
+def test_zero_claim_safety():
+    evaluator = get_evaluator()
+    # Empty string
+    empty_res = evaluator.compute_claim_breakdown("", ["Some valid context"])
+    assert empty_res["total_claims"] == 0
+    assert empty_res["faithfulness"] == 0.0
+
+    # Non-empty with whitespace
+    ws_res = evaluator.compute_claim_breakdown("   ", ["Some valid context"])
+    assert ws_res["total_claims"] == 0
+
+    # Honest abstention
+    abstain_res = evaluator.compute_claim_breakdown(
+        "I cannot find sufficient information in the provided documents to answer.",
+        ["Unrelated context"],
+    )
+    assert abstain_res["faithfulness"] == 1.0
+    assert abstain_res["supported_claim_rate"] == 1.0
+    assert abstain_res["contradiction_rate"] == 0.0
+
+
+def test_rank_sensitive_context_precision_and_ranking():
+    evaluator = get_evaluator()
+    chunks = ["Chunk 1", "Chunk 2", "Chunk 3", "Chunk 4"]
+    retrieved_ids = ["c1", "c2", "c3", "c4"]
+    # Relevant chunks placed at top ranks (rank 1 and rank 2)
+    top_relevant_ids = ["c1", "c2"]
+
+    prec_top, mrr_top, ndcg_top = evaluator.compute_rank_sensitive_context_precision(
+        chunks=chunks,
+        question="Query",
+        retrieved_ids=retrieved_ids,
+        relevant_ids=top_relevant_ids,
+    )
+    assert prec_top == 1.0
+    assert mrr_top == 1.0
+    assert ndcg_top > 0.90
+
+    # Relevant chunk placed only at lowest rank (rank 4)
+    bottom_relevant_ids = ["c4"]
+    prec_bot, mrr_bot, ndcg_bot = evaluator.compute_rank_sensitive_context_precision(
+        chunks=chunks,
+        question="Query",
+        retrieved_ids=retrieved_ids,
+        relevant_ids=bottom_relevant_ids,
+    )
+    assert prec_bot < prec_top
+    assert mrr_bot == 0.25  # 1 / 4
+    assert ndcg_bot < ndcg_top
+
+
+def test_factual_correctness_numerical_mutation():
+    evaluator = get_evaluator()
+    reference = "The global average temperature increased by 1.1 degrees Celsius above pre-industrial levels."
+    
+    # Grounded answer
+    grounded_answer = "Global average temperatures increased by 1.1 degrees Celsius above pre-industrial benchmarks."
+    grounded_scores = evaluator.compute_answer_correctness(grounded_answer, reference)
+    assert grounded_scores["factual_correctness"] >= 0.90
+
+    # Mutated number (retains high lexical overlap but fact is false: 7.8 vs 1.1)
+    mutated_answer = "The global average temperature increased by 7.8 degrees Celsius above pre-industrial levels."
+    mutated_scores = evaluator.compute_answer_correctness(mutated_answer, reference)
+    # ROUGE-L is high because 11 of 12 words match!
+    assert mutated_scores["rouge_l_f1"] > 0.80
+    # But factual correctness must catch the numerical mutation!
+    assert mutated_scores["factual_correctness"] < grounded_scores["factual_correctness"]
+    assert mutated_scores["answer_correctness"] < grounded_scores["answer_correctness"]

@@ -1,7 +1,7 @@
-"""Statistical metric calculation, confidence intervals, hypothesis testing, and reporting helpers."""
+"""Statistical metric calculation, IR ranking metrics, confidence intervals, and hypothesis testing."""
 
 import math
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 import numpy as np
 import scipy.stats as stats
 
@@ -29,6 +29,118 @@ def clamp_score(score: float, min_val: float = 0.0, max_val: float = 1.0) -> flo
         return min_val
 
 
+# ----------------------------------------------------------------------
+# Standard Information Retrieval (IR) Ranking Metrics
+# ----------------------------------------------------------------------
+
+def compute_rank_sensitive_context_precision(
+    retrieved_chunk_relevance: Sequence[bool | int | float],
+    total_relevant: Optional[int] = None,
+    k: Optional[int] = None,
+) -> float:
+    """
+    Standard Rank-Sensitive Context Precision@K (as formulated in RAGAS and Classical IR).
+
+    Evaluates whether relevant chunks are concentrated at the top ranks:
+        Context Precision@K = (1 / min(K, total_relevant)) * sum_{i=1}^K (Precision@i * v_i)
+    where v_i in {0, 1} indicates relevance of chunk at rank i,
+    and Precision@i = (sum_{j=1}^i v_j) / i.
+    """
+    if not retrieved_chunk_relevance:
+        return 0.0
+
+    rels = [1 if r else 0 for r in retrieved_chunk_relevance]
+    if k is not None and k > 0:
+        rels = rels[:k]
+
+    n_chunks = len(rels)
+    if n_chunks == 0:
+        return 0.0
+
+    actual_relevant_in_topk = sum(rels)
+    if actual_relevant_in_topk == 0:
+        return 0.0
+
+    # Denominator normalizer: min(K, total_known_relevant)
+    if total_relevant is not None and total_relevant > 0:
+        denom = min(n_chunks, total_relevant)
+    else:
+        denom = actual_relevant_in_topk
+
+    cum_relevant = 0
+    precision_sum = 0.0
+
+    for i, v_i in enumerate(rels, start=1):
+        if v_i > 0:
+            cum_relevant += 1
+            precision_at_i = cum_relevant / i
+            precision_sum += precision_at_i
+
+    score = precision_sum / max(1, denom)
+    return clamp_score(score)
+
+
+def compute_mrr(
+    retrieved_chunk_relevance: Sequence[bool | int | float],
+    k: Optional[int] = None,
+) -> float:
+    """
+    Mean Reciprocal Rank (MRR@K):
+    Reciprocal rank of the first relevant document retrieved in top-K:
+        RR = 1 / rank_first_relevant (0.0 if none relevant in top-K).
+    """
+    if not retrieved_chunk_relevance:
+        return 0.0
+
+    rels = [1 if r else 0 for r in retrieved_chunk_relevance]
+    if k is not None and k > 0:
+        rels = rels[:k]
+
+    for rank, is_rel in enumerate(rels, start=1):
+        if is_rel > 0:
+            return round(1.0 / rank, 4)
+    return 0.0
+
+
+def compute_ndcg(
+    retrieved_chunk_relevance: Sequence[bool | int | float],
+    k: Optional[int] = None,
+) -> float:
+    """
+    Normalized Discounted Cumulative Gain (nDCG@K):
+        DCG@K = sum_{i=1}^K (2^{rel_i} - 1) / log2(i + 1)
+        nDCG@K = DCG@K / IDCG@K
+    """
+    if not retrieved_chunk_relevance:
+        return 0.0
+
+    rels = [float(1 if r else 0) for r in retrieved_chunk_relevance]
+    if k is not None and k > 0:
+        rels = rels[:k]
+
+    if not rels or sum(rels) == 0:
+        return 0.0
+
+    dcg = 0.0
+    for i, rel in enumerate(rels, start=1):
+        dcg += (math.pow(2.0, rel) - 1.0) / math.log2(i + 1.0)
+
+    # Ideal ranking (all 1s sorted first)
+    ideal_rels = sorted(rels, reverse=True)
+    idcg = 0.0
+    for i, rel in enumerate(ideal_rels, start=1):
+        idcg += (math.pow(2.0, rel) - 1.0) / math.log2(i + 1.0)
+
+    if idcg <= 0:
+        return 0.0
+
+    return clamp_score(dcg / idcg)
+
+
+# ----------------------------------------------------------------------
+# Lexical & Semantic Verification Fallbacks
+# ----------------------------------------------------------------------
+
 def compute_rouge_l_native(reference: str, candidate: str) -> float:
     """
     Pure Python longest common subsequence (LCS) ROUGE-L F1 calculation.
@@ -41,7 +153,6 @@ def compute_rouge_l_native(reference: str, candidate: str) -> float:
     if m == 0 or n == 0:
         return 0.0
 
-    # DP table for LCS length
     dp = [[0] * (n + 1) for _ in range(m + 1)]
     for i in range(1, m + 1):
         for j in range(1, n + 1):
@@ -99,7 +210,6 @@ def compute_confidence_interval(
     std = float(np.std(clean_vals, ddof=1))
     se = std / math.sqrt(n)
 
-    # Critical value from Student's t or Normal distribution
     alpha = 1.0 - confidence
     if n < 30:
         t_crit = float(stats.t.ppf(1.0 - alpha / 2.0, df=n - 1))
@@ -162,7 +272,7 @@ def compute_statistical_comparison(
 ) -> Dict[str, Any]:
     """
     Perform paired two-tailed Student's t-test and effect size (Cohen's d)
-    contrasting a treatment condition (e.g. Hybrid RAG with reranking) against a baseline.
+    contrasting a treatment condition against a baseline.
     """
     clean_base = [float(v) for v in baseline_values if isinstance(v, (int, float)) and v == v]
     clean_treat = [float(v) for v in treatment_values if isinstance(v, (int, float)) and v == v]
@@ -183,7 +293,6 @@ def compute_statistical_comparison(
     diff = t - b
     mean_delta = float(np.mean(diff))
 
-    # Paired t-test
     if np.all(diff == 0):
         t_stat = 0.0
         p_val = 1.0
@@ -192,7 +301,6 @@ def compute_statistical_comparison(
         t_stat = float(res.statistic) if res.statistic == res.statistic else 0.0
         p_val = float(res.pvalue) if res.pvalue == res.pvalue else 1.0
 
-    # Cohen's d for paired samples
     s_diff = float(np.std(diff, ddof=1))
     cohens_d = (mean_delta / s_diff) if s_diff > 1e-9 else 0.0
 
@@ -216,7 +324,7 @@ def aggregate_metrics(metric_dicts: List[Dict[str, float]]) -> Dict[str, float]:
 
     for m in metric_dicts:
         for k, v in m.items():
-            if isinstance(v, (int, float)) and v == v:  # not NaN
+            if isinstance(v, (int, float)) and v == v:
                 totals[k] = totals.get(k, 0.0) + float(v)
                 counts[k] = counts.get(k, 0) + 1
 
@@ -263,16 +371,19 @@ def format_metrics_report(metrics: Dict[str, Any]) -> str:
     ]
 
     interpretations = {
-        "faithfulness": "Context grounding (higher is less hallucinated)",
-        "hallucination_rate": "Fraction of claims unsupported by context (lower is better)",
-        "answer_relevance": "Directness and semantic alignment to user question",
-        "context_precision": "Average semantic relevance of retrieved context to query",
-        "retrieval_precision": "Fraction of retrieved chunks exceeding relevance threshold",
-        "context_recall": "Coverage of reference answer content by context",
-        "retrieval_recall": "Fraction of ground-truth document chunks retrieved",
-        "answer_correctness": "Composite semantic (BERTScore) & lexical (ROUGE) alignment",
-        "rouge_l_f1": "Longest common subsequence overlap with reference",
-        "bertscore_f1": "Token-level contextual embedding similarity with reference",
+        "supported_claim_rate": "Fraction of claims strictly entailed by context (Faithfulness)",
+        "contradiction_rate": "Fraction of claims in direct factual conflict with context",
+        "unsupported_claim_rate": "Fraction of claims with insufficient / neutral evidence",
+        "faithfulness": "Overall context grounding of answer claims",
+        "hallucination_rate": "Proportion of ungrounded or contradictory claims (1 - Faithfulness)",
+        "context_precision": "Rank-sensitive precision: concentration of relevant chunks at top ranks",
+        "mrr_at_k": "Mean Reciprocal Rank of first relevant document chunk",
+        "ndcg_at_k": "Normalized Discounted Cumulative Gain over top-K chunks",
+        "retrieval_recall": "Fraction of ground-truth relevant document chunks retrieved",
+        "factual_correctness": "Bidirectional NLI claim verification against reference answer",
+        "semantic_similarity": "Contextual embedding similarity (BERTScore) with reference",
+        "lexical_overlap": "Longest common subsequence F1 (ROUGE-L) with reference",
+        "answer_correctness": "Composite factual (50%), semantic (25%), and lexical (25%) alignment",
     }
 
     for name, stat in sorted(metrics.items()):

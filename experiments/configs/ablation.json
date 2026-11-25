@@ -1,0 +1,21 @@
+{
+  "experiment_name": "component_ablation",
+  "dataset": "ragtruth",
+  "num_runs": 5,
+  "conditions": [
+    { "id": "full", "description": "Full Hybrid RAG + Cross-Encoder Reranking + Abstention" },
+    { "id": "no_rerank", "description": "Remove Cross-Encoder Reranking (Hybrid Only)" },
+    { "id": "no_bm25", "description": "Remove BM25 Sparse Search (Pure Dense)" },
+    { "id": "no_dense", "description": "Remove Dense Embeddings (Pure BM25)" },
+    { "id": "no_abstain", "description": "Remove Abstention Prompt Guardrails" }
+  ],
+  "metrics": [
+    "faithfulness",
+    "hallucination_rate",
+    "supported_claim_rate",
+    "contradiction_rate",
+    "unsupported_claim_rate",
+    "answer_correctness",
+    "latency_ms"
+  ]
+}
