@@ -186,6 +186,7 @@ class EvaluationResponse(BaseModel):
     evaluation_id: Optional[str] = None
     qa_session_id: Optional[str] = None
     metrics: Dict[str, float]
+    error_taxonomy: Optional[Dict[str, float]] = None
     details: Dict[str, Any] = Field(default_factory=dict)
 
 
@@ -201,10 +202,12 @@ class EvaluationListResponse(BaseModel):
 
 class ExperimentConfig(BaseModel):
     """Configuration definition for benchmarking."""
-    variable: str = Field(..., description="Parameter to vary: 'chunk_size', 'embedding_model', 'retrieval_mode', 'reranking', or 'top_k'")
+    variable: str = Field(..., description="Parameter to vary: 'retrieval_mode', 'reranking', 'top_k', 'llm_model', 'context_relevance', 'chunk_size', 'embedding_model'")
     values: List[Any] = Field(..., description="List of values to test for the variable")
-    questions: List[str] = Field(..., min_length=1, description="List of test questions")
+    questions: List[str] = Field(default_factory=list, description="List of test questions (optional if benchmark_dataset is set)")
     reference_answers: Optional[List[Optional[str]]] = None
+    benchmark_dataset: Optional[str] = Field(default=None, description="Standard benchmark dataset: 'ragtruth', 'halueval', or 'all'")
+    num_runs: int = Field(default=1, ge=1, le=10, description="Number of runs per condition for statistical confidence intervals")
     default_top_k: int = 5
     default_retrieval_mode: str = "semantic"
     default_use_reranking: bool = False

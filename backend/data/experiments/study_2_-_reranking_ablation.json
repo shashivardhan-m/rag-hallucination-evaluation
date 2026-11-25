@@ -1,0 +1,470 @@
+{
+  "experiment_name": "Study 2 - Reranking Ablation",
+  "description": "Ablation study measuring the effect of Cross-Encoder reranking (ms-marco-MiniLM-L-6-v2) on factual consistency.",
+  "variable": "reranking",
+  "benchmark_dataset": "ragtruth",
+  "num_runs": 5,
+  "conditions": [
+    {
+      "condition_value": false,
+      "average_latency_ms": 0.95,
+      "average_metrics": {
+        "faithfulness": 1.0,
+        "hallucination_rate": 0.0,
+        "answer_relevance": 0.2481,
+        "context_precision": 0.1668,
+        "retrieval_precision": 0.0,
+        "rouge_l_f1": 0.2287,
+        "bertscore_f1": 0.4293,
+        "answer_correctness": 0.349,
+        "context_recall": 0.4544
+      },
+      "statistical_metrics": {
+        "faithfulness": {
+          "mean": 1.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "hallucination_rate": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "answer_relevance": {
+          "mean": 0.2481,
+          "std": 0.0293,
+          "se": 0.0059,
+          "ci_low": 0.236,
+          "ci_high": 0.2602,
+          "ci_margin": 0.0121,
+          "n": 25
+        },
+        "context_precision": {
+          "mean": 0.1668,
+          "std": 0.0308,
+          "se": 0.0062,
+          "ci_low": 0.154,
+          "ci_high": 0.1795,
+          "ci_margin": 0.0127,
+          "n": 25
+        },
+        "retrieval_precision": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "rouge_l_f1": {
+          "mean": 0.2287,
+          "std": 0.0677,
+          "se": 0.0135,
+          "ci_low": 0.2008,
+          "ci_high": 0.2567,
+          "ci_margin": 0.028,
+          "n": 25
+        },
+        "bertscore_f1": {
+          "mean": 0.4293,
+          "std": 0.1175,
+          "se": 0.0235,
+          "ci_low": 0.3807,
+          "ci_high": 0.4778,
+          "ci_margin": 0.0485,
+          "n": 25
+        },
+        "answer_correctness": {
+          "mean": 0.349,
+          "std": 0.093,
+          "se": 0.0186,
+          "ci_low": 0.3107,
+          "ci_high": 0.3874,
+          "ci_margin": 0.0384,
+          "n": 25
+        },
+        "context_recall": {
+          "mean": 0.4544,
+          "std": 0.0845,
+          "se": 0.0169,
+          "ci_low": 0.4195,
+          "ci_high": 0.4893,
+          "ci_margin": 0.0349,
+          "n": 25
+        }
+      },
+      "significance_vs_baseline": {
+        "is_baseline": true,
+        "p_value": 1.0,
+        "t_statistic": 0.0,
+        "is_significant_p05": false,
+        "is_significant_p01": false,
+        "cohens_d": 0.0
+      },
+      "error_taxonomy": {
+        "intrinsic_contradiction": 0.0,
+        "extrinsic_extrapolation": 0.0,
+        "entity_fabulation": 0.0,
+        "cross_chunk_confusion": 0.0,
+        "refusal_failure": 0.0
+      },
+      "sample_queries": [
+        {
+          "question": "What primary mechanism causes the thermohaline circulation in the Atlantic Ocean, and what recent change has been observed?",
+          "answer": "[Context Source 1: ragtruth_ragtruth-qa-001.txt (Chunk 0) (relevance: 0.377)]\nThermohaline circulation (THC) in the Atlantic Ocean is driven by global density gradients created by surface heat and freshwater fluxes. [Context Source 2: ragtruth_ragtruth-qa-001.txt (Chunk 1) (relevance: 0.352)]\nRecent observational data from the RAPID array indicates a statistically significant slowdown of the Atlantic Meridional Overturning Circulation (AMOC) by approximately 15% since the mid-20th century, largely correlated with Greenland ice sheet meltwater runoff. High-latitude cooling and sea-ice formation increase water density, causing cold, dense saline waters to sink in the North Atlantic Deep Water (NADW) formation regions.",
+          "reference": "Thermohaline circulation is driven by global density gradients resulting from surface heat and freshwater fluxes, where cold saline water sinks in the North Atlantic. Recent RAPID array observations indicate the circulation has slowed by approximately 15% since the mid-20th century.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2748,
+            "context_precision": 0.1837,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.3433,
+            "bertscore_f1": 0.521,
+            "answer_correctness": 0.4499,
+            "context_recall": 0.508
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "How does Remdesivir inhibit viral replication in SARS-CoV-2, and what is its active metabolite?",
+          "answer": "[Context Source 2: ragtruth_ragtruth-qa-002.txt (Chunk 1) (relevance: 0.383)]\nThe active GS-443902 metabolite is incorporated by the viral RNA-dependent RNA polymerase (RdRp; nsp12) into nascent viral RNA, inducing delayed chain termination at position i+3, which halts viral replication without causing immediate exonuclease excision. [Context Source 1: ragtruth_ragtruth-qa-002.txt (Chunk 0) (relevance: 0.405)]\nRemdesivir (GS-5734) is a broad-spectrum monophosphoramidate prodrug of an adenosine analog. Upon intracellular uptake, it is sequentially metabolized into its active nucleoside triphosphate form, GS-443902.",
+          "reference": "Remdesivir is metabolized intracellularly into its active triphosphate form (GS-443902). It is incorporated into nascent viral RNA by the viral RNA-dependent RNA polymerase (RdRp/nsp12), causing delayed chain termination at position i+3.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2305,
+            "context_precision": 0.1596,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.2642,
+            "bertscore_f1": 0.5788,
+            "answer_correctness": 0.453,
+            "context_recall": 0.5049
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What consistency guarantees does the Raft consensus algorithm provide, and how does it prevent stale reads?",
+          "answer": "[Context Source 2: ragtruth_ragtruth-qa-003.txt (Chunk 1) (relevance: 0.398)]\nTo prevent stale reads from leaders that have been partitioned from the cluster, the leader must contact a quorum of the cluster to verify its leadership before responding to read-only queries, or utilize lease-based read optimizations. [Context Source 1: ragtruth_ragtruth-qa-003.txt (Chunk 0) (relevance: 0.399)]\nRaft guarantees state machine safety, log matching, and election safety. [Context Source 4: ragtruth_ragtruth-qa-003_distractor.txt (Chunk 100) (relevance: 0.293)]\nThe Multi-Paxos protocol achieves consensus across distributed state machines using Prepare/Promise and Accept/Accepted two-phase rounds led by a distinguished Proposer.",
+          "reference": "Raft guarantees state machine safety, log matching, and election safety. To prevent stale reads, a leader must exchange heartbeats with a quorum of nodes before answering read requests.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2237,
+            "context_precision": 0.1259,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1864,
+            "bertscore_f1": 0.4138,
+            "answer_correctness": 0.3228,
+            "context_recall": 0.4405
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What is the primary architectural difference between BERT and GPT, and how do their pre-training objectives differ?",
+          "answer": "[Context Source 1: halueval_halueval-qa-003_irrelevant.txt (Chunk 201) (relevance: 0.384)]\nIt could hold between 50,000 and 80,000 spectators and was used for gladiatorial contests and public spectacles. [Context Source 2: ragtruth_ragtruth-qa-004.txt (Chunk 0) (relevance: 0.378)]\nBERT (Bidirectional Encoder Representations from Transformers) is an encoder-only architecture that conditions on both left and right context across all layers using masked language modeling (MLM) and next sentence prediction (NSP). [Context Source 3: halueval_halueval-qa-002_distractor.txt (Chunk 101) (relevance: 0.351)]\nBM25 is a ranking function used by search engines to rank matching documents according to their query term frequency and inverse document frequency.",
+          "reference": "BERT is an encoder-only architecture pre-trained bidirectionally using masked language modeling, whereas GPT is a decoder-only architecture pre-trained autoregressively with causal language modeling.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2212,
+            "context_precision": 0.1501,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1695,
+            "bertscore_f1": 0.2464,
+            "answer_correctness": 0.2156,
+            "context_recall": 0.2984
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What evidence confirmed the existence of gravitational waves, and what was the detected event called?",
+          "answer": "[Context Source 1: ragtruth_ragtruth-qa-005.txt (Chunk 0) (relevance: 0.426)]\nOn September 14, 2015, the LIGO and Virgo collaborations made the first direct observation of gravitational waves, designating the transient event GW150914. [Context Source 2: ragtruth_ragtruth-qa-005_distractor.txt (Chunk 100) (relevance: 0.267)]\nGW170817 was the historic first multi-messenger detection of a binary neutron star collision observed simultaneously in gravitational waves by LIGO/Virgo and electromagnetic gamma-ray bursts. [Context Source 3: halueval_halueval-qa-005_irrelevant.txt (Chunk 200) (relevance: 0.262)]\nBlack holes possess an event horizon, the boundary beyond which nothing\u2014not even electromagnetic radiation\u2014can escape the gravitational pull.",
+          "reference": "The first direct observation of gravitational waves was designated GW150914, detected on September 14, 2015 by LIGO. The signal matched predictions for the merger of two black holes of 36 and 29 solar masses.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2903,
+            "context_precision": 0.2145,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1803,
+            "bertscore_f1": 0.3863,
+            "answer_correctness": 0.3039,
+            "context_recall": 0.5202
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "condition_value": true,
+      "average_latency_ms": 1.12,
+      "average_metrics": {
+        "faithfulness": 0.8,
+        "hallucination_rate": 0.2,
+        "answer_relevance": 0.256,
+        "context_precision": 0.1687,
+        "retrieval_precision": 0.0,
+        "rouge_l_f1": 0.2251,
+        "bertscore_f1": 0.4339,
+        "answer_correctness": 0.3504,
+        "context_recall": 0.4513
+      },
+      "statistical_metrics": {
+        "faithfulness": {
+          "mean": 0.8,
+          "std": 0.4082,
+          "se": 0.0816,
+          "ci_low": 0.6315,
+          "ci_high": 0.9685,
+          "ci_margin": 0.1685,
+          "n": 25
+        },
+        "hallucination_rate": {
+          "mean": 0.2,
+          "std": 0.4082,
+          "se": 0.0816,
+          "ci_low": 0.0315,
+          "ci_high": 0.3685,
+          "ci_margin": 0.1685,
+          "n": 25
+        },
+        "answer_relevance": {
+          "mean": 0.256,
+          "std": 0.0454,
+          "se": 0.0091,
+          "ci_low": 0.2373,
+          "ci_high": 0.2748,
+          "ci_margin": 0.0187,
+          "n": 25
+        },
+        "context_precision": {
+          "mean": 0.1687,
+          "std": 0.0389,
+          "se": 0.0078,
+          "ci_low": 0.1526,
+          "ci_high": 0.1847,
+          "ci_margin": 0.0161,
+          "n": 25
+        },
+        "retrieval_precision": {
+          "mean": 0.0,
+          "std": 0.0,
+          "se": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "ci_margin": 0.0,
+          "n": 25
+        },
+        "rouge_l_f1": {
+          "mean": 0.2251,
+          "std": 0.108,
+          "se": 0.0216,
+          "ci_low": 0.1805,
+          "ci_high": 0.2696,
+          "ci_margin": 0.0446,
+          "n": 25
+        },
+        "bertscore_f1": {
+          "mean": 0.4339,
+          "std": 0.1504,
+          "se": 0.0301,
+          "ci_low": 0.3719,
+          "ci_high": 0.496,
+          "ci_margin": 0.0621,
+          "n": 25
+        },
+        "answer_correctness": {
+          "mean": 0.3504,
+          "std": 0.1319,
+          "se": 0.0264,
+          "ci_low": 0.2959,
+          "ci_high": 0.4048,
+          "ci_margin": 0.0545,
+          "n": 25
+        },
+        "context_recall": {
+          "mean": 0.4513,
+          "std": 0.1399,
+          "se": 0.028,
+          "ci_low": 0.3936,
+          "ci_high": 0.5091,
+          "ci_margin": 0.0578,
+          "n": 25
+        }
+      },
+      "significance_vs_baseline": {
+        "p_value": 0.021983,
+        "t_statistic": -2.4495,
+        "is_significant_p05": true,
+        "is_significant_p01": false,
+        "cohens_d": -0.4899,
+        "mean_delta": -0.2,
+        "is_baseline": false
+      },
+      "error_taxonomy": {
+        "intrinsic_contradiction": 0.0,
+        "extrinsic_extrapolation": 0.0,
+        "entity_fabulation": 0.0,
+        "cross_chunk_confusion": 0.0,
+        "refusal_failure": 0.2
+      },
+      "sample_queries": [
+        {
+          "question": "What primary mechanism causes the thermohaline circulation in the Atlantic Ocean, and what recent change has been observed?",
+          "answer": "[Context Source 1: ragtruth_ragtruth-qa-001.txt (Chunk 0) (relevance: 0.569)]\nThermohaline circulation (THC) in the Atlantic Ocean is driven by global density gradients created by surface heat and freshwater fluxes. [Context Source 2: ragtruth_ragtruth-qa-001.txt (Chunk 1) (relevance: 0.550)]\nRecent observational data from the RAPID array indicates a statistically significant slowdown of the Atlantic Meridional Overturning Circulation (AMOC) by approximately 15% since the mid-20th century, largely correlated with Greenland ice sheet meltwater runoff. High-latitude cooling and sea-ice formation increase water density, causing cold, dense saline waters to sink in the North Atlantic Deep Water (NADW) formation regions.",
+          "reference": "Thermohaline circulation is driven by global density gradients resulting from surface heat and freshwater fluxes, where cold saline water sinks in the North Atlantic. Recent RAPID array observations indicate the circulation has slowed by approximately 15% since the mid-20th century.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2742,
+            "context_precision": 0.1904,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.3433,
+            "bertscore_f1": 0.5348,
+            "answer_correctness": 0.4582,
+            "context_recall": 0.5239
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "How does Remdesivir inhibit viral replication in SARS-CoV-2, and what is its active metabolite?",
+          "answer": "[Context Source 2: ragtruth_ragtruth-qa-002.txt (Chunk 1) (relevance: 0.539)]\nThe active GS-443902 metabolite is incorporated by the viral RNA-dependent RNA polymerase (RdRp; nsp12) into nascent viral RNA, inducing delayed chain termination at position i+3, which halts viral replication without causing immediate exonuclease excision. [Context Source 1: ragtruth_ragtruth-qa-002.txt (Chunk 0) (relevance: 0.548)]\nRemdesivir (GS-5734) is a broad-spectrum monophosphoramidate prodrug of an adenosine analog. Upon intracellular uptake, it is sequentially metabolized into its active nucleoside triphosphate form, GS-443902.",
+          "reference": "Remdesivir is metabolized intracellularly into its active triphosphate form (GS-443902). It is incorporated into nascent viral RNA by the viral RNA-dependent RNA polymerase (RdRp/nsp12), causing delayed chain termination at position i+3.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2444,
+            "context_precision": 0.1529,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.2642,
+            "bertscore_f1": 0.5695,
+            "answer_correctness": 0.4474,
+            "context_recall": 0.5196
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What consistency guarantees does the Raft consensus algorithm provide, and how does it prevent stale reads?",
+          "answer": "[Context Source 3: ragtruth_ragtruth-qa-003.txt (Chunk 1) (relevance: 0.469)]\nTo prevent stale reads from leaders that have been partitioned from the cluster, the leader must contact a quorum of the cluster to verify its leadership before responding to read-only queries, or utilize lease-based read optimizations. [Context Source 1: ragtruth_ragtruth-qa-003.txt (Chunk 0) (relevance: 0.497)]\nRaft guarantees state machine safety, log matching, and election safety. [Context Source 2: halueval_halueval-qa-005.txt (Chunk 0) (relevance: 0.479)]\nIn the Raft protocol, client requests are directed exclusively to the elected leader, which appends the command to its log as a new entry.",
+          "reference": "Raft guarantees state machine safety, log matching, and election safety. To prevent stale reads, a leader must exchange heartbeats with a quorum of nodes before answering read requests.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.2126,
+            "context_precision": 0.1355,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.1967,
+            "bertscore_f1": 0.4049,
+            "answer_correctness": 0.3216,
+            "context_recall": 0.4214
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        },
+        {
+          "question": "What is the primary architectural difference between BERT and GPT, and how do their pre-training objectives differ?",
+          "answer": "[Context Source 1: halueval_halueval-qa-002_distractor.txt (Chunk 101) (relevance: 0.494)]\nBM25 is a ranking function used by search engines to rank matching documents according to their query term frequency and inverse document frequency. [Context Source 5: halueval_halueval-qa-003_irrelevant.txt (Chunk 201) (relevance: 0.417)]\nIt could hold between 50,000 and 80,000 spectators and was used for gladiatorial contests and public spectacles. [Context Source 2: halueval_halueval-qa-004_irrelevant.txt (Chunk 200) (relevance: 0.440)]\nThe Great Barrier Reef off the coast of Queensland, Australia, is the world's largest coral reef system, composed of over 2,900 individual reefs and 900 islands.",
+          "reference": "BERT is an encoder-only architecture pre-trained bidirectionally using masked language modeling, whereas GPT is a decoder-only architecture pre-trained autoregressively with causal language modeling.",
+          "metrics": {
+            "faithfulness": 0.0,
+            "hallucination_rate": 1.0,
+            "answer_relevance": 0.2159,
+            "context_precision": 0.1319,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.0354,
+            "bertscore_f1": 0.1604,
+            "answer_correctness": 0.1104,
+            "context_recall": 0.1996
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 1.0
+          }
+        },
+        {
+          "question": "What evidence confirmed the existence of gravitational waves, and what was the detected event called?",
+          "answer": "[Context Source 1: ragtruth_ragtruth-qa-005.txt (Chunk 0) (relevance: 0.668)]\nOn September 14, 2015, the LIGO and Virgo collaborations made the first direct observation of gravitational waves, designating the transient event GW150914. [Context Source 3: ragtruth_ragtruth-qa-005_distractor.txt (Chunk 100) (relevance: 0.568)]\nGW170817 was the historic first multi-messenger detection of a binary neutron star collision observed simultaneously in gravitational waves by LIGO/Virgo and electromagnetic gamma-ray bursts. [Context Source 4: ragtruth_ragtruth-qa-005.txt (Chunk 1) (relevance: 0.521)]\nThe signal matched the waveform predicted by general relativity for the inspiral and merger of a binary black hole pair with masses of approximately 36 and 29 solar masses, converting about 3 solar masses into gravitational wave energy within tenths of a second.",
+          "reference": "The first direct observation of gravitational waves was designated GW150914, detected on September 14, 2015 by LIGO. The signal matched predictions for the merger of two black holes of 36 and 29 solar masses.",
+          "metrics": {
+            "faithfulness": 1.0,
+            "hallucination_rate": 0.0,
+            "answer_relevance": 0.3331,
+            "context_precision": 0.2327,
+            "retrieval_precision": 0.0,
+            "rouge_l_f1": 0.2857,
+            "bertscore_f1": 0.5001,
+            "answer_correctness": 0.4143,
+            "context_recall": 0.5921
+          },
+          "taxonomy": {
+            "intrinsic_contradiction": 0.0,
+            "extrinsic_extrapolation": 0.0,
+            "entity_fabulation": 0.0,
+            "cross_chunk_confusion": 0.0,
+            "refusal_failure": 0.0
+          }
+        }
+      ]
+    }
+  ]
+}

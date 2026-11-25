@@ -1,0 +1,107 @@
+[
+  {
+    "id": "halueval-qa-001",
+    "benchmark": "HaluEval",
+    "task": "Question Answering",
+    "question": "What is the primary role of histone deacetylases (HDACs) in eukaryotic gene regulation?",
+    "gold_context": [
+      "Histone deacetylases (HDACs) are a class of enzymes that remove acetyl groups from ε-N-acetyl lysine amino acids on histone tails.",
+      "By removing acetyl groups, HDACs allow histones to wrap DNA more tightly, leading to condensed heterochromatin structure and transcriptional repression of target genes."
+    ],
+    "ground_truth_answer": "Histone deacetylases remove acetyl groups from histone lysine residues, causing chromatin to condense into heterochromatin and leading to the transcriptional repression of genes.",
+    "hallucinated_answer": "Histone deacetylases add methyl groups to adenine bases in DNA, causing the double helix to unwind and dramatically accelerating mRNA transcription rates.",
+    "distractor_context": [
+      "Histone acetyltransferases (HATs) transfer acetyl groups from acetyl-CoA to lysine residues on histone tails, neutralizing positive charges to facilitate euchromatin formation.",
+      "DNA methyltransferases (DNMTs) catalyze the transfer of a methyl group to the C-5 position of cytosine residues, typically associated with gene silencing in CpG islands."
+    ],
+    "irrelevant_context": [
+      "The fast Fourier transform (FFT) algorithm computes the discrete Fourier transform of a sequence in O(N log N) time complexity instead of O(N^2).",
+      "Cooley-Tukey is the most common FFT algorithm, recursively dividing a DFT of size N = N1 * N2 into smaller sub-transforms."
+    ],
+    "hallucination_types": ["intrinsic_contradiction", "extrinsic_extrapolation"]
+  },
+  {
+    "id": "halueval-qa-002",
+    "benchmark": "HaluEval",
+    "task": "Question Answering",
+    "question": "How does the PageRank algorithm compute importance scores across web pages?",
+    "gold_context": [
+      "PageRank evaluates the relative importance of web documents by modeling the probability that a random web surfer navigating hyperlinks lands on a specific page.",
+      "The rank vector satisfies the stationary distribution R = d * M * R + (1 - d)/N * E, where d is the damping factor (traditionally set to 0.85) representing the probability of continuing to follow links rather than jumping randomly."
+    ],
+    "ground_truth_answer": "PageRank calculates importance by simulating a random web surfer following hyperlinks, computing the stationary probability distribution across pages using a transition matrix with a damping factor (typically 0.85).",
+    "hallucinated_answer": "PageRank counts the number of times a webpage has been visited by Google Chrome users in the past 24 hours and ranks pages directly by total advertising revenue generated.",
+    "distractor_context": [
+      "The HITS (Hyperlink-Induced Topic Search) algorithm develops two separate scores for web pages: Authority values (valuable content) and Hub values (links to authoritative pages).",
+      "BM25 is a ranking function used by search engines to rank matching documents according to their query term frequency and inverse document frequency."
+    ],
+    "irrelevant_context": [
+      "Mitochondria are double-membrane-bound organelles found in most eukaryotic organisms, responsible for generating most of the cell's supply of adenosine triphosphate (ATP) via oxidative phosphorylation.",
+      "The inner mitochondrial membrane contains the electron transport chain complexes I through IV and ATP synthase."
+    ],
+    "hallucination_types": ["extrinsic_extrapolation", "entity_fabulation"]
+  },
+  {
+    "id": "halueval-qa-003",
+    "benchmark": "HaluEval",
+    "task": "Fact Verification",
+    "question": "What is the function of the CRISPR-Cas9 endonuclease complex in bacterial immunity?",
+    "gold_context": [
+      "In bacterial adaptive immunity, the CRISPR-Cas9 system utilizes a single-guide RNA (sgRNA) complementary to invading viral bacteriophage DNA.",
+      "Cas9 recognizes a 2-6 base pair protospacer adjacent motif (PAM) downstream of the target sequence and introduces a sequence-specific blunt double-stranded break (DSB) three nucleotides upstream of the PAM site."
+    ],
+    "ground_truth_answer": "The CRISPR-Cas9 complex uses a guide RNA to locate complementary foreign bacteriophage DNA adjacent to a PAM sequence, where it induces a targeted double-stranded break to disable the viral genome.",
+    "hallucinated_answer": "CRISPR-Cas9 synthesizes bacterial cell walls by assembling peptidoglycan polymers and repairing shattered ribosomal subunits during viral infections.",
+    "distractor_context": [
+      "Cas12a (Cpf1) is an alternate RNA-guided endonuclease that recognizes a T-rich PAM and produces staggered cohesive ends (overhangs) rather than blunt double-stranded breaks.",
+      "Type III CRISPR systems target RNA rather than DNA, using the Cas10 multiprotein complex to degrade foreign transcripts."
+    ],
+    "irrelevant_context": [
+      "The Roman Colosseum was commissioned around 70-72 AD by Emperor Vespasian of the Flavian dynasty and completed in 80 AD under his successor Titus.",
+      "It could hold between 50,000 and 80,000 spectators and was used for gladiatorial contests and public spectacles."
+    ],
+    "hallucination_types": ["intrinsic_contradiction"]
+  },
+  {
+    "id": "halueval-qa-004",
+    "benchmark": "HaluEval",
+    "task": "Question Answering",
+    "question": "How does speculative decoding accelerate LLM inference without altering the target model's output distribution?",
+    "gold_context": [
+      "Speculative decoding employs a smaller, faster draft model to autoregressively generate K candidate tokens sequentially at minimal computational cost.",
+      "The larger target model evaluates all K candidate tokens in a single parallel forward pass, accepting candidate tokens that satisfy modified rejection sampling criteria: p_target(x) / p_draft(x) >= u, guaranteeing that the accepted output strictly matches the target model's distribution."
+    ],
+    "ground_truth_answer": "Speculative decoding uses a lightweight draft model to generate candidate tokens, which the larger target model verifies simultaneously in a single parallel pass using rejection sampling, guaranteeing identical output distribution to the target model.",
+    "hallucinated_answer": "Speculative decoding alters the output distribution by quantizing 16-bit model weights down to 1-bit integers and randomly dropping half of the attention layers during prompt encoding.",
+    "distractor_context": [
+      "Medusa introduces multiple draft heads on top of the final transformer hidden states of a single model to predict multiple future tokens concurrently without a separate draft model.",
+      "FlashAttention optimizes attention computation memory traffic by tiling queries, keys, and values to fit into GPU SRAM, reducing HBM reads without changing arithmetic outputs."
+    ],
+    "irrelevant_context": [
+      "The Great Barrier Reef off the coast of Queensland, Australia, is the world's largest coral reef system, composed of over 2,900 individual reefs and 900 islands.",
+      "Mass coral bleaching events have been triggered repeatedly by elevated sea surface temperatures driven by marine heatwaves."
+    ],
+    "hallucination_types": ["intrinsic_contradiction", "extrinsic_extrapolation"]
+  },
+  {
+    "id": "halueval-qa-005",
+    "benchmark": "HaluEval",
+    "task": "Fact Verification",
+    "question": "What is the role of the Raft cluster leader during log replication?",
+    "gold_context": [
+      "In the Raft protocol, client requests are directed exclusively to the elected leader, which appends the command to its log as a new entry.",
+      "The leader issues AppendEntries RPCs in parallel to all follower nodes. Once the entry has been replicated on a majority of cluster nodes, the leader commits the entry and applies it to its local state machine before responding to the client."
+    ],
+    "ground_truth_answer": "The Raft leader receives client commands, appends them to its log, sends AppendEntries RPCs to followers in parallel, and commits the entry once safely replicated on a majority quorum of servers.",
+    "hallucinated_answer": "In Raft, followers write entries directly to disk and elect a leader only when the cluster experiences complete power failure, with the leader having no role in log replication.",
+    "distractor_context": [
+      "In PBFT, requests pass through pre-prepare, prepare, and commit phases, requiring two-thirds agreement from all active replicas.",
+      "Chubby is a distributed lock service developed by Google that implements Paxos consensus over coarse-grained advisory locks."
+    ],
+    "irrelevant_context": [
+      "Black holes possess an event horizon, the boundary beyond which nothing—not even electromagnetic radiation—can escape the gravitational pull.",
+      "The Schwarzschild radius defines the radius of the event horizon for a non-rotating, spherically symmetric mass."
+    ],
+    "hallucination_types": ["intrinsic_contradiction"]
+  }
+]
