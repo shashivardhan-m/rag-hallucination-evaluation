@@ -3131,7 +3131,7 @@
         },
         "significance_vs_baseline": {
           "p_value": 0.0,
-          "t_statistic": -Infinity,
+          "t_statistic": -999.0,
           "is_significant_p05": true,
           "is_significant_p01": true,
           "cohens_d": 0.0,

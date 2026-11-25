@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 # ---------------------------------------------------------
@@ -116,9 +116,22 @@ class QARequest(BaseModel):
     use_reranking: bool = False
     backend: Optional[str] = None
     model: Optional[str] = None
+    llm_backend: Optional[str] = None
+    llm_model: Optional[str] = None
+    reference_answer: Optional[str] = None
     run_standard: bool = True
     run_rag: bool = True
     document_id: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def resolve_aliases(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if "llm_backend" in data and not data.get("backend"):
+                data["backend"] = data["llm_backend"]
+            if "llm_model" in data and not data.get("model"):
+                data["model"] = data["llm_model"]
+        return data
 
 
 class QAResponse(BaseModel):
@@ -219,7 +232,34 @@ class ExperimentRunRequest(BaseModel):
     """Payload to trigger an experiment run."""
     name: str
     description: Optional[str] = None
-    config: ExperimentConfig
+    config: Optional[ExperimentConfig] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def wrap_flat_config(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if data.get("config") is None:
+                cfg_keys = {
+                    "variable", "values", "questions", "reference_answers",
+                    "benchmark_dataset", "num_runs", "default_top_k",
+                    "default_retrieval_mode", "default_use_reranking",
+                    "backend", "model",
+                }
+                extracted = {k: v for k, v in data.items() if k in cfg_keys}
+                if "base_config" in data and isinstance(data["base_config"], dict):
+                    bc = data["base_config"]
+                    if "top_k" in bc and "default_top_k" not in extracted:
+                        extracted["default_top_k"] = bc["top_k"]
+                    if "retrieval_mode" in bc and "default_retrieval_mode" not in extracted:
+                        extracted["default_retrieval_mode"] = bc["retrieval_mode"]
+                    if "use_reranking" in bc and "default_use_reranking" not in extracted:
+                        extracted["default_use_reranking"] = bc["use_reranking"]
+                    if "llm_backend" in bc and "backend" not in extracted:
+                        extracted["backend"] = bc["llm_backend"]
+                    if "llm_model" in bc and "model" not in extracted:
+                        extracted["model"] = bc["llm_model"]
+                data["config"] = extracted
+        return data
 
 
 class ExperimentResult(BaseModel):
@@ -230,6 +270,7 @@ class ExperimentResult(BaseModel):
     status: str
     config: Dict[str, Any]
     results: Optional[Dict[str, Any]] = None
+    runs: Optional[List[Dict[str, Any]]] = None
     created_at: datetime
     completed_at: Optional[datetime] = None
     num_queries: int
@@ -297,6 +338,31 @@ class SettingsRequest(BaseModel):
     openai_api_key: Optional[str] = None
     ollama_base_url: Optional[str] = None
 
+    # Frontend aliases
+    llm_backend: Optional[str] = None
+    llm_model: Optional[str] = None
+    top_k: Optional[int] = None
+    chunk_size: Optional[int] = None
+    chunk_overlap: Optional[int] = None
+    retrieval_mode: Optional[str] = None
+    use_reranking: Optional[bool] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def resolve_aliases(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if "llm_backend" in data and not data.get("default_llm_backend"):
+                data["default_llm_backend"] = data["llm_backend"]
+            if "llm_model" in data and not data.get("default_groq_model"):
+                data["default_groq_model"] = data["llm_model"]
+            if "top_k" in data and not data.get("default_top_k"):
+                data["default_top_k"] = data["top_k"]
+            if "chunk_size" in data and not data.get("default_chunk_size"):
+                data["default_chunk_size"] = data["chunk_size"]
+            if "chunk_overlap" in data and not data.get("default_chunk_overlap"):
+                data["default_chunk_overlap"] = data["chunk_overlap"]
+        return data
+
 
 class SettingsResponse(BaseModel):
     """Current system settings."""
@@ -315,3 +381,25 @@ class SettingsResponse(BaseModel):
     ollama_base_url: str
     faiss_index_path: str
     database_url: str
+
+    # Frontend aliases
+    llm_backend: Optional[str] = None
+    llm_model: Optional[str] = None
+    top_k: Optional[int] = None
+    chunk_size: Optional[int] = None
+    chunk_overlap: Optional[int] = None
+    retrieval_mode: Optional[str] = "semantic"
+    use_reranking: Optional[bool] = False
+
+    @model_validator(mode="before")
+    @classmethod
+    def populate_aliases(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            data.setdefault("llm_backend", data.get("default_llm_backend", "groq"))
+            data.setdefault("llm_model", data.get("default_groq_model", "llama3-8b-8192"))
+            data.setdefault("top_k", data.get("default_top_k", 5))
+            data.setdefault("chunk_size", data.get("default_chunk_size", 512))
+            data.setdefault("chunk_overlap", data.get("default_chunk_overlap", 128))
+            data.setdefault("retrieval_mode", "semantic")
+            data.setdefault("use_reranking", False)
+        return data

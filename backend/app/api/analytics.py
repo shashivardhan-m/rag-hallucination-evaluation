@@ -1,5 +1,6 @@
 """API endpoints for system-wide performance analytics, hallucination trends, and model comparisons."""
 
+import math
 from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy import func
@@ -21,6 +22,21 @@ from app.models.schemas import (
 )
 
 router = APIRouter(prefix="/analytics", tags=["Analytics"])
+
+
+def _sanitize_floats(obj: Any) -> Any:
+    """Recursively replace inf, -inf, and nan with JSON-compliant numbers."""
+    if isinstance(obj, float):
+        if math.isinf(obj):
+            return -999999.0 if obj < 0 else 999999.0
+        if math.isnan(obj):
+            return 0.0
+        return obj
+    if isinstance(obj, dict):
+        return {k: _sanitize_floats(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_sanitize_floats(v) for v in obj]
+    return obj
 
 
 @router.get("/summary", response_model=AnalyticsSummary)
@@ -113,12 +129,18 @@ async def compare_models(db: Session = Depends(get_db)):
 
         comparison.append({
             "model_name": m,
+            "model": m,
+            "backend": "groq" if any(k in m.lower() for k in ["llama", "mixtral", "gemma"]) else "llm",
             "session_count": count,
+            "num_sessions": count,
             "avg_standard_latency_ms": round(float(avg_std_lat), 2),
             "avg_rag_latency_ms": round(float(avg_rag_lat), 2),
+            "avg_latency_ms": round(float(avg_rag_lat or avg_std_lat), 2),
             "faithfulness": metric_averages.get("faithfulness", 0.0),
+            "avg_faithfulness": metric_averages.get("faithfulness", 0.0),
             "hallucination_rate": metric_averages.get("hallucination_rate", 0.0),
             "answer_relevance": metric_averages.get("answer_relevance", 0.0),
+            "avg_relevance": metric_averages.get("answer_relevance", 0.0),
             "answer_correctness": metric_averages.get("answer_correctness", 0.0),
         })
 
@@ -232,6 +254,7 @@ async def get_research_findings():
         try:
             with open(summary_file, "r", encoding="utf-8") as f:
                 summary_data = json.load(f)
+                summary_data = _sanitize_floats(summary_data)
         except Exception:
             pass
 

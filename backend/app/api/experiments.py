@@ -254,6 +254,35 @@ async def _run_experiment_pipeline(
     }
 
 
+def _extract_runs(res: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Flatten condition queries into a uniform runs array for UI compatibility."""
+    if not res or not isinstance(res, dict):
+        return []
+    runs = []
+    conditions = res.get("conditions") or []
+    for cond in conditions:
+        val = cond.get("condition_value")
+        queries = cond.get("queries") or []
+        if queries:
+            for q in queries:
+                runs.append({
+                    "variable_value": val,
+                    "question": q.get("question", ""),
+                    "answer": q.get("answer", ""),
+                    "metrics": q.get("metrics", {}),
+                    "latency_ms": q.get("latency_ms", cond.get("average_latency_ms", 0.0)),
+                })
+        else:
+            runs.append({
+                "variable_value": val,
+                "question": f"Condition: {val}",
+                "answer": f"Average faithfulness: {cond.get('average_metrics', {}).get('faithfulness', 0.0)}",
+                "metrics": cond.get("average_metrics", {}),
+                "latency_ms": cond.get("average_latency_ms", 0.0),
+            })
+    return runs
+
+
 @router.post("/run", response_model=ExperimentResult, status_code=status.HTTP_201_CREATED)
 async def run_experiment(payload: ExperimentRunRequest, db: Session = Depends(get_db)):
     """
@@ -324,6 +353,7 @@ async def run_experiment(payload: ExperimentRunRequest, db: Session = Depends(ge
         status=db_exp.status,
         config=config_dict,
         results=results,
+        runs=_extract_runs(results),
         created_at=db_exp.created_at,
         completed_at=db_exp.completed_at,
         num_queries=db_exp.num_queries,
@@ -354,6 +384,7 @@ async def list_experiments(
                 status=e.status,
                 config=cfg,
                 results=res,
+                runs=_extract_runs(res),
                 created_at=e.created_at,
                 completed_at=e.completed_at,
                 num_queries=e.num_queries,
@@ -380,6 +411,7 @@ async def get_experiment(exp_id: str, db: Session = Depends(get_db)):
         status=e.status,
         config=cfg,
         results=res,
+        runs=_extract_runs(res),
         created_at=e.created_at,
         completed_at=e.completed_at,
         num_queries=e.num_queries,

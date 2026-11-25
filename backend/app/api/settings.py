@@ -31,25 +31,31 @@ async def get_current_settings():
     )
 
 
+@router.patch("", response_model=SettingsResponse, include_in_schema=False)
 @router.patch("/", response_model=SettingsResponse)
 async def update_settings(payload: SettingsRequest):
     """Dynamically update runtime settings in memory."""
     if payload.debug is not None:
         settings.DEBUG = payload.debug
-    if payload.default_llm_backend is not None:
-        settings.DEFAULT_LLM_BACKEND = payload.default_llm_backend
-    if payload.default_groq_model is not None:
-        settings.DEFAULT_GROQ_MODEL = payload.default_groq_model
+    backend_val = payload.default_llm_backend or payload.llm_backend
+    if backend_val is not None:
+        settings.DEFAULT_LLM_BACKEND = backend_val
+    model_val = payload.default_groq_model or payload.llm_model
+    if model_val is not None:
+        settings.DEFAULT_GROQ_MODEL = model_val
     if payload.embedding_model is not None:
         settings.EMBEDDING_MODEL = payload.embedding_model
     if payload.reranker_model is not None:
         settings.RERANKER_MODEL = payload.reranker_model
-    if payload.default_top_k is not None:
-        settings.DEFAULT_TOP_K = payload.default_top_k
-    if payload.default_chunk_size is not None:
-        settings.DEFAULT_CHUNK_SIZE = payload.default_chunk_size
-    if payload.default_chunk_overlap is not None:
-        settings.DEFAULT_CHUNK_OVERLAP = payload.default_chunk_overlap
+    top_k_val = payload.default_top_k or payload.top_k
+    if top_k_val is not None:
+        settings.DEFAULT_TOP_K = top_k_val
+    chunk_size_val = payload.default_chunk_size or payload.chunk_size
+    if chunk_size_val is not None:
+        settings.DEFAULT_CHUNK_SIZE = chunk_size_val
+    overlap_val = payload.default_chunk_overlap or payload.chunk_overlap
+    if overlap_val is not None:
+        settings.DEFAULT_CHUNK_OVERLAP = overlap_val
     if payload.groq_api_key is not None:
         settings.GROQ_API_KEY = payload.groq_api_key
     if payload.openai_api_key is not None:

@@ -3,6 +3,7 @@
 import csv
 import io
 import json
+import math
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List
@@ -23,6 +24,21 @@ from app.utils.metrics_utils import format_metrics_report
 
 router = APIRouter(prefix="/reports", tags=["Reports"])
 settings = get_settings()
+
+
+def _sanitize_floats(obj: Any) -> Any:
+    """Recursively sanitize float('-inf'), float('inf'), and float('nan') for strict JSON compliance."""
+    if isinstance(obj, float):
+        if math.isinf(obj):
+            return 999999.0 if obj > 0 else -999999.0
+        if math.isnan(obj):
+            return 0.0
+        return obj
+    if isinstance(obj, dict):
+        return {k: _sanitize_floats(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_sanitize_floats(v) for v in obj]
+    return obj
 
 
 @router.get("/export/csv")
@@ -141,9 +157,10 @@ async def export_data_json(db: Session = Depends(get_db)):
         ],
     }
 
+    clean_payload = _sanitize_floats(payload)
     filename = f"rag_evaluation_dump_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.json"
     return Response(
-        content=json.dumps(payload, indent=2),
+        content=json.dumps(clean_payload, indent=2),
         media_type="application/json",
         headers={"Content-Disposition": f"attachment; filename={filename}"},
     )

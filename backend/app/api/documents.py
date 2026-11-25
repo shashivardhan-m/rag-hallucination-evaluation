@@ -221,6 +221,8 @@ async def get_document_chunks(
     doc_id: str,
     skip: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=200),
+    page: Optional[int] = Query(None),
+    page_size: Optional[int] = Query(None),
     db: Session = Depends(get_db),
 ):
     """Retrieve all chunks belonging to a document."""
@@ -231,9 +233,12 @@ async def get_document_chunks(
             detail=f"Document with ID {doc_id} not found",
         )
 
+    effective_limit = page_size if page_size is not None else limit
+    effective_skip = (page - 1) * effective_limit if (page is not None and page > 0) else skip
+
     query = db.query(DocumentChunk).filter(DocumentChunk.document_id == doc_id).order_by(DocumentChunk.chunk_index.asc())
     total = query.count()
-    chunks = query.offset(skip).limit(limit).all()
+    chunks = query.offset(effective_skip).limit(effective_limit).all()
 
     return ChunkListResponse(
         total=total,

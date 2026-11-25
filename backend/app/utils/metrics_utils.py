@@ -298,11 +298,13 @@ def compute_statistical_comparison(
         p_val = 1.0
     else:
         res = stats.ttest_rel(t, b)
-        t_stat = float(res.statistic) if res.statistic == res.statistic else 0.0
-        p_val = float(res.pvalue) if res.pvalue == res.pvalue else 1.0
+        t_stat = float(res.statistic) if (res.statistic == res.statistic and not np.isinf(res.statistic)) else 0.0
+        p_val = float(res.pvalue) if (res.pvalue == res.pvalue and not np.isinf(res.pvalue)) else 1.0
 
     s_diff = float(np.std(diff, ddof=1))
     cohens_d = (mean_delta / s_diff) if s_diff > 1e-9 else 0.0
+    if np.isnan(cohens_d) or np.isinf(cohens_d):
+        cohens_d = 0.0
 
     return {
         "p_value": round(p_val, 6),

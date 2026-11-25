@@ -18,6 +18,7 @@ import type {
   MetricDefinition,
   ExperimentConfig,
   Experiment,
+  ExperimentRun,
   AnalyticsSummary,
   ModelComparison,
   MetricTimeSeries,
@@ -202,23 +203,74 @@ export const evaluationAPI = {
   },
 };
 
+function normalizeExperiment(data: any): Experiment {
+  if (!data) return data;
+  let runs: ExperimentRun[] = data.runs || [];
+  if ((!runs || runs.length === 0) && data.results?.conditions) {
+    runs = [];
+    for (const cond of data.results.conditions) {
+      if (cond.queries && cond.queries.length > 0) {
+        for (const q of cond.queries) {
+          runs.push({
+            variable_value: cond.condition_value,
+            question: q.question,
+            answer: q.answer,
+            metrics: q.metrics || {},
+            latency_ms: q.latency_ms || cond.average_latency_ms || 0,
+          });
+        }
+      } else {
+        runs.push({
+          variable_value: cond.condition_value,
+          question: `Condition: ${cond.condition_value}`,
+          answer: `Average faithfulness: ${cond.average_metrics?.faithfulness ?? 'N/A'}`,
+          metrics: cond.average_metrics || {},
+          latency_ms: cond.average_latency_ms || 0,
+        });
+      }
+    }
+  }
+  return {
+    ...data,
+    runs,
+  };
+}
+
 // ── Experiments ────────────────────────────────────────────
 export const experimentsAPI = {
-  async run(config: ExperimentConfig): Promise<Experiment> {
-    const { data } = await apiClient.post<Experiment>('/experiments/run', config, {
+  async run(config: ExperimentConfig | any): Promise<Experiment> {
+    const payload = config.config ? config : {
+      name: config.name || 'Experiment',
+      description: config.description,
+      config: {
+        variable: config.variable,
+        values: config.values,
+        questions: config.questions,
+        reference_answers: config.reference_answers,
+        benchmark_dataset: config.benchmark_dataset,
+        num_runs: config.num_runs,
+        default_top_k: config.base_config?.top_k,
+        default_retrieval_mode: config.base_config?.retrieval_mode,
+        default_use_reranking: config.base_config?.use_reranking,
+        backend: config.base_config?.llm_backend,
+        model: config.base_config?.llm_model,
+      },
+    };
+    const { data } = await apiClient.post<any>('/experiments/run', payload, {
       timeout: 600_000, // 10 min for large experiments
     });
-    return data;
+    return normalizeExperiment(data);
   },
 
   async list(): Promise<Experiment[]> {
-    const { data } = await apiClient.get<{ experiments: Experiment[] }>('/experiments/');
-    return data.experiments;
+    const { data } = await apiClient.get<any>('/experiments/');
+    const list = data?.experiments || (Array.isArray(data) ? data : []);
+    return list.map(normalizeExperiment);
   },
 
   async get(id: string): Promise<Experiment> {
-    const { data } = await apiClient.get<Experiment>(`/experiments/${id}`);
-    return data;
+    const { data } = await apiClient.get<any>(`/experiments/${id}`);
+    return normalizeExperiment(data);
   },
 
   async delete(id: string): Promise<void> {
@@ -234,18 +286,37 @@ export const analyticsAPI = {
   },
 
   async getModelComparison(): Promise<ModelComparison[]> {
-    const { data } = await apiClient.get<ModelComparison[]>('/analytics/model-comparison');
-    return data;
+    const { data } = await apiClient.get<any>('/analytics/model-comparison');
+    const rawList = Array.isArray(data) ? data : (data?.models || []);
+    return rawList.map((m: any) => ({
+      model: m.model || m.model_name || 'default',
+      backend: m.backend || 'groq',
+      avg_faithfulness: m.avg_faithfulness ?? m.faithfulness ?? 0.0,
+      avg_relevance: m.avg_relevance ?? m.answer_relevance ?? 0.0,
+      avg_latency_ms: m.avg_latency_ms ?? m.avg_rag_latency_ms ?? m.avg_standard_latency_ms ?? 0.0,
+      num_sessions: m.num_sessions ?? m.session_count ?? 0,
+      ...m,
+    }));
   },
 
-  async getMetricsOverTime(limit = 50): Promise<MetricTimeSeries[]> {
-    const { data } = await apiClient.get<MetricTimeSeries[]>(`/analytics/metrics-over-time?limit=${limit}`);
-    return data;
+  async getMetricsOverTime(limit = 50, metric = 'faithfulness'): Promise<any[]> {
+    const { data } = await apiClient.get<any>(`/analytics/metrics-over-time?metric_name=${metric}&limit=${limit}`);
+    const points = Array.isArray(data) ? data : (data?.points || []);
+    return points.map((p: any) => ({
+      timestamp: p.timestamp ? new Date(p.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '',
+      [metric]: p.value,
+      value: p.value,
+    }));
   },
 
-  async getHallucinationTrend(limit = 50): Promise<MetricTimeSeries[]> {
-    const { data } = await apiClient.get<MetricTimeSeries[]>(`/analytics/hallucination-trend?limit=${limit}`);
-    return data;
+  async getHallucinationTrend(limit = 50): Promise<any[]> {
+    const { data } = await apiClient.get<any>(`/analytics/hallucination-trend?limit=${limit}`);
+    const points = Array.isArray(data) ? data : (data?.points || []);
+    return points.map((p: any) => ({
+      timestamp: p.timestamp ? new Date(p.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '',
+      hallucination_rate: p.value,
+      value: p.value,
+    }));
   },
 
   async getHallucinationTaxonomy(): Promise<{ taxonomy: Record<string, number>; descriptions: Record<string, string> }> {
@@ -276,12 +347,32 @@ export const reportsAPI = {
 // ── Settings ───────────────────────────────────────────────
 export const settingsAPI = {
   async get(): Promise<AppSettings> {
-    const { data } = await apiClient.get<AppSettings>('/settings');
-    return data;
+    const { data } = await apiClient.get<any>('/settings');
+    return {
+      llm_backend: data.llm_backend || data.default_llm_backend || 'groq',
+      llm_model: data.llm_model || data.default_groq_model || 'llama3-8b-8192',
+      embedding_model: data.embedding_model || 'BAAI/bge-base-en-v1.5',
+      chunk_size: data.chunk_size || data.default_chunk_size || 512,
+      chunk_overlap: data.chunk_overlap || data.default_chunk_overlap || 128,
+      top_k: data.top_k || data.default_top_k || 5,
+      use_reranking: data.use_reranking ?? false,
+      retrieval_mode: data.retrieval_mode || 'semantic',
+      ...data,
+    };
   },
   async update(settings: Partial<AppSettings>): Promise<AppSettings> {
-    const { data } = await apiClient.patch<AppSettings>('/settings', settings);
-    return data;
+    const { data } = await apiClient.patch<any>('/settings', settings);
+    return {
+      llm_backend: data.llm_backend || data.default_llm_backend || 'groq',
+      llm_model: data.llm_model || data.default_groq_model || 'llama3-8b-8192',
+      embedding_model: data.embedding_model || 'BAAI/bge-base-en-v1.5',
+      chunk_size: data.chunk_size || data.default_chunk_size || 512,
+      chunk_overlap: data.chunk_overlap || data.default_chunk_overlap || 128,
+      top_k: data.top_k || data.default_top_k || 5,
+      use_reranking: data.use_reranking ?? false,
+      retrieval_mode: data.retrieval_mode || 'semantic',
+      ...data,
+    };
   },
 };
 

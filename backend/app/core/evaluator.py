@@ -203,17 +203,24 @@ class HallucinationEvaluator:
                 "contradiction_rate": 0.0,
                 "unsupported_claim_rate": 0.0,
                 "total_claims": 0,
+                "supported_claims_count": 0,
+                "contradiction_claims_count": 0,
+                "unsupported_claims_count": 0,
                 "claims_analysis": [],
                 "taxonomy_proportions": empty_taxonomy,
             }
 
         if not context_chunks:
+            claim_count = len(split_into_sentences(answer))
             return {
                 "faithfulness": 0.0,
                 "supported_claim_rate": 0.0,
                 "contradiction_rate": 0.0,
                 "unsupported_claim_rate": 1.0,
-                "total_claims": len(split_into_sentences(answer)),
+                "total_claims": claim_count,
+                "supported_claims_count": 0,
+                "contradiction_claims_count": 0,
+                "unsupported_claims_count": claim_count,
                 "claims_analysis": [],
                 "taxonomy_proportions": empty_taxonomy,
             }
@@ -231,6 +238,9 @@ class HallucinationEvaluator:
                 "contradiction_rate": 0.0,
                 "unsupported_claim_rate": 0.0,
                 "total_claims": 1,
+                "supported_claims_count": 1,
+                "contradiction_claims_count": 0,
+                "unsupported_claims_count": 0,
                 "claims_analysis": [{"claim": answer, "status": "entailed", "nli_label": "entailment", "error_type": None}],
                 "taxonomy_proportions": empty_taxonomy,
             }
@@ -244,6 +254,9 @@ class HallucinationEvaluator:
                 "contradiction_rate": 0.0,
                 "unsupported_claim_rate": 0.0,
                 "total_claims": 0,
+                "supported_claims_count": 0,
+                "contradiction_claims_count": 0,
+                "unsupported_claims_count": 0,
                 "claims_analysis": [],
                 "taxonomy_proportions": empty_taxonomy,
             }
@@ -728,12 +741,12 @@ class HallucinationEvaluator:
         details = {
             "num_context_chunks": len(context_chunks),
             "has_reference": bool(reference and reference.strip()),
-            "claims_count": claim_breakdown["total_claims"],
-            "supported_claims_count": claim_breakdown["supported_claims_count"],
-            "contradiction_claims_count": claim_breakdown["contradiction_claims_count"],
-            "unsupported_claims_count": claim_breakdown["unsupported_claims_count"],
-            "claims_analysis": claim_breakdown["claims_analysis"],
-            "error_taxonomy": claim_breakdown["taxonomy_proportions"],
+            "claims_count": claim_breakdown.get("total_claims", 0),
+            "supported_claims_count": claim_breakdown.get("supported_claims_count", 0),
+            "contradiction_claims_count": claim_breakdown.get("contradiction_claims_count", 0),
+            "unsupported_claims_count": claim_breakdown.get("unsupported_claims_count", 0),
+            "claims_analysis": claim_breakdown.get("claims_analysis", []),
+            "error_taxonomy": claim_breakdown.get("taxonomy_proportions", {}),
         }
 
         return {

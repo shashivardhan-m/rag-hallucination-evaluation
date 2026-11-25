@@ -139,6 +139,7 @@ app.mount("/uploads", StaticFiles(directory=str(uploads_path)), name="uploads")
 
 
 @app.get("/health", tags=["Health"])
+@app.get("/api/health", tags=["Health"])
 async def health_check():
     """Service health and component status check."""
     vs = get_vector_store()
